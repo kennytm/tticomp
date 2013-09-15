@@ -31,6 +31,7 @@
 
 #include <vector>
 #include <utility>
+#include <cstdlib>
 #include "../Util/loop.h"
 #include "OTGlyph.h"
 #include "OTGlyphToOutline.h"
@@ -78,6 +79,8 @@ namespace OpenType {
 		virtual void transpose (T x, T y) = 0;
 		virtual void transform (T xx, T xy, T yx, T yy) = 0;
 		void scale (T x, T y) { transform (x, 0, 0, y); }
+
+		virtual ~Curve() {}
 	};
 
 	/// PointCurve consists of just one point (usually an anchor point).
@@ -508,13 +511,13 @@ namespace OpenType {
 		Contour getContour() const {
 			typedef std::vector <ContourPoint> ContourPoints;
 			Contour contour;
-			const_iterator i = begin();
+			const_iterator i = this->begin();
 			do {
 				ContourPoints points = (*i)->getContourPoints();
 				for (ContourPoints::const_iterator p = points.begin(); p != points.end(); p ++)
 					contour.push (*p);
 				++ i;
-			} while (i != begin());
+			} while (i != this->begin());
 
 			// Do a bit of optimisation by deleting any on-curve points
 			// right between two off-curve points
@@ -549,10 +552,10 @@ namespace OpenType {
 		void getBoundingBox (coordinate_type & minX, coordinate_type & minY,
 			coordinate_type & maxX, coordinate_type & maxY) const
 		{
-			const_iterator i = begin();
+			const_iterator i = this->begin();
 			(*i)->getBoundingBox (minX, minY, maxX, maxY);
 			++ i;
-			while (i != begin()) {
+			while (i != this->begin()) {
 				coordinate_type localMinX, localMinY, localMaxX, localMaxY;
 				(*i)->getBoundingBox (localMinX, localMinY, localMaxX, localMaxY);
 				if (localMinX < minX)
@@ -569,27 +572,27 @@ namespace OpenType {
 		}
 
 		void transpose (coordinate_type x, coordinate_type y) {
-			iterator i = begin();
+			iterator i = this->begin();
 			do {
 				(*i)->transpose (x, y);
 				++ i;
-			} while (i != begin());
+			} while (i != this->begin());
 		}
 
 		void transform (coordinate_type xx, coordinate_type xy,
 			coordinate_type yx, coordinate_type yy)
 		{
-			iterator i = begin();
+			iterator i = this->begin();
 			do {
 				(*i)->transform (xx, xy, yx, yy);
 				++ i;
-			} while (i != begin());
+			} while (i != this->begin());
 		}
 
 		void addPointsAtExtremes() {
 			coordinate_type minX, minY, maxX, maxY;
 			getBoundingBox (minX, minY, maxX, maxY);
-			iterator i = begin();
+			iterator i = this->begin();
 			do {
 				coordinate_type localMinX, localMinY, localMaxX, localMaxY;
 				(*i)->getCBox (localMinX, localMinY, localMaxX, localMaxY);
@@ -608,7 +611,7 @@ namespace OpenType {
 				}
 
 				++ i;
-			} while (i != begin());
+			} while (i != this->begin());
 		}
 	};
 
@@ -633,26 +636,26 @@ namespace OpenType {
 
 		Contours getContours() const {
 			Contours contours;
-			contours.reserve (size());
-			for (const_iterator i = begin(); i != end(); ++ i)
+			contours.reserve (this->size());
+			for (const_iterator i = this->begin(); i != this->end(); ++ i)
 				contours.push_back (i->getContour());
 			return contours;
 		}
 
 		void transpose (coordinate_type x, coordinate_type y) {
-			for (iterator i = begin(); i != end(); ++ i)
+			for (iterator i = this->begin(); i != this->end(); ++ i)
 				i->transpose (x, y);
 		}
 
 		void transform (coordinate_type xx, coordinate_type xy,
 			coordinate_type yx, coordinate_type yy)
 		{
-			for (iterator i = begin(); i != end(); ++ i)
+			for (iterator i = this->begin(); i != this->end(); ++ i)
 				i->transform (xx, xy, yx, yy);
 		}
 
 		void addPointsAtExtremes() {
-			for (iterator i = begin(); i != end(); ++ i)
+			for (iterator i = this->begin(); i != this->end(); ++ i)
 				i->addPointsAtExtremes();
 		}
 	};

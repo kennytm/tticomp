@@ -41,6 +41,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include <cstring>
 
 namespace util {
 
@@ -183,6 +184,7 @@ namespace util {
 		// int as string
 		explicit String (int i, int base = 10, int length = 1);
 		explicit String (unsigned int i, int base = 10, int length = 1);
+		explicit String (unsigned long i, int base = 10, int length = 1);
 
 		~String();
 
@@ -644,6 +646,11 @@ namespace util {
 		characters = new StringCharacters (i, base, length);
 	}
 
+	inline String::String (unsigned long i, int base, int length) {
+		// Just a workaround when `size_t` is not an `unsigned int`.
+		// Assume `i` is not very large.
+		characters = new StringCharacters ((unsigned)i, base, length);
+	}
 
 	inline String::~String() {
 		releaseCharacters ();

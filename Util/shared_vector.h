@@ -194,7 +194,7 @@ namespace util {
 		}
 		void pop_back() {
 			v = v->get_own_object();
-			b->pop_back();
+			v->pop_back();
 		}
 
 		iterator insert (iterator pos, const T & x) {

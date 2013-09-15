@@ -29,6 +29,7 @@
 
 #include <vector>
 #include <iostream>
+#include <cstdio>
 
 #include "../Util/smart_ptr.h"
 #include "../Util/String.h"

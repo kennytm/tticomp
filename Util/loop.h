@@ -2,6 +2,7 @@
 #define LOOP_H
 
 #include <vector>
+#include <cstddef>
 
 namespace util {
 

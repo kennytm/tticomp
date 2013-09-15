@@ -188,12 +188,12 @@ namespace OpenType {
 		UShort flags;
 	public:
 		OpenTypeTextIterator (const OpenTypeText::Chars::iterator &i, OpenTypeText *_text, UShort _flags)
-			: iterator (i), text (_text), flags (_flags) {}
+			: OpenTypeText::Chars::iterator (i), text (_text), flags (_flags) {}
 		OpenTypeTextIterator (const OpenTypeTextIterator &i)
-			: iterator (i), text (i.text), flags (i.flags) {}
+			: OpenTypeText::Chars::iterator (i), text (i.text), flags (i.flags) {}
 
 		OpenTypeTextIterator & operator = (const OpenTypeTextIterator &i) {
-			iterator::operator = (i);
+			OpenTypeText::Chars::iterator::operator = (i);
 			text = i.text;
 			flags = i.flags;
 			return *this;
@@ -204,7 +204,7 @@ namespace OpenType {
 		OpenTypeTextIterator & operator ++() {
 			assert (*this != text->end (flags));
 			do {
-				iterator::operator ++();
+				OpenTypeText::Chars::iterator::operator ++();
 			} while (*this != text->end (flags) && (**this)->skip ((OpenTypeChar::LookupFlag) flags));
 			return *this;
 		}
@@ -218,7 +218,7 @@ namespace OpenType {
 		OpenTypeTextIterator & operator --() {
 			assert (*this != text->begin (flags));
 			do {
-				iterator::operator --();
+				OpenTypeText::Chars::iterator::operator --();
 			} while ((**this)->skip ((OpenTypeChar::LookupFlag) flags));
 			return *this;
 		}

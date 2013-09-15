@@ -82,7 +82,9 @@ namespace util {
 		The easiest way to produce specialisations is to use the
 		#DECLARE_PRECISION_BITS macro.
 	*/
-	template <typename I> struct int_bits_trait {
+	template <typename I> struct int_bits_trait;
+#if 0
+	{
 		static_assert <false> _this_must_never_be_used_because_there_should_be_a_explicit_specialisation;
 
 		enum {
@@ -90,6 +92,7 @@ namespace util {
 			precision = 0
 		};
 	};
+#endif
 
 	/** \brief Indicates which integer type may be used for the specified number of bits.
 
@@ -617,11 +620,13 @@ namespace util {
 			return false;
 		}
 
+#if 0
 		static bool yields_underflow (const int_type & i)
 		{
 			//return i != 0 && (i & get_lsb_mask <int_type, (n_source - n_dest)> ()) != 0;
 			static_assert <false> _not_used;
 		}
+#endif
 	};
 
 	template <int n_source, int n_dest, typename int_type>

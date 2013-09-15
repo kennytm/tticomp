@@ -75,7 +75,9 @@ char Preprocessor::getChar() {
 	if (curFile->eof())
 		return '\0';
 	else {
-		char c = curFile->get();
+		int c = curFile->get();
+		if (c == EOF)
+			return '\0';
 		if (backtracked)
 			backtracked --;
 		else {
