@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Alternate Substitution</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/alternatesubst.html";
+var lastEdited = "March 13, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+A multiple substitution specifies a number of glyphs that may replace
+one other glyph.
+This may be used to allow the user a choice of variant glyphs.
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup decompose {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub e -> [e e.alt1 e.alt2];<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub z -> [z z.alt1 z.alt2];<BR>
+}
+</CODE>
+</P>
+
+<P>
+At the left side of <CODE>-></CODE> you should supply one glyph, which is
+not a list.
+At the right side one list of glyphs should appear that contains the source
+glyph and at least one other glyph.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

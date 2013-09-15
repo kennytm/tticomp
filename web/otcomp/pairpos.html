@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Pair Positioning</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/pairpos.html";
+var lastEdited = "March 13, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+A pair positioning lookup may changes the position of two glyph.
+If the second glyph's position is not changed, after it is applied
+the lookup will continue its work starting from the second glyph.
+This is useful for kerning lookups.
+An example that kerns some Latin glyphs:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup kerning {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;pos [A Lambda Delta] [V W Y] -> ,,-100;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;pos V [a e o] -> ,,-120;<BR>
+}
+</CODE>
+</P>
+
+<P>
+The input sequence should contain two glyphs, which may be glyph lists.
+The positioning data may supply one or two positioning values.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

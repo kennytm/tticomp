@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>Freeware Fonts</title>
+
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot;">
+                           
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "fonts.html";
+var lastEdited = "22 November 2003";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+       
+<P>I have made two OpenType fonts (not finished yet) you may
+<A href="fontsrelease.zip">download</A>.
+I am releasing them under the GNU Public License.
+The <A href="fontsource.zip">sources</A> are available as well.
+</P>
+         
+<h2>Legendum</h2>
+
+<P>Legendum is a typeface not unlike MS's Verdana.
+ It has been made for optimal screen readibility. It is anti-aliased on Windows
+ as well. It now contains all normal Latin characters as well as all Greek
+ characters, plus punctuation. All are instructed.
+I use this permanently on my desktop, and have found it extremely nice to look
+at for longer stretches of time.
+</P>
+<P>
+It has the OpenType features "kern" (kerning), "lnum" (lining numerals;
+it's got old-style numerals by default), "mark"/"mkmk" (mark positioning).
+It comes in two flavours: Legendum_legacy.otf has hundreds of precomposed
+characters (such as &eacute;) while Legendum.otf does not, but OpenType-aware
+OSes and/or applications may be able to produce them anyway.
+The file for the latter is a lot smaller though.
+Most of the Latin combined glyphs are there, and (I think) all of the
+Greek ones (including polytonic Greek).
+</P>
+   
+    <P><img src="image/legendumsample.png" alt="Legendum sample">
+   <BR><SPAN id="warning1">(This image may have an ugly greyish background on browsers that don't have PNG alpha support,
+ such as IE 5)</SPAN></P>
+     
+<h2>Garogier</h2>
+     
+<P>Garogier is a typeface not unlike Garamond (hence
+the name).
+It will have optical size through its instructions (i.e. at low sizes,
+also when it is used on a high-resolution device such as a printer, the characters
+are changed slightly to increase readablity). This is supported by Windows
+98 and up (this includes 2000 and XP). Freetype does not support it (yet).
+</P>
+
+<P>
+I have not supplied a hinted version for the moment though.
+The font has kerning through the OpenType feature "kern", supports ligatures
+("liga"), both lining and old-style figures ("lnum") and small caps ("smcp").
+If you are used to looking at Greek letters: I'd like to have some feedback
+on those before I go on to instruct them.
+</P>
+   
+    <P><img src="image/garogiersample.png" alt="Garogier sample">
+   <BR><SPAN id="warning2">(This image may have an ugly greyish background on browsers that don't have PNG alpha support,
+ such as IE 5)</SPAN></P>
+
+<h2>TestInstructions</h2>
+
+<p>
+<a href="TestInstructions.ttf">TestInstructions</a> is a font that provides a number of minimal testcases for
+TrueType instructions.
+You can test the behaviour of virtual machines with it.
+This is what it looks like at 12 pts (16 pixels) on Windows 2000:
+</p>
+
+    <P><img src="image/testinstructionssample.png" alt="TestInstructions sample">
+   <BR><SPAN id="warning3">(This image may have an ugly greyish background on browsers that don't have PNG alpha support,
+ such as IE 5)</SPAN></P>
+
+         
+<SCRIPT type="text/javascript">
+beautify();
+if(navigator.userAgent.substring(0,11)=="Mozilla/5.0") {
+	document.getElementById("warning1").style.display = "none";
+	document.getElementById("warning2").style.display = "none";
+	document.getElementById("warning3").style.display = "none";
+}
+</SCRIPT>
+</body>
+</html>

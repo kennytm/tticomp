@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Instruction Compiler Tutorial</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+<STYLE type="text/css">
+.switchImageButton {
+	border: 1px solid;
+	border-color: #FFBB44 #AA7700 #AA7700 #FFBB44;
+	padding: 0em .2em .2em .2em;
+	background-color: #FFFFF0;
+	position: relative;
+	top:-25px;
+	text-decoration: none;
+}
+</STYLE>
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "tticomp/introduction.html";
+var lastEdited = "31 December 2002";
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>As you have probably arrived at this page because you want to know about TrueType
+instructions and how to edit them, an extremely short introduction into
+<I>hinting</I> is given here. If you want to read more, or if you do not yet
+know what <I>glyphs</I> or <I>contour points</I> are, you may want to find your way to
+more general information available on the web before diving into this.
+</P>
+
+<P>
+If you have any comments to this tutorial (if you can call it that) or any
+suggestions, questions, or anything at all, please send
+<A href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</A> a note.
+</P>
+
+<P>The relevant bit of the
+history of font file formats starts with <I>Type 1</I> fonts.
+<A href="?" class="tooltipLink" id="history">The Type 1 font file format was
+invented by Adobe in 1985</A> and is
+used in the Postscript printer language and in PDF (Portable Document Format)
+files.
+It is an outline format, that is, the glyphs are specified by their
+outlines (by cubic splines).
+TrueType was invented by Apple around 1988, but Microsoft has got the rights
+as well, and they are now the main promotors.
+It is an outline format as well, but it uses conic splines.
+Though cubic splines form a superset of conic splines, they
+can be converted to conic splines, in which case sometimes a number of extra
+points are needed to represent the original splines. The distortion this
+results in is usually minimal because of the high resolution used to specify
+the outline points. On the other hand, conic splines are mathematically less
+complex, so that they can in principle be rendered more quickly.
+</P>
+       
+<H2>What are TrueType instructions?</H2>
+<P>That's a difficult question to answer in three sentences. One major problem in
+using outline font files on low-resolution devices such as computer screens is
+what was described by Microsoft in
+<A href="?" class="tooltipLink" id="ttintroduction"> an article promoting TrueType</A>.
+Basically, outlines may fall off pixels or turn on more than
+one pixel row at random, because they are scaled down to a given number of
+pixels. In Type 1 fonts, it is tried to solve this by using
+<A href="?" class="tooltipLink" id="pfaedit">hints</A>.</P>
+
+<H3>Hints</H3>
+<P>Hints are things that tell the rasteriser (the program that renders a string
+of characters to a surface) something about the topology of the character. For
+example, they may identify the two horizontal stems and the vertical one of the
+character "H". More advanced descriptions are available as well. The hints are
+normally added by the font designer or another human being, though the computer
+may be able do some things automatically.</P>
+<P>It should be clear that the rasteriser has to use these hints to display
+glyphs well. This is not at all a trivial task. Usually the glyph is stretched
+so that the stems fit the pixels in some way. Italic characters or slanted
+stems are extremely difficult to get right. Whatever smart algorithms are used,
+some glyphs will always look slightly less than perfect.
+</P>
+
+<H3>Instructions</H3><P>The way to make sure small glyph bitmaps look perfect is, obviously, create
+them by hand. The <A href="?" class="tooltipLink" id="instructions">instructions</A> that
+<I>TrueType</I> uses can do this, though
+it may take a lot of work (most of which must be done by humans). TrueType
+instructions allow the designer to include programs with every glyph to
+distort the outline in any way the designer wants it to. This should not be
+called hinting, as it has more to do with commanding than with hinting, but it
+is often called hinting anyway. So, when it says
+"TrueType hinting" somewhere, it should be "TrueType instructing". The instructions are
+executed by a <A href="?" class="tooltipLink" id="virtualMachine">Virtual Machine</A>.
+</P>
+
+<P>The instructions have many
+advantages: everything you want to do can be done. You may, for example, want
+to remove all stems at lower sizes, or to delete other features not necessary
+to convey what character the glyph represents. It also means that hinting done
+in <I>any</I> other hinting system may be converted to TrueType instructions,
+though this does not necessarily lead to good-looking fonts compared to
+manually instructed ones.
+</P>
+
+<H3>Producing TrueType Instructions</H3>
+<P>The abundance of not-terribly-well hinted fonts available from everywhere
+makes painfully clear that hand-hinting is a difficult job for which it is
+difficult to produce tools. Microsoft has its <I>Visual TrueType</I> tool which
+is said to work pretty well. FontLab has got a rather limited set of
+instructions which do allow access to the instruction set in a visual way.
+</P>
+
+<H2>The TrueType Instruction Compiler</H2>
+<P>Knowing that TrueType fonts basically contain small programs, however, I
+was amazed to find how few tools for actually programming TrueType
+instructions were available (zero, to my knowledge). This was why I made my own tool.
+Its input consists of a programming language which may be characterised as a
+simplified version of C. The fact that programming skills are required may
+immediately be seen as evidence that it is not as <I>easy</I> to use the
+TrueType Instruction Compiler, as I called it in an extremely creative mood,
+as it is to use more visual tools. However, it is more powerful and as I did not
+add many difficult constructions or anything a basic knowledge of any
+procedural or object-oriented programming language will do.
+</P>
+
+<SCRIPT type="text/javascript">
+
+var currentInstructionImage = 1;
+function previousInstructionImage() {
+	if (currentInstructionImage>1) {
+		currentInstructionImage --;
+		document.getElementById("instructionImage").src="l"+currentInstructionImage+".png";
+	}
+}
+
+function nextInstructionImage() {
+	if (currentInstructionImage<7) {
+		currentInstructionImage ++;
+		document.getElementById("instructionImage").src="l"+currentInstructionImage+".png";
+	}
+}
+
+function getTip(element) {
+	switch (element.id) {
+	case "glyph":
+		return { text : "A glyph is a visual representation of a character that is defined by a number of contour points."};
+	case "virtualMachine":
+		return { text: "A <I>virtual machine</I> executes its own machine code just like a computer processor (i.e. Intel Pentium), but does so in software. A well-known virtual machine is the Java Virtual Machine."};
+	case "instructions":
+		return {closeButton: true,
+			text: "A example of how TrueType instructions may work on a simple glyph:<DIV style='text-align: center;'><A class='switchImageButton' href='javascript:previousInstructionImage();'>&lt;&lt;</A>  <IMG src='l1.png' id='instructionImage'>  <A class='switchImageButton'  href='javascript:nextInstructionImage();'>&gt;&gt;</A></DIV>"};
+	case "ttintroduction":
+		return {closeButton: false, text:
+			"See <A href='http://msdn.microsoft.com/archive/en-us/dnargdi/html/msdn_truetype.asp'>An Introduction to Digital Typography Using TrueType</A> at the Microsoft website. This article was written when TrueType was new and unknown by many." };
+	case "pfaedit":
+		return {closeButton: false, text:
+			"For more information on how Type 1 hints work, see for example <A href='http://pfaedit.sourceforge.net/overview.html#Hints'>the PfaEdit homepage</A>." };
+	case "history":
+		return {closeButton: false, text:
+			"A discussion about the history of Type 1 fonts was <A href='http://topica.com/lists/opentype/read/message.html?mid=1607996428&sort=d&start=2084'>started by Adam Twardoch on the OpenType mailing list</A> in October 2002." };
+	default:
+		alert("error");
+	}
+}
+beautify();
+</SCRIPT>
+</body>
+</html>

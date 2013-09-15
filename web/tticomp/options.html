@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Instruction Compiler Tutorial - Options</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "tticomp/options.html";
+var lastEdited = "30 December 2002";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<H2>Input and Output</H2>
+<P>
+You have already seen how to specify a source file location and a destination
+file location.
+</P>
+
+<P class="codeFragment"><CODE>
+#input "../Garogier.ttf"<BR>
+#output "Garogier_instructed.ttf"
+</CODE></P>
+
+<H2>Rasteriser instructions</H2>
+<P>
+Microsoft has defined a <B>gasp</B> table that enables fonts to specify at
+what point sizes anti-aliasing should be used and when grid-fitting should
+be used (i.e. when the instructions should be executed). This is specified
+as ranges of sizes.
+</P>
+
+<P class="codeFragment"><CODE>
+#gasp A 8 I 20 AI 2048 A
+</P></CODE>
+
+<P>
+Here, the Microsoft recommendation is implemented. Up to ppem=8, the glyphs
+will be anti-aliased (<CODE>A</CODE>) but the instructions are not executed;
+from 9 up to 20 no aliasing will be used, but the instructions will be
+(<CODE>I</CODE>);
+from 21 up to 2048 both are on (<CODE>AI</CODE>);
+above 2048 only aliasing will be used.
+<CODE>N</CODE> may be used for no anti-aliasing and no instruction execution.
+Note that the <B>gasp</B> table appears
+to be patented, so that free renderes may not use the information in it
+(for example, the <A href="http://www.freetype.org/">FreeType</A> rendering
+engine doesn't).
+However, not all is lost: instruction execution may be switched on in the
+<CODE>prep()</CODE> function depending on point size programmatically.
+It may be sensible to specify that instructions and anti-aliasing should
+always be done:
+</P>
+
+<P class="codeFragment"><CODE>
+#gasp AI
+</P></CODE>
+
+<P>
+If no <CODE>#gasp</CODE> option is found, the original table, if any, will
+remain in the font.
+</P>
+
+<H2>Memory requirements</H2>
+
+<P>
+The memory requirements for the instructions may be specified using options.
+Once again, if you specify nothing, the original settings will be used.
+</P>
+
+<P class="codeFragment"><CODE>
+#twilight 1<BR>
+#stack 100
+</CODE></P>
+
+<P>
+The <CODE>#twilight</CODE> option specifies how many <A href="#"
+class="tooltipLink" id="twilightPoints">twilight points</A> are used in the
+instructions. This may be <CODE>0</CODE> (zero).
+The <CODE>#stack</CODE> option specifies the stack size.
+This depends on the length of functions, number of parameters, number of
+function calls etcetera.
+You do not know this on beforehand; it is safest to set it to a sufficiently
+large number (say, 300) and change it later, using any "stack overflow" error
+messages from the virtual machine (e.g., TrueTypeViewer or the Microsoft Font
+Validator) as an indication you've gone too low.
+</P>
+
+<SCRIPT type="text/javascript">
+function getTip(element) {
+	switch (element.id) {
+	case "twilightPoints":
+		return {text: "Twilight points are points in the <I>twilight zone</I>: this is the zone where all helper points that are not on the glyph contour that is manipulated reside."};
+	}
+}
+
+beautify();
+showReservedWords (TTIReservedWords);
+</SCRIPT>
+</body>
+</html>

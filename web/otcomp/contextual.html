@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Contextual Lookups</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/contextual.html";
+var lastEdited = "March 14, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+The context and chaining context lookups are meta-lookups:
+they specify a certain context, in which other lookups may operate at
+different positions.
+The sub-lookups may be either substitution or positioning lookups.
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup abcToxx {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;context (q) a b c (r);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub 0 ab_to_x;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub 1 c_to_x;<BR>
+}<BR>
+<BR>
+lookup ab_to_x {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub a b -> x;<BR>
+}<BR>
+<BR>
+lookup c_to_x {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub c -> x;<BR>
+}
+</CODE>
+</P>
+
+<P>
+This example shows a (nonsense) lookup that changes the sequence "qabcr" into
+"qxxr".
+It works as follows:
+</P>
+
+<UL>
+<LI>
+A context is found which matches the <CODE>context (q) a b c (r)</CODE> bit;
+in this context, the sequence "abc" is the <I>input sequence</I>.
+The "q" sequence is called the <I>backtrack sequence</I>.
+The "r" sequence is called the <I>lookahead sequence</I>.
+These may be longer than one glyph, and they may contain glyph lists.
+</LI>
+<LI>
+The lookup "ab_to_x" is applied at position 0.
+This yields the changed input sequence "xc".
+</LI>
+<LI>
+The lookup "c_to_x" is applied at position 1.
+This means the "c" is changed to "x".
+</LI>
+<LI>
+The lookup continues its work starting immediately after the input sequence.
+</LI>
+</UL>
+
+<H2>Replacing i by dotlessi before marks</H2>
+<P>
+That was a nice example showing how things work exactly,
+but here is a more useful example.
+When the glyph "i" is followed by a mark above,
+the dot above the i is removed and the mark is placed over
+the "dotlessi" glyph.
+This may be done be replacing "i" by "dotlessi" whenever it is followed
+by a mark above.
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup dotlessI {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ignore mark except @marksAbove;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;context [i j] (@marksAbove);<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub 0 iToDotlessI;<BR>
+}<BR>
+<BR>
+lookup iToDotlessI {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub i -> dotlessi;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub j -> dotlessj;<BR>
+}
+</CODE>
+</P>
+
+<P>
+The context that is matched here is either i or j,
+followed by a combining mark above.
+If such a sequence is found, at position 0
+(the first position of the input sequence)
+a lookup is applied that changes "i" into "dotlessi" and "j" into "dotlessj".
+</P>
+
+<P>
+<B>Note</B>: OTComp will generate a <I>contextual lookup</I> when you specify
+no glyphs for the backtrack and lookahead sequences.
+If you do, a <I>chaining contextual lookup</I> will be generated.
+</P>
+
+<P>
+<B>Note 2</B>: this lookup may be too powerful for "normal" use;
+if you think so and have a good idea for a simpler syntax that is easier to
+use, please let me know.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

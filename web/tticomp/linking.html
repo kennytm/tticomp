@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Instruction Compiler Tutorial - Linking</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "tticomp/linking.html";
+var lastEdited = "30 December 2002";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<H2>Attaching instructions to fonts</H2>
+<P>Now that you have an idea of what you can put in a .tti file, you may want
+to know how to link your programs to a font.
+The first things required for this are a source file location and a destination
+file location:
+</P>
+
+<P class="codeFragment"><CODE>
+#input "../Garogier.ttf"<BR>
+#output "Garogier_instructed.ttf"
+</CODE></P>
+
+<P>TTIComp will look in the current directory, without doing advanced things
+with search paths and such. After the file is found, a function is sought for
+every glyph, according to their postscript name.
+When the glyph is displayed for the first time, the function is called to
+grid-fit the outline according to your program.
+</P>
+
+<P class="codeFragment"><CODE>
+void A() {<BR>
+&nbsp;&nbsp;<I>&lt;Code for capital A goes here&gt;</I><BR>
+}<BR>
+<BR>
+void Zsmall() {<BR>
+&nbsp;&nbsp;<I>&lt;Code for small capital Z goes here&gt;</I><BR>
+}
+</CODE></P>
+
+<P>Note: the postscript name <B>Z.small</B> will be linked to the
+function <CODE>Zsmall()</CODE>: the period has to be left out in the .tti file
+because it can't be used in identifiers in C.<BR>
+Note 2: it is possible to call function <CODE>A</CODE> from within another
+function. <CODE>Asmall()</CODE> may do this, for example.<BR>
+Note 3: the functions should not have any parameters, or they will not be
+linked to the glyph.
+</P>
+
+<P>There is one additional function that is automatically linked. It has to
+be called <CODE>prep()</CODE> because it is put in the TrueType
+<B>prep</B> table. This function is executed every time the font size is
+changed. It may be used to set global variables, but it is mainly used to
+set <I>CVT</I> values.
+</P>
+
+<H2>The CVT Table</H2>
+<P>
+One of the most interesting aspects of TrueType instructions is the Control
+Value Table. It contains lots of common distances used in your font.
+For example, you may want to regularise all stems in a sans-serif font,
+by setting it to one below a certain threshold and rounding it to whole pixels
+otherwise. The stem then gets a value in the CVT table (say 100
+<A href="#" class="tooltipLink" id="fontUnits">font units</A>) which is rounded
+every time the font size is changed by the <CODE>prep()</CODE> function.
+</P>
+
+<P class="codeFragment"><CODE>
+#cvt stem: 100<BR>
+//&nbsp;const uint stem = 0u;<BR>
+<BR>
+void prep() {<BR>
+&nbsp;&nbsp;setCVT(stem, floor(getCVT(stem)+.5));<BR>
+}
+</CODE></P>
+
+<P>
+The first line of this piece of code defines the CVT table. Normally, this is
+a list of integers that may contain label definitions like <CODE>stem:</CODE>.
+Label definitions like <CODE>stem:</CODE> may come in handy when referencing
+the CVT value later.
+Internally, <CODE>stem</CODE> is defined as a constant with a value of
+<CODE>0u</CODE>.
+</P>
+
+<P>
+The CVT value is given in font units. However, when <CODE>getCVT()</CODE> is
+called, it returns a <CODE>fixed</CODE> number, that is, a number in pixel
+units. This provides an extremely simple way of converting distances in the
+font to actual distances in the current pixel size. After the stem size is
+rounded, the CVT value is set to the new value.
+</P>
+
+<H2>Predefined Functions</H2>
+
+<P>
+The aim of the TrueType instructions is to move points. For this, a large
+number of instructions are available.
+These instructions are represented as built-in functions in the TrueType
+Instruction Compiler.
+A call like <CODE>moveDistance(1u,2u, 1u,3u, 3.0);</CODE> is not compiled
+into a function call, but becomes an instruction call (which obviously
+takes only a few bytes).
+A description of the functions can be found at &lt;not available yet&gt;.
+</P>
+
+<SCRIPT type="text/javascript">
+function getTip(element) {
+	switch (element.id) {
+	case "fontUnits":
+		return {text: "Font units are used in designing a font. The size of one font unit is defined by the ppem (points per em) value, which may be different for each font. In TrueType fonts the ppem value is usually 2048."};
+	}
+}
+
+beautify();
+showReservedWords (TTIReservedWords);
+</SCRIPT>
+</body>
+</html>

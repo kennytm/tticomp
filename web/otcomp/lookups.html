@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Lookups</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/lookups.html";
+var lastEdited = "March 14, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+Lookups may have some parameters to skip certain glyphs.
+For example, a lookup converting "fi" to a ligature should not be hindered
+by any intervening combining diacritics.
+Therefore, glyphs may be assigned a <I>class</I>.
+</P>
+
+<H2>Glyph Lists</H2>
+<P>
+It is often convenient to reference a number of glyphs at once.
+For example, to convert all Latin lowercase letters to uppercase,
+you do not usually want to type in the whole alphabet two times.
+It is therefore possible to use a list instead of one glyph.
+Thus, <CODE>[a e i o u y]</CODE> refers to six glyphs.
+<CODE>[a-z]</CODE> refers to all glyphs from "a" up to "z", which means the
+whole lower-case alphabet if you have ordered the glyphs in the font in this
+way.
+If you have defined a glyph group you can use it in lists as well:
+<CODE>@marksAbove</CODE> means all glyphs in the group you have defined
+previously.
+<CODE>[@marksAbove a e i o u y]</CODE> refers to all of the group plus six
+glyphs.
+<CODE>[@marksAbove @marksBelow @marksAttachedRight]</CODE> combines all
+the glyphs in the three groups.
+<CODE>[@marksAbove - [acutecomb gravecomb]]</CODE> refers to all of the group
+<I>except</I> the combing acute and grave accents.
+<CODE>[@marksAbove - [@greekDoubleMarks tonoscomb]]</CODE> refers to all of
+the group except for the glyphs in the <CODE>@greekDoubleMarks</CODE> group
+and "tonoscomb".
+</P>
+<P>
+With these simple constructs, a lot of nesting is allowed (and may often come
+in extremely useful).
+</P>
+
+<H2>Glyph Groups</H2>
+<P>
+Before glyph groups can be used, they first have to be declared:<BR>
+<CODE>group @<I>&lt;name&gt;</I> <I>&lt;glyph list&gt;</I>
+[<I>&lt;glyph class&gt;</I>];</CODE>
+</P>
+<P>
+The glyph class may be either <CODE>base</CODE> for a base glyph,
+<CODE>ligature</CODE> for a ligature, <CODE>component</CODE> for a ligature
+component or <CODE>mark</CODE> for a combining mark.
+It may also be left out.
+A glyph may only be assigned a glyph class once.
+</P>
+
+<H2>Lookup Definitions</H2>
+<P>
+The "fi" ligature lookup should not heed any intervening diacritical marks.
+To ignore these, a lookup definition can start thus:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup ffi {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ignore mark;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub f f i -> fi;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub f l -> fl;<BR>
+}
+</CODE>
+</P>
+
+<P>
+This will ignore all marks.
+Some lookups, however, may ignore only marks of one <I>mark attachment class</I>.
+This allows mark attachment lookups to apply to a base glyph and a mark above
+without minding marks that attach below the base glyph:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup marksAbove {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ignore mark except @marksAbove;<BR>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;[...]<BR>
+}
+</CODE>
+</P>
+
+<P>
+Here, "@marksAbove" must have been defined as a mark group, i.e. with
+<CODE>group @marksAbove [<I>&lt;glyph names&gt;</I>] <B>mark</B>;</CODE>.
+</P>
+
+<P>
+One lookup should have one type;
+it is not possible, for example, to mix single substitution and ligature
+substitution in one lookup.
+It is possible, however, to give multiple lookups the same name, so that
+they may be referred to at once in a feature definition using that name.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

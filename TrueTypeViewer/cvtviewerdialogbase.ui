@@ -1,0 +1,90 @@
+<!DOCTYPE UI><UI>
+<class>CVTViewerDialogBase</class>
+<widget>
+    <class>QDialog</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>CVTViewerDialogBase</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>243</width>
+            <height>322</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>Form2</string>
+    </property>
+    <hbox>
+        <property stdset="1">
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget>
+            <class>QListView</class>
+            <column>
+                <property>
+                    <name>text</name>
+                    <string>Column 1</string>
+                </property>
+                <property>
+                    <name>clickable</name>
+                    <bool>true</bool>
+                </property>
+                <property>
+                    <name>resizeable</name>
+                    <bool>true</bool>
+                </property>
+            </column>
+        <item>
+            <property>
+                <name>text</name>
+                <string>New Item</string>
+            </property>
+            <property>
+                <name>pixmap</name>
+                <pixmap></pixmap>
+            </property>
+        </item>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>listItems</cstring>
+            </property>
+            <property stdset="1">
+                <name>resizePolicy</name>
+                <enum>Manual</enum>
+            </property>
+            <property stdset="1">
+                <name>allColumnsShowFocus</name>
+                <bool>true</bool>
+            </property>
+            <property stdset="1">
+                <name>showSortIndicator</name>
+                <bool>true</bool>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <slot access="public">backInstruction()</slot>
+    <slot access="public">firstInstruction()</slot>
+    <slot access="public">forwardInstruction()</slot>
+    <slot access="public">lastInstruction()</slot>
+    <slot access="public">nextInstruction()</slot>
+    <slot access="public">openCVTViewer()</slot>
+    <slot access="public">openGraphicsStateViewer()</slot>
+    <slot access="public">openStackViewer()</slot>
+    <slot access="public">openStorageViewer()</slot>
+    <slot access="public">previousInstruction()</slot>
+    <slot access="public">selectGlyph(int)</slot>
+    <slot access="public">showDebug(bool)</slot>
+</connections>
+</UI>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - OpenType Concepts</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/concepts.html";
+var lastEdited = "March 14, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+OpenType fonts my be used in different situations, which is why the file
+format allows for different things to happen in different scripts and
+languages.
+</P>
+
+<UL>
+<LI>
+The <B>script</B> has to do with the letterforms.
+This text is written in the Latin script, which is called a simple script
+because it is comparatively easy to render,
+just like the Greek and the Cyrillic scripts.
+Complex scripts are used for example for Arabic and Indic languages.
+</LI>
+
+<LI>
+The <B>language</B> a text is written is important as well.
+This may not seem clear at once, but a good example of a language that
+requires different mark positioning than other languages
+with the same script is Vietnamese:
+normal Latin marks are supposed to be put over the previous one,
+but in Vietnamese some marks should be placed right of the previous mark.
+Also, the Serbian alphabet has some different glyph forms from the
+Russian alphabet, although both are called Cyrillic.
+</LI>
+</UL>
+
+<P>
+Normally, scripts would also define a <B>default</B> language that is used
+when no specific instruction for a certain language are available.
+For example, English, French and Dutch all may use the same rules for glyph
+substitution and positioning.
+</P>
+
+<H2>Internals</H2>
+
+<H3>Features</H3>
+
+<P>
+In order to let the client (the computer program that shows a text on the
+screen, for example your favourite word processor) know what a rule does
+on an abstract level, <B>features</B> are used.
+As a lot of processing within OpenType fonts is done with 4-character codes
+that are called <B>tags</B>, features have been assigned tags that tell
+the client what they do.
+</P>
+
+<UL>
+<LI>
+The <B>liga</B> tag is short for ligatures.
+The font may implement these tags by replacing the sequences like
+"fi" by ligatures.<BR>
+<IMG src="../image/fi.png">
+</LI>
+<LI>
+The <B>mark</B> tag is short for mark positioning.
+This feature contains information about the positions of marks
+relative to their base characters.<BR>
+<IMG src="../image/breakinggood.png">
+</LI>
+</UL>
+
+<P>
+A full list of feature tags and their descriptions is available from the
+<A href="http://www.microsoft.com/typography/otspec/feattags.htm">Microsoft website</A>.
+Many features are not turned on by default; some may be switched on by the
+user, and others may be switched on at the discretion of the client.
+</P>
+
+<H3>Lookups</H3>
+
+<P>
+What actually happens when a feature is switched on is implemented by
+<B>lookups</B>.
+As the name suggests, when these things are applied the right context is
+found and the substitution or positioning is applied. 
+</P>
+
+<P>
+There are two kinds of lookups.
+</P>
+<UL>
+<LI>
+<B>Substitution</B> lookups substitute one glyph for another.
+This may provide an esthetic alternate for a glyph or a number of glyphs,
+or characters may be composed or decomposed for technical reasons.
+</LI>
+
+<LI>
+<B>Positioning</B> lookups position glyphs.
+This may be done using relative positioning of the glyph and by changing
+the advance width or height of the glyph.
+For example, the advance width of the glyph "V" may be changed in sequences
+"VA":<BR>
+<IMG src="../image/VA.png">
+</LI>
+</UL>
+
+<SCRIPT type="text/javascript">
+beautify();
+</SCRIPT>
+</body>
+</html>

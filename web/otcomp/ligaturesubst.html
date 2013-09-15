@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Ligature Substitution</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/ligaturesubst.html";
+var lastEdited = "March 13, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+A ligature substitution replaces a sequence of glyphs by one glyph,
+which is called a ligature.
+An example that supplies some standard ligatures:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup decompose {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub f f i -> ffi<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub f f -> ff<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub f i -> fi;<BR>
+}
+</CODE>
+</P>
+
+<P>
+At the left side of <CODE>-></CODE> you should supply a sequence of glyphs.
+At the right side one glyph should appear.
+Note: the order in which the ligatures are applied is not changed
+(except in cases where it does not matter).
+The "ffi" ligature should be placed before the "ff" ligature, otherwise the
+lookup will have seen "ff" and have replaced it before the "ffi" ligature
+is seen.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

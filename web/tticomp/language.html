@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Instruction Compiler Tutorial - The Language</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "tticomp/language.html";
+var lastEdited = "30 December 2002";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<H2>TTIComp language constructs</H2>
+<P>The TrueType instruction compiler takes a .tti file with code that specify
+the instructions. The language is based on C. I will here presume basic
+knowledge of C, C++, Java, or something similar.
+</P>
+
+<H3>Definitions</H3>
+<P>Functions are defined like this:</P>
+<P class="codeFragment"><CODE>void calculateDistance(uint p1, uint p2) {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<I>&lt;Any code&gt;</I><BR>
+}</CODE></P>
+
+<P>Variables are defined like this:</P>
+<P class="codeFragment"><CODE>int i;<BR>
+uint a = 7u;</CODE></P>
+
+<P>Constants are defined like this:</P>
+<P class="codeFragment"><CODE>const int i = 5;<BR>
+const uint a = 7u;</CODE></P>
+
+<H3>Types</H3>
+<P>TTIComp uses only 5 types:
+
+<TABLE><TBODY>
+<TR class="tableHeader"><TD>Type</TD><TD>Explanation</TD><TD>Example</TD></TR>
+
+<TR><TD class="leftHeader"><CODE>void</CODE></TD>
+<TD>An empty type used for function returns</TD>
+<TD></TD></TR>
+
+<TR><TD class="leftHeader"><CODE>int</CODE></TD>
+<TD>A 32-bits signed integer</TD>
+<TD><CODE>2563</CODE>, <CODE>-4783</CODE></TD></TR>
+
+<TR><TD class="leftHeader"><CODE>uint</CODE></TD>
+<TD>A 32-bits unsigned integer</TD>
+<TD><CODE>2563u</CODE></TD></TR>
+
+<TR><TD class="leftHeader"><CODE>fixed</CODE></TD>
+<TD>A 32-bits fixed point number (26.6). Used to specify point positions in
+TrueType.</TD>
+<TD><CODE>25.63</CODE>, <CODE>-47.83</CODE></TD></TR>
+
+<TR><TD class="leftHeader"><CODE>bool</CODE></TD>
+<TD>A 32-bits fixed point number (26.6). Used to specify point positions in
+TrueType.</TD>
+<TD><CODE>25.63</CODE></TD></TR>
+
+</TBODY></TABLE></P>
+
+<P>Conversion between types is <I>not</I> done automatically:
+<CODE>uint a = 7;</CODE> will generate a compile error. A <CODE>u</CODE> is
+needed to signify that this number is unsigned.
+This could also be done using a <I>type cast</I>, which takes the C++ style:
+<CODE>uint a = uint(7);</CODE>.</P>
+
+<H3>Within a function</H3>
+
+<P>Within a function, then, you can use normal statements like:
+</P>
+
+<P class="codeFragment"><CODE>int a=5;<BR>
+int b=6;<BR>
+if (b) {<BR>
+&nbsp;&nbsp;a = b+5*a;<BR>
+}<BR>
+moveDistance(1u,2u, 1u,3u, 3.0);<BR>
+fixed distance = getDistance(1u,2u, 1u,3u);</CODE></P>
+
+<P>Here, <CODE>moveDistance</CODE> and <CODE>getDistance</CODE> are predefined
+functions (see the next page for those).
+Calculations may require type casts because some things can't be
+done automatically. When using type casts, please watch out:
+<CODE>fixed(5)</CODE> is the same as <CODE>.08</CODE>, and not <CODE>5.0</CODE>.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (TTIReservedWords);
+</SCRIPT>
+</body>
+</html>

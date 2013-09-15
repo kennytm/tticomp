@@ -1,0 +1,435 @@
+#input "Garogier.ttf"
+#output "Garogier_unhinted.otf"
+
+/*** Scripts ***/
+
+script latn {
+	feature dotlessI;
+	feature smallCaps;
+	feature liningNumerals;
+	feature latinLigatures;
+	feature historical;
+	feature discLigatures;
+	feature alternates;
+	feature kerning;
+	feature case;
+	feature latinMarks;
+	feature latinMarkToMark;
+}
+
+script grek {
+	required feature greekRequired;
+	feature greekCompose;
+	feature greekMarks;
+}
+
+/*** Groups ***/
+group @lowLeftRound [c d e o q];
+group @smallCap [Asmall - Omegasmall];
+
+group @marksAbove [[gravecomb - dasiaperispomenicomb] - iotasubscriptcomb] mark;
+	
+group @marksUnder [iotasubscriptcomb] mark;
+
+/*** Case-sensitive forms ***/
+
+lookup case {
+	pos [parenleft parenright bracketleft bracketright braceleft braceright] -> ,+200;
+	pos hyphen -> ,+250;
+}
+
+feature case case {
+	lookup case;
+}
+
+/*** Numeral styles ***/
+
+lookup liningNumerals {
+	sub [zero-nine] -> [zerolining-ninelining];
+}
+
+lookup liningNumerals {
+	pos [plus less equal greater] -> ,+250;
+}
+
+/*** Kerning ***/
+
+feature kerning kern {
+	lookup kerning;
+}
+
+lookup kerning {
+	ignore mark;
+
+	pos [A Delta] [V W Y] -> ,,-220;
+	pos A T -> ,,-200;
+	pos [A Delta] [C O] -> ,,-70;
+	pos A U -> ,,-100;
+
+	pos A [Vsmall Wsmall Ysmall] -> ,,-100;
+	
+	pos A [c e o u] -> ,,-70;
+	pos A t -> ,,-70;
+	pos A [v w y] -> ,,-150;
+	
+	pos E [v w y] -> ,,-100;
+	
+	pos F A -> ,,-150;
+	pos F AE -> ,,-250;
+	pos F [a c d e g o q r s ae] -> ,,-100;
+	pos F [m n p t u v w x y z] -> ,,-50;
+	
+	pos I @lowLeftRound -> ,,-50;
+	
+	pos K [C G O Q] -> ,,-100;
+	pos N [c d e g m n o q r s] -> ,,-50;
+	
+	pos P A -> ,,-150;
+	pos P AE -> ,,-250;
+	pos Thorn A -> ,,-50;
+	pos Thorn AE -> ,,-130;
+	
+	pos R [V W Y] -> ,,-100;
+	pos R T -> ,,-100;
+	pos R [c d e o q] -> ,,-50;
+	
+	pos X [C G O Q] -> ,,-50;
+	pos [O Q] X -> ,,-50;
+	
+	/* T */
+	pos [T Tau] [A Alpha] -> ,,-150;
+	pos [T Tau] Delta -> ,,-200;
+	pos T [ @smallCap - [Vsmall Wsmall Ysmall] ] -> ,,-200;
+	pos T [Vsmall Wsmall Ysmall] -> ,,-250;
+	pos T [o e] -> ,,-300;
+	pos T a -> ,,-250;
+	pos T [s v w y] -> ,,-250;
+	pos T [c d g m n r p q u x z] -> ,,-200;
+	pos [a b c e g h k m n o p q r s u v w x y z] T -> ,,-200;
+	
+	pos [V W Y] [A Delta] -> ,,-150;
+	
+	pos [V W Y] [@smallCap - Asmall] -> ,,-150;
+	pos [V W Y] Asmall -> ,,-200;
+	
+	pos [V W Y] [a c d e g o q s] -> ,,-200;
+	pos [V W Y] [m n p r u v w x y z] -> ,,-150;
+	pos [V W Y] [t] -> ,,-70;
+	
+	/*** lowercase ***/
+	
+	pos a [v w y] -> ,,-80;
+	pos a t ->,,-50;
+	
+	pos f [B D E F H I J K L M N P R T U V W X Y Z] -> ,,150;
+	
+	pos g g -> ,,30;
+	
+	pos k [e o] -> ,,-70;
+	pos l l -> ,,30;
+	
+	pos n t -> ,,-30;
+	pos n [v w y] -> ,,-50;
+	
+	pos r g -> ,,-50;
+	
+	pos x @lowLeftRound -> ,,-50;
+	pos [e o] x -> ,,-50;
+	
+	pos [v w y] e -> ,,-50;
+	pos [v w y] [a c o] -> ,,-30;
+	
+	/*** Interpunction ***/
+	
+	pos [V W Y] [comma period] -> ,,-300;
+	pos [comma period] [V W Y] -> ,,-300;
+	pos P [comma period] -> ,,-200;
+
+	pos r [comma period] -> ,,-150;
+	pos [v w y] [comma period] -> ,,-250;
+	pos period t -> ,,-70;
+}
+
+/*** Cap style ***/
+
+lookup smallCaps {
+	sub [a-sigmafinal] -> [Asmall - Sigmasmall];
+	sub [sigma-omega] -> [Sigmasmall - Omegasmall];
+	sub longs -> Ssmall;
+}
+
+lookup smallCaps {
+	sub germandbls -> Ssmall Ssmall;
+}
+
+lookup historical {
+	sub s -> longs;
+}
+
+lookup fifl {
+	ignore mark;
+	
+	sub f b -> fb;
+	sub f h -> fh;
+	sub f i -> fi;
+	sub f j -> fj;
+	sub f l -> fl;
+	sub f thorn -> fthorn;
+}
+
+lookup discLigatures {
+	ignore mark;
+	
+	sub Q u -> Qu;
+	sub T h -> Th;
+}
+
+
+feature smallCaps smcp {
+	lookup smallCaps;
+}
+
+feature liningNumerals lnum {
+	lookup liningNumerals;
+}
+
+feature latinLigatures liga {
+	lookup fifl;
+}
+
+feature discLigatures dlig {
+	lookup discLigatures;
+}
+
+feature historical hist {
+	lookup historical;
+}
+
+lookup alternateFigures {
+	sub threelining -> [threelining threelining.alt];
+	sub fivelining -> [fivelining fivelining.alt];
+	sub one -> [one one.alt];
+	sub three -> [three three.alt];
+	sub five -> [five five.alt];
+}
+
+feature alternates aalt {
+	lookup alternateFigures;
+}
+
+/*** Mark positioning ***/
+
+feature dotlessI ccmp {
+	lookup dotlessI;
+}
+
+lookup dotlessI {
+	ignore mark except @marksAbove;
+	context [i j] (@marksAbove);
+	sub 0 ijToDotless;
+}
+lookup ijToDotless {
+	sub i -> dotlessi;
+	sub j -> dotlessj;
+}
+
+feature greekRequired ccmp {
+	lookup greekSubAccents;
+}
+feature greekCompose ccmp {
+	lookup greekCompose;
+}
+feature greekMarks mark {
+	lookup greekMarks;
+	lookup greekAndLatinMarks;
+}
+
+feature latinMarks mark {
+	lookup greekAndLatinMarks;
+}
+
+lookup greekSubAccents {
+	sub gravecomb -> variacomb;
+	sub acutecomb -> tonoscomb;
+	sub commaabovecomb -> psilicomb;
+	sub reversedcommaabovecomb -> dasiacomb;
+	sub tildeaccentcomb -> perispomenicomb;
+}
+
+lookup greekCompose {
+	ignore mark except @marksAbove;
+	
+	sub dieresiscomb variacomb -> dialectycavariacomb;
+	sub dieresiscomb tonoscomb -> dialectycatonoscomb;
+	sub psilicomb variacomb -> psilivariacomb;
+	sub psilicomb tonoscomb -> psilioxiacomb;
+	sub psilicomb perispomenicomb -> psiliperispomenicomb;
+	sub dasiacomb variacomb -> dasiavariacomb;
+	sub dasiacomb tonoscomb -> dasiaoxiacomb;
+	sub dasiacomb perispomenicomb -> dasiaperispomenicomb;
+}
+
+// psiliperispomenicomb and dasiaperispomenicomb are in greekSingleMarks because they behave like those
+group @greekDoubleMarks [psilivariacomb psilioxiacomb dasiavariacomb dasiaoxiacomb];
+group @greekSingleMarks [psilicomb dasiacomb variacomb tonoscomb psiliperispomenicomb dasiaperispomenicomb];
+group @greekMarksAbove [@marksAbove - [@greekDoubleMarks @greekSingleMarks]];
+
+lookup greekMarks {
+	ignore mark except @marksAbove;
+	
+	pos Alpha @greekSingleMarks -> 50,,50;
+	pos Alpha @greekDoubleMarks -> 250,,250;
+	pos [Epsilon Eta Iota] @greekSingleMarks -> 300,,300;
+	pos [Epsilon Eta Iota] @greekDoubleMarks -> 550,,550;
+	pos [Omicron Omega] @greekSingleMarks -> 150,,150;
+	pos [Omicron Omega] @greekDoubleMarks -> 400,,400;
+	pos Upsilon @greekSingleMarks -> 350,,350;
+	pos Upsilon @greekDoubleMarks -> 600,,600;
+}
+
+lookup greekAndLatinMarks {
+	ignore mark except @marksAbove;
+	
+	mark [@marksAbove - macroncomb] <: -250, 1000>;
+	mark macroncomb <: -250, 1100>;
+	
+	base [A Lambda] @marksAbove <620, 1450>;
+	base [B Beta] @marksAbove <600, 1450>;
+	base [C G] @marksAbove <720, 1450>;
+	base D @marksAbove <750, 1450>;
+	base [E F Gamma] @marksAbove <: 650, 1450>;
+	base [H] @marksAbove <775, 1450>;
+	base [I J] @marksAbove <325, 1450>;
+	base [K Kappa] @marksAbove <700, 1450>;
+	base L @marksAbove <550, 1450>;
+	base [M Mu] @marksAbove <920, 1450>;
+	base [N Nu] @marksAbove <750, 1450>;
+	base [O Q Theta] @marksAbove <730, 1450>;
+	base [P R Rho] @marksAbove <650, 1450>;
+	base S @marksAbove <520, 1450>;
+	base [T Tau] @marksAbove <655, 1450>;
+	base U @marksAbove <720, 1450>;
+	base V @marksAbove <700, 1450>;
+	base W @marksAbove <920, 1450>;
+	base [X Chi] @marksAbove <680, 1450>;
+	base Y @marksAbove <700, 1450>;
+	base [Z Zeta] @marksAbove <650, 1450>;
+
+	// Greek vowels	
+	base Alpha @greekSingleMarks <200, 1000>;
+	base Alpha @greekDoubleMarks <100, 1000>;
+	base Alpha @greekMarksAbove <620, 1450>;
+	
+	base [Epsilon Eta Iota] @greekSingleMarks <-150, 1000>;
+	base [Epsilon Eta Iota] @greekDoubleMarks <-250, 1000>;
+	base Epsilon @greekMarksAbove <650, 1450>;
+	base Eta @greekMarksAbove <775, 1450>;
+	base Iota @greekMarksAbove <325, 1450>;
+	
+	base [Omicron Omega] @greekSingleMarks <-20, 1000>;
+	base [Omicron Omega] @greekDoubleMarks <-120, 1000>;
+	base [Omicron Omega] @greekMarksAbove <730, 1450>;
+
+	base Upsilon @greekSingleMarks <-220, 1000>;
+	base Upsilon @greekDoubleMarks <-320, 1000>;
+	base Upsilon @greekMarksAbove <700, 1450>;
+
+	// Other Greek capitals
+	base Delta @marksAbove <630, 1450>;
+	base Xi @marksAbove <740, 1450>;
+	base Pi @marksAbove <775, 1450>;
+	base Sigma @marksAbove <650, 1450>;
+	base Phi @marksAbove <625, 1450>;
+	base Psi @marksAbove <805, 1450>;
+
+	base Asmall @marksAbove <450, 1000>;
+	base Bsmall @marksAbove <450, 1000>;
+	base [Csmall Gsmall] @marksAbove <500, 1000>;
+	base Dsmall @marksAbove <530, 1000>;
+	base Esmall @marksAbove <480, 1000>;
+	base Fsmall @marksAbove <480, 1000>;
+	base Hsmall @marksAbove <550, 1000>;
+	base Ismall @marksAbove <250, 1000>;
+	base Jsmall @marksAbove <240, 1000>;
+	base Ksmall @marksAbove <500, 1000>;
+	base Lsmall @marksAbove <500, 1000>;
+	base Msmall @marksAbove <650, 1000>;
+	base Nsmall @marksAbove <550, 1000>;
+	base Osmall @marksAbove <510, 1000>;
+	base [Psmall Rsmall] @marksAbove <450, 1000>;
+	base Qsmall @marksAbove <510, 1000>;
+	base Ssmall @marksAbove <380, 1000>;
+	base Tsmall @marksAbove <455, 1000>;
+	base Usmall @marksAbove <550, 1000>;
+	base Vsmall @marksAbove <500, 1000>;
+	base Wsmall @marksAbove <675, 1000>;
+	base [Xsmall Ysmall] @marksAbove <480, 1000>;
+	base Zsmall @marksAbove <450, 1000>;
+
+	base a @marksAbove <: 400, 1000>;
+	base b @marksAbove <550, 1200>;
+	base c @marksAbove <480, 1000>;
+	base d @marksAbove <350, 1250>;
+	base e @marksAbove <: 480, 1000>;
+	base f @marksAbove <450, 1500>;
+	base g @marksAbove <450, 1000>;
+	base h @marksAbove <550, 1200>;
+	base i @marksAbove <250, 1400>;
+	base dotlessi @marksAbove <230, 1000>;
+	base j @marksAbove <250, 1400>;
+	base k @marksAbove <600, 1200>;
+	base l @marksAbove <230, 1500>;
+	base m @marksAbove <800, 1000>;
+	base n @marksAbove <550, 1000>;
+	base [o omicron] @marksAbove <520, 1000>;
+	base p @marksAbove <570, 1000>;
+	base q @marksAbove <500, 1000>;
+	base r @marksAbove <400, 1000>;
+	base s @marksAbove <380, 1000>;
+	base t @marksAbove <280, 1200>;
+	base u @marksAbove <480, 1000>;
+	base [v y] @marksAbove <500, 1000>;
+	base w @marksAbove <700, 1000>;
+	base x @marksAbove <500, 1000>;
+	base z @marksAbove <480, 1000>;
+	
+	base ae @marksAbove <670, 1000>;
+
+	base alpha @marksAbove <: 550, 1000>;
+	base beta @marksAbove <: 430, 1500>;
+	base gamma @marksAbove <: 550, 1000>;
+	base delta @marksAbove <: 470, 1400>;
+	base epsilon @marksAbove <: 400, 1000>;
+	base eta @marksAbove <: 520, 1000>;
+	base iota @marksAbove <: 250, 1000>;
+	base upsilon @marksAbove <: 480, 1000>;
+	base omega @marksAbove <: 640, 1000>;
+}
+
+lookup greekAndLatinMarks {
+	ignore mark except @marksUnder;
+
+	mark @marksUnder <-250, -100>;
+	
+	base alpha @marksUnder <500, -100>;
+	base epsilon @marksUnder <370, -100>;
+	base eta @marksUnder <235, -100>;
+	base iota @marksUnder <250, -100>;
+	base omicron @marksUnder <520, -100>;
+	base upsilon @marksUnder <450, -100>;
+	base omega @marksUnder <640, -100>;
+}
+
+/*** Mark to mark positioning ***/
+
+feature latinMarkToMark mkmk {
+	lookup latinMarkToMark;
+}
+
+lookup latinMarkToMark {
+	ignore mark except @marksAbove;
+	
+	mark @marksAbove <-250, 1000>;
+	
+	base mark @marksAbove @marksAbove <-250, 1300>;
+}

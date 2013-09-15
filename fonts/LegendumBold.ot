@@ -1,0 +1,818 @@
+#input "LegendumBold.ttf"
+#output "LegendumBold_unhinted.otf"
+
+/*** Script definitions ***/
+
+script grek {
+	feature greekMarkComposition;
+	feature liningNumerals;
+	feature proportionalNumerals;
+	feature case;
+	feature kerning;
+	feature greekMarks;
+	feature markToMark;
+}
+
+script latn {
+	feature dotlessI;
+	feature liningNumerals;
+	feature proportionalNumerals;
+	feature kerning;
+	feature case;
+	feature latinMarks;
+	feature markToMark;
+}
+
+/*** Groups ***/
+
+group @oldStyleNumerals [zero-nine];
+group @liningNumerals [zerolining-ninelining];
+group @proportionalNumerals [zeroprop-nineprop];
+
+group @marksAbove [gravecomb variacomb acutecomb tonoscomb circumflexcomb
+	tildeaccentcomb macroncomb brevecomb dotabovecomb dieresiscomb
+	hookabovecomb ringabovecomb doubleacutecomb caroncomb
+	verticallineabovecomb doubleverticallineabovecomb
+	doublegravecomb	commaabovecomb reversedcommaabovecomb
+	dialectycavariacomb dialectycatonoscomb psilivariacomb psilioxiacomb
+	dasiavariacomb dasiaoxiacomb] mark;
+
+group @marksBelow [dotbelowcomb iotasubscriptcomb] mark;
+
+group @marksAttachedRightAbove [horncomb] mark;
+
+group @marksAttachedBelow [cedillacomb ogonekcomb] mark;
+
+group @greekDoubleMarks [psilivariacomb psilioxiacomb dasiavariacomb dasiaoxiacomb];
+group @greekSingleMarks [commaabovecomb reversedcommaabovecomb variacomb tonoscomb];
+group @greekMarksLeft [@greekDoubleMarks @greekSingleMarks];
+group @greekMarksAbove [@marksAbove - @greekMarksLeft];
+
+/*** Case-sensitive forms ***/
+
+feature case case {
+	lookup case;
+}
+
+lookup case {
+	pos [parenleft parenright hyphen bracketleft bracketright braceleft braceright] -> ,+20;
+}
+
+/*** Changing numeral style ***/
+
+feature liningNumerals lnum {
+	lookup liningNumerals;
+}
+lookup liningNumerals {
+	sub [zero-nine] -> [zerolining-ninelining];
+}
+lookup liningNumerals {
+	pos [plus equal minus less greater] -> ,+25;
+}
+
+feature proportionalNumerals pnum {
+	lookup proportionalNumerals;
+}
+
+lookup proportionalNumerals {
+	sub [zero-nine] -> [zeroprop-nineprop];
+}
+
+/*** Kerning ***/
+
+feature kerning kern {
+	lookup kerning;
+}
+
+lookup kerning {
+	ignore mark;
+
+	pos [A Delta] [V W Y] -> ,,-20;
+	pos [V W Y] [A Delta] -> ,,-20;
+	
+	pos [A Delta] T -> ,,-15;
+	pos A f -> ,,-10;
+	pos [A Delta] hyphen -> ,,-10;
+	
+	pos F A -> ,,-10;
+	pos F [a c d e o] -> ,,-5;
+	
+	pos L Y -> ,,-35;
+	pos L V -> ,,-25;
+	pos L W -> ,,-15;
+	
+	pos [D O] V -> ,,-10;
+	
+	pos [P Rho] [A Delta Lambda] -> ,,-20;
+	pos P [c e o] -> ,,-5;
+	pos P a -> ,,-10;
+	
+	pos T [A Delta] -> ,,-15;
+	pos T [a c e o] -> ,,-30;
+	pos T [d g m n p q r s u w] -> ,,-25;
+	pos T y -> ,,-25;
+	pos T [v z] -> ,,-15;
+	pos T hyphen -> ,,-30;
+	
+	pos V [C O] -> ,,-10;
+	
+	pos V [a c d e g o q s] -> ,,-20;
+	pos V [m n p r u x z] -> ,,-10;
+	pos V j -> ,,-15;
+	pos V hyphen -> ,,-20;
+	
+	pos W [a c d e g o q s] -> ,,-10;
+	
+	pos Thorn AE -> ,,-20;
+	
+	pos Gamma [alpha gamma epsilon eta iota kappa mu nu omicron pi
+		rho sigma1 sigma tau upsilon phi chi psi] -> ,, -60;
+	
+	pos parenleft [c d e o q] -> ,,-10;
+	pos parenleft j -> ,,15;
+	pos [b e o p] parenright -> ,,-10;
+	pos f parenright -> ,,10;
+	
+	pos g g -> ,,5;
+	pos g j -> ,,20;
+	
+	/** Interpunction **/
+	pos F [comma period] -> ,,-25;
+	pos V [comma period] -> ,,-25;
+	pos W [comma period] -> ,,-15;
+	pos f [comma period] -> ,,-10;
+	pos r [comma period] -> ,,-30;
+	pos v [comma period] -> ,,-25;
+	pos w [comma period] -> ,,-10;
+	pos y [comma period] -> ,,-20;
+}
+
+
+/*** Mark features ***/
+
+feature greekMarkComposition ccmp {
+	lookup greekMarkComposition;
+}
+
+feature greekMarks mark {
+	lookup greekMarks;
+	lookup marks;
+}
+
+feature dotlessI ccmp {
+	lookup dotlessI;
+//	lookup test;
+}
+
+feature latinMarks mark {
+	lookup marks;
+}
+
+/*** Marks ***/
+
+// Replace "i" by "dotlessi" before a mark above
+lookup iToDotlessI {
+	sub i -> dotlessi;
+	sub j -> dotlessj;
+}
+lookup dotlessI {
+	ignore mark except @marksAbove;
+	context [i j] (@marksAbove);
+	sub 0 iToDotlessI;
+}
+
+lookup greekMarkComposition {
+	ignore mark except @marksAbove;
+	sub gravecomb -> variacomb;
+	sub acutecomb -> tonoscomb;
+}
+
+lookup greekMarkComposition {
+	ignore mark except @marksAbove;
+	sub dieresiscomb variacomb -> dialectycavariacomb;
+	sub dieresiscomb tonoscomb -> dialectycatonoscomb;
+	sub commaabovecomb variacomb -> psilivariacomb;
+	sub commaabovecomb tonoscomb -> psilioxiacomb;
+//	sub commaabovecomb tildeaccentcomb -> psiliperispomenicomb;
+	sub reversedcommaabovecomb variacomb -> dasiavariacomb;
+	sub reversedcommaabovecomb tonoscomb -> dasiaoxiacomb;
+//	sub reversedcommaabovecomb tildeaccentcomb -> dasiaperispomenicomb;
+}
+
+/*** Some Greek marks should be at the left of the base glyph ***/
+
+// First move the base glyph slightly
+
+lookup greekMarks {
+	ignore mark except @marksAbove;
+	pos Alpha @greekSingleMarks -> 10,,10;
+	pos Alpha @greekDoubleMarks -> 50,,50;
+	pos [Epsilon Eta Iota Rho] @greekSingleMarks -> 35,,35;
+	pos [Epsilon Eta Iota Rho] @greekDoubleMarks -> 75,,75;
+	pos Omicron @greekSingleMarks -> 25,,25;
+	pos Omicron @greekDoubleMarks -> 65,,65;
+	pos Upsilon @greekSingleMarks -> 45,,45;
+	pos Upsilon @greekDoubleMarks -> 85,,85;
+	pos Omega @greekSingleMarks -> 30,,30;
+	pos Omega @greekDoubleMarks -> 70,,70;
+}
+
+// Then attach the marks to the left of the glyph
+
+lookup greekMarks {
+	ignore mark except @marksAbove;
+	mark @greekSingleMarks <: -25, 160>;
+	// @greekDoubleMarks
+	mark [psilivariacomb dasiavariacomb] <: 0, 160>;
+	mark [psilioxiacomb dasiaoxiacomb] <: -5, 160>;
+	
+	base Alpha @greekMarksLeft <20, 160>;
+	base Epsilon @greekMarksLeft <-15, 160>;
+	base Eta @greekMarksLeft <-15, 160>;
+	base Iota @greekMarksLeft <-10, 160>;
+	base Omicron @greekMarksLeft <-5, 160>;
+	base Rho @greekMarksLeft <-15, 160>;
+	base Upsilon @greekMarksLeft <-25, 160>;
+	base Omega @greekMarksLeft <-10, 160>;
+	
+	mark @greekMarksAbove <: -25, 160>;
+
+	base Alpha @greekMarksAbove <: 90, 200>;
+	base Epsilon @greekMarksAbove <: 85, 200>;
+	base Eta @greekMarksAbove <: 90, 200>;
+	base Iota @greekMarksAbove <: 55, 200>;
+	base [Omicron Omega] @greekMarksAbove <: 103, 200>;
+	base Rho @greekMarksAbove <: 85, 200>;
+	base Upsilon @greekMarksAbove <: 85, 200>;
+}
+/*
+lookup test {
+	ignore mark;
+	sub f l -> L;
+	sub f q -> Q;
+}
+
+lookup test {
+	//ignore mark except @marksAbove;
+	mark @marksAbove <-25, 160>;
+	base Q @marksAbove <50, 200> <150, 200>;
+	base L @marksAbove <50, 200> <150, 150>;
+
+	mark @marksBelow <-25, -30>;
+	base Q @marksBelow <50, -50> <150, -50>;
+	base L @marksBelow <50, -30> <150, -30>;
+}*/
+
+lookup marks {
+	ignore mark except @marksAbove;
+	mark @marksAbove <: -25, 160>;
+	
+	base [A Delta Lambda] @marksAbove <: 97, 200>;
+	base [B Beta] @marksAbove <: 80, 200>;
+	base C @marksAbove <: 120, 200>;
+	base D @marksAbove <: 95, 200>;
+	base [E F Gamma] @marksAbove <: 100, 200>;
+	base G @marksAbove <: 125, 200>;
+	base H @marksAbove <: 105, 200>;
+	base I @marksAbove <: 70, 200>;
+	base J @marksAbove <: 70, 200>;
+	base [K Kappa] @marksAbove <: 105, 200>;
+	base L @marksAbove <: 85, 200>;
+	base [M Mu] @marksAbove <: 120, 200>;
+	base [N Nu] @marksAbove <: 105, 200>;
+	base [O Q Oslash Theta] @marksAbove <: 110, 200>;
+	base [P R] @marksAbove <: 90, 200>;
+	base S @marksAbove <: 95, 200>;
+	base [T Tau] @marksAbove <: 83, 200>;
+	base U @marksAbove <: 103, 200>;
+	base V @marksAbove <: 97, 200>;
+	base W @marksAbove <: 135, 200>;
+	base [X Chi] @marksAbove <: 92, 200>;
+	base Y @marksAbove <: 92, 200>;
+	base [Z Zeta] @marksAbove <: 80, 200>;
+	base AE @marksAbove <: 145, 200>;
+	base OE @marksAbove <: 165, 200>;
+	base Eth @marksAbove <: 105, 200>; // D + (10,0) by def
+	base Thorn @marksAbove <: 95, 200>;
+
+//**** done up to here
+	base Xi @marksAbove <: 85, 200>;
+	base Pi @marksAbove <: 90, 200>;
+	base Sigma @marksAbove <: 80, 200>;
+	base Phi @marksAbove <: 100, 200>;
+	base Psi @marksAbove <: 95, 200>;
+	
+	base a @marksAbove <: 75, 160>;
+	base [b thorn] @marksAbove <: 90, 180>;
+	base c @marksAbove <: 80, 160>;
+	base d @marksAbove <: 70, 180>;
+	base e @marksAbove <: 80, 160>;
+	base f @marksAbove <: 70, 205>;
+	base g @marksAbove <: 85, 160>;
+	base h @marksAbove <: 85, 180>;
+	base i @marksAbove <: 30, 200>;
+	base dotlessi @marksAbove <: 30, 160>;
+	base j @marksAbove <: 45, 200>;
+	base dotlessj @marksAbove <: 45, 160>;
+	base k @marksAbove <: 85, 180>;
+	base l @marksAbove <: 30, 205>;
+	base m @marksAbove <: 125, 160>;
+	base [n eta] @marksAbove <: 80, 160>;
+	base [o omicron] @marksAbove <: 83, 160>;
+	base p @marksAbove <: 85, 160>;
+	base q @marksAbove <: 75, 160>;
+	base r @marksAbove <: 60, 160>;
+	base s @marksAbove <: 70, 160>;
+	base t @marksAbove <: 45, 185>;
+	base u @marksAbove <: 80, 160>;
+	base [v nu] @marksAbove <: 70, 160>;
+	base w @marksAbove <: 105, 160>;
+	base x @marksAbove <: 70, 160>;
+	base y @marksAbove <: 65, 160>;
+	base z @marksAbove <: 70, 160>;
+	
+	base ae @marksAbove <: 122, 160>;
+	base oslash @marksAbove <: 83, 160>;
+	base oe @marksAbove <: 140, 160>;
+	base germandbls @marksAbove <: 80, 205>;
+	base eth @marksAbove <: 100, 205>;
+	// for thorn see b
+	
+	base alpha @marksAbove <: 85, 160>;
+	base beta @marksAbove <: 80, 205>;
+	base gamma @marksAbove <: 70, 160>;
+	base delta @marksAbove <: 70, 205>;
+	base epsilon @marksAbove <: 70, 160>;
+	base zeta @marksAbove <: 70, 205>;
+	// for eta see n
+	base theta @marksAbove <: 83, 205>;
+	base iota @marksAbove <: 30, 160>;
+	base kappa @marksAbove <: 75, 160>;
+	base lambda @marksAbove <: 55, 205>;
+	base mu @marksAbove <: 75, 160>;
+	// for nu see v
+	base xi @marksAbove <: 70, 205>;
+	// for omicron see o
+	base pi @marksAbove <: 80, 160>;
+	base rho @marksAbove <: 85, 160>;
+	base sigma1 @marksAbove <: 85, 160>;
+	base sigma @marksAbove <: 85, 160>;
+	base tau @marksAbove <: 60, 160>;
+	base upsilon @marksAbove <: 80, 160>;
+	base phi @marksAbove <: 90, 160>;
+	base chi @marksAbove <: 60, 160>;
+	base psi @marksAbove <: 105, 160>;
+	base omega @marksAbove <: 110, 160>;
+}
+
+/*** All marks except marksAbove ***/
+lookup marks {
+	/*** Marks below ***/
+	mark @marksBelow <: -25, -10>;
+
+	base [A Alpha Delta Lambda] @marksBelow <: 90, -10>;
+	base [B Beta] @marksBelow <: 75, -10>;
+	base C @marksBelow <: 105, -10>;
+	base D @marksBelow <: 90, -10>;
+	base [E Epsilon] @marksBelow <: 85, -10>;
+	base [F Gamma] @marksBelow <: 50, -10>;
+	base G @marksBelow <: 110, -10>;
+	base [H Eta] @marksBelow <: 90, -10>;
+	base [I Iota] @marksBelow <: 55, -10>;
+	base J @marksBelow <: 40, -10>;
+	base [K Kappa] @marksBelow <: 90, -10>;
+	base L @marksBelow <: 80, -10>;
+	base [M Mu] @marksBelow <: 110, -10>;
+	base [N Nu] @marksBelow <: 95, -10>;
+	base [O Oslash Theta Omicron Omega] @marksBelow <: 103, -10>;
+	base [P Rho] @marksBelow <: 60, -10>;
+	base Q @marksBelow <: 103, -50>;
+	base R @marksBelow <: 85, -10>;
+	base S @marksBelow <: 85, -10>;
+	base [T Tau] @marksBelow <: 75, -10>;
+	base U @marksBelow <: 95, -10>;
+	base V @marksBelow <: 90, -10>;
+	base W @marksBelow <: 120, -10>;
+	base [X Chi] @marksBelow <: 85, -10>;
+	base [Y Upsilon] @marksBelow <: 85, -10>;
+	base [Z Zeta] @marksBelow <: 80, -10>;
+	base AE @marksBelow <: 125, -10>;
+	base OE @marksBelow <: 150, -10>;
+	base Eth @marksBelow <: 100, -10>; // D + (10,0) by def
+	base Thorn @marksBelow <: 80, -10>;
+
+	base Xi @marksBelow <: 85, -10>;
+	base Pi @marksBelow <: 90, -10>;
+	base Sigma @marksBelow <: 80, -10>;
+	base Phi @marksBelow <: 100, -10>;
+	base Psi @marksBelow <: 95, -10>;
+	
+	base a @marksBelow <: 70, -10>;
+	base b @marksBelow <: 80, -10>;
+	base c @marksBelow <: 80, -10>;
+	base d @marksBelow <: 80, -10>;
+	base e @marksBelow <: 80, -10>;
+	base f @marksBelow <: 40, -10>;
+	base g @marksBelow <: 90, -53>;
+	base h @marksBelow <: 75, -10>;
+	base [i dotlessi] @marksBelow <: 30, -10>;
+	base [j dotlessj] @marksBelow <: 20, -53>;
+	base k @marksBelow <: 75, -10>;
+	base l @marksBelow <: 30, -10>;
+	base m @marksBelow <: 125, -10>;
+	base n @marksBelow <: 75, -10>;
+	base [o omicron] @marksBelow <: 83, -10>;
+	base [p thorn] @marksBelow <: 90, -10>;
+	base q @marksBelow <: 70, -10>;
+	base r @marksBelow <: 55, -10>;
+	base s @marksBelow <: 70, -10>;
+	base t @marksBelow <: 60, -10>;
+	base u @marksBelow <: 75, -10>;
+	base [v nu] @marksBelow <: 70, -10>;
+	base w @marksBelow <: 105, -10>;
+	base x @marksBelow <: 70, -10>;
+	base y @marksBelow <: 55, -50>;
+	base z @marksBelow <: 70, -10>;
+	
+	base ae @marksBelow <: 122, -10>;
+	base oslash @marksBelow <: 83, -10>;
+	base oe @marksBelow <: 140, -10>;
+	base germandbls @marksBelow <: 80, -10>;
+	base eth @marksBelow <: 83, -10>;
+	// for thorn see p
+	
+	base alpha @marksBelow <: 85, -10>;
+	base beta @marksBelow <: 90, -10>;
+	base gamma @marksBelow <: 70, -53>;
+	base delta @marksBelow <: 83, -10>;
+	base epsilon @marksBelow <: 70, -10>;
+	base [zeta xi sigma1] @marksBelow <: 70, -40>;
+	base eta @marksBelow <: 30, -10>;
+	base theta @marksBelow <: 83, -10>;
+	base iota @marksBelow <: 30, -10>;
+	base kappa @marksBelow <: 75, -10>;
+	base lambda @marksBelow <: 70, -10>;
+	base mu @marksBelow <: 90, -10>;
+	// for nu see v
+	// for omicron see o
+	base pi @marksBelow <: 80, -10>;
+	base rho @marksBelow <: 90, -10>;
+	base sigma @marksBelow <: 75, -10>;
+	base tau @marksBelow <: 60, -10>;
+	base upsilon @marksBelow <: 80, -10>;
+	base phi @marksBelow <: 90, -53>;
+	base chi @marksBelow <: 60, -45>;
+	base psi @marksBelow <: 105, -53>;
+	base omega @marksBelow <: 110, -10>;
+	
+	/*** Marks attached right above ***/
+	
+	mark @marksAttachedRightAbove <: -20, 130>;
+	
+	base [A Alpha Delta Lambda] @marksAttachedRightAbove <: 95, 180>;
+	base [B Beta] @marksAttachedRightAbove <: 120, 170>;
+	base C @marksAttachedRightAbove <: 135, 180>;
+	base D @marksAttachedRightAbove <: 120, 170>;
+	base [E F Epsilon Gamma] @marksAttachedRightAbove <: 140, 180>;
+	base G @marksAttachedRightAbove <: 145, 180>;
+	base [H Eta] @marksAttachedRightAbove <: 150, 180>;
+	base [I Iota] @marksAttachedRightAbove <: 85, 180>;
+	base J @marksAttachedRightAbove <: 75, 180>;
+	base [K Kappa] @marksAttachedRightAbove <: 145, 180>;
+	base L @marksAttachedRightAbove <: 30, 180>;
+	base [M Mu] @marksAttachedRightAbove <: 190, 180>;
+	base [N Nu] @marksAttachedRightAbove <: 160, 180>;
+	base [O Q Theta Omicron Omega] @marksAttachedRightAbove <: 155, 165>;
+	base [P R Rho] @marksAttachedRightAbove <: 120, 170>;
+	base S @marksAttachedRightAbove <: 120, 180>; ///doneeeeeee
+	base [T Tau] @marksAttachedRightAbove <: 140, 180>;
+	base U @marksAttachedRightAbove <: 160, 180>;
+	base V @marksAttachedRightAbove <: 160, 180>;
+	base W @marksAttachedRightAbove <: 220, 180>;
+	base [X Chi] @marksAttachedRightAbove <: 140, 180>;
+	base [Y Upsilon] @marksAttachedRightAbove <: 150, 180>;
+	base [Z Zeta] @marksAttachedRightAbove <: 140, 180>;
+	base AE @marksAttachedRightAbove <: 235, 180>;
+	base Oslash @marksAttachedRightAbove <: 165, 155>;
+	base OE @marksAttachedRightAbove <: 260, 180>;
+	base Eth @marksAttachedRightAbove <: 130, 170>; // D + (10,0) by def
+	base Thorn @marksAttachedRightAbove <: 115, 135>;
+
+	base Xi @marksAttachedRightAbove <: 150, 180>;
+	base Pi @marksAttachedRightAbove <: 150, 180>;
+	base Sigma @marksAttachedRightAbove <: 135, 180>;
+	base Phi @marksAttachedRightAbove <: 150, 150>;
+	base Psi @marksAttachedRightAbove <: 170, 180>;
+
+	base a @marksAttachedRightAbove <: 115, 120>;
+	base b @marksAttachedRightAbove <: 120, 120>;
+	base c @marksAttachedRightAbove <: 125, 120>;
+	base d @marksAttachedRightAbove <: 135, 130>;
+	base e @marksAttachedRightAbove <: 120, 120>;
+	base f @marksAttachedRightAbove <: 85, 130>;
+	base g @marksAttachedRightAbove <: 150, 125>;
+	base h @marksAttachedRightAbove <: 120, 120>;
+	base [i dotlessi iota] @marksAttachedRightAbove <: 30, 130>;
+	base [j dotlessj] @marksAttachedRightAbove <: 45, 130>;
+	base k @marksAttachedRightAbove <: 115, 130>;
+	base l @marksAttachedRightAbove <: 30, 130>;
+	base m @marksAttachedRightAbove <: 215, 120>;
+	base [n eta] @marksAttachedRightAbove <: 120, 120>;
+	base [o omicron] @marksAttachedRightAbove <: 120, 120>;
+	base [p thorn] @marksAttachedRightAbove <: 120, 120>;
+	base q @marksAttachedRightAbove <: 135, 130>;
+	base r @marksAttachedRightAbove <: 90, 130>;
+	base s @marksAttachedRightAbove <: 110, 130>;
+	base t @marksAttachedRightAbove <: 80, 130>;
+	base u @marksAttachedRightAbove <: 125, 130>;
+	base [v nu] @marksAttachedRightAbove <: 125, 130>;
+	base w @marksAttachedRightAbove <: 185, 130>;
+	base x @marksAttachedRightAbove <: 115, 130>;
+	base y @marksAttachedRightAbove <: 115, 130>;
+	base z @marksAttachedRightAbove <: 125, 130>;
+
+	base ae @marksAttachedRightAbove <: 210, 120>;
+	base oslash @marksAttachedRightAbove <: 135, 95>;
+	base oe @marksAttachedRightAbove <: 240, 120>;
+	base germandbls @marksAttachedRightAbove <: 120, 100>;
+	base eth @marksAttachedRightAbove <: 125, 120>;
+	// for thorn see p
+	
+	base alpha @marksAttachedRightAbove <: 150, 130>;
+	base beta @marksAttachedRightAbove <: 120, 90>;
+	base gamma @marksAttachedRightAbove <: 125, 130>;
+	base delta @marksAttachedRightAbove <: 125, 105>;
+	base epsilon @marksAttachedRightAbove <: 115, 125>;
+	base zeta @marksAttachedRightAbove <: 115, 190>;
+	// for eta see n
+	base theta @marksAttachedRightAbove <: 135, 130>;
+	// for iota see i
+	base kappa @marksAttachedRightAbove <: 125, 130>;
+	base lambda @marksAttachedRightAbove <: 80, 100>;
+	base mu @marksAttachedRightAbove <: 125, 130>;
+	// for nu see v
+	base xi @marksAttachedRightAbove <: 110, 103>;
+	// for omicron see o
+	base pi @marksAttachedRightAbove <: 145, 130>;
+	base rho @marksAttachedRightAbove <: 120, 120>;
+	base sigma @marksAttachedRightAbove <: 170, 130>;
+	base sigma1 @marksAttachedRightAbove <: 120, 130>;
+	base tau @marksAttachedRightAbove <: 110, 130>;
+	base upsilon @marksAttachedRightAbove <: 130, 130>;
+	base phi @marksAttachedRightAbove <: 135, 120>;
+	base chi @marksAttachedRightAbove <: 105, 130>;
+	base psi @marksAttachedRightAbove <: 180, 130>;
+	base omega @marksAttachedRightAbove <: 165, 130>;
+
+	/*** Marks attached below ***/
+
+	mark cedillacomb <: -25, 0>;
+	
+	base [A Alpha Delta Lambda] cedillacomb <: 90, -5>;
+	base [B Beta] cedillacomb <: 75, 0>;
+	base C cedillacomb <: 105, 0>;
+	base D cedillacomb <: 70, 5>;
+	base [E Epsilon] cedillacomb <: 85, 0>;
+	base [F Gamma] cedillacomb <: 30, 0>;
+	base G cedillacomb <: 110, 0>;
+	base [H Eta] cedillacomb <: 90, -5>;
+	base [I Iota] cedillacomb <: 55, 0>;
+	base J cedillacomb <: 40, 0>;
+	base [K Kappa] cedillacomb <: 90, -5>;
+	base L cedillacomb <: 80, 0>;
+	base [M Mu] cedillacomb <: 110, -5>;
+	base [N Nu] cedillacomb <: 95, -5>;
+	base [O Oslash Theta Omicron Omega] cedillacomb <: 103, 0>;
+	base [P Rho] cedillacomb <: 30, 0>;
+	base Q cedillacomb <: 103, -50>;
+	base R cedillacomb <: 85, -5>;
+	base S cedillacomb <: 85, 0>;
+	base [T Tau] cedillacomb <: 75, 0>;
+	base U cedillacomb <: 95, 0>;
+	base V cedillacomb <: 90, 0>;
+	base W cedillacomb <: 120, -5>;
+	base [X Chi] cedillacomb <: 85, -5>;
+	base [Y Upsilon] cedillacomb <: 85, 0>;
+	base [Z Zeta] cedillacomb <: 80, 0>;
+	base AE cedillacomb <: 125, 0>;
+	base OE cedillacomb <: 150, 0>;
+	base Eth cedillacomb <: 100, 0>; // D + (10,0) by def
+	base Thorn cedillacomb <: 30, 0>;
+
+	base Xi cedillacomb <: 85, 0>;
+	base Pi cedillacomb <: 90, -5>;
+	base Sigma cedillacomb <: 80, 0>;
+	base Phi cedillacomb <: 100, 0>;
+	base Psi cedillacomb <: 95, 0>;
+	
+	base a cedillacomb <: 70, 0>;
+	base b cedillacomb <: 80, 0>;
+	base c cedillacomb <: 80, 0>;
+	base d cedillacomb <: 80, 0>;
+	base e cedillacomb <: 80, 0>;
+	base f cedillacomb <: 40, 0>;
+	base g cedillacomb <: 90, -50>;
+	base h cedillacomb <: 75, -5>;
+	base [i dotlessi] cedillacomb <: 30, 0>;
+	base [j dotlessj] cedillacomb <: 20, -45>;
+	base k cedillacomb <: 80, -5>;
+	base l cedillacomb <: 30, 0>;
+	base m cedillacomb <: 125, 0>;
+	base n cedillacomb <: 75, -5>;
+	base [o omicron] cedillacomb <: 83, 0>;
+	base [p thorn] cedillacomb <: 90, 0>;
+	base q cedillacomb <: 70, 0>;
+	base r cedillacomb <: 30, 0>;
+	base s cedillacomb <: 65, 0>;
+	base t cedillacomb <: 60, 0>;
+	base u cedillacomb <: 75, 0>;
+	base [v nu] cedillacomb <: 67, 0>;
+	base w cedillacomb <: 105, -5>;
+	base x cedillacomb <: 70, -5>;
+	base y cedillacomb <: 40, -45>;
+	base z cedillacomb <: 70, 0>;
+
+	base ae cedillacomb <: 122, 0>;
+	base oslash cedillacomb <: 83, 0>;
+	base oe cedillacomb <: 140, -5>;
+	base germandbls cedillacomb <: 80, 0>;
+	base eth cedillacomb <: 83, 0>;
+	// for thorn see p
+	
+	base alpha cedillacomb <: 85, 0>;
+	base beta cedillacomb <: 90, 0>;
+	base gamma cedillacomb <: 70, -60>;
+	base delta cedillacomb <: 83, 0>;
+	base epsilon cedillacomb <: 70, 0>;
+	base [zeta xi sigma1] cedillacomb <: 100, -55>;
+	base eta cedillacomb <: 30, 0>;
+	base theta cedillacomb <: 83, 0>;
+	base iota cedillacomb <: 30, 0>;
+	base kappa cedillacomb <: 75, -5>;
+	base lambda cedillacomb <: 70, -5>;
+	base mu cedillacomb <: 90, 0>;
+	// for nu see v
+	// for omicron see o
+	base pi cedillacomb <: 80, -5>;
+	base rho cedillacomb <: 90, 0>;
+	base sigma cedillacomb <: 75, 0>;
+	base tau cedillacomb <: 60, 0>;
+	base upsilon cedillacomb <: 80, 0>;
+	base phi cedillacomb <: 90, -60>;
+	base chi cedillacomb <: 60, -50>;
+	base psi cedillacomb <: 105, -60>;
+	base omega cedillacomb <: 110, -5>;
+
+
+	// Combining ogonek
+	
+	mark ogonekcomb <: -25, 0>;
+	
+	base [A Alpha Delta Lambda] ogonekcomb <: 170, 0>;
+	base [B Beta] ogonekcomb <: 110, 5>;
+	base C ogonekcomb <: 150, 10>;
+	base D ogonekcomb <: 110, 8>;
+	base [E Epsilon] ogonekcomb <: 145, 0>;
+	base [F Gamma] ogonekcomb <: 30, 0>;
+	base G ogonekcomb <: 160, 10>;
+	base [H Eta] ogonekcomb <: 155, 0>;
+	base [I Iota] ogonekcomb <: 85, 0>;
+	base J ogonekcomb <: 60, 4>;
+	base [K Kappa] ogonekcomb <: 165, 0>;
+	base L ogonekcomb <: 130, 0>;
+	base [M Mu] ogonekcomb <: 195, 0>;
+	base [N Nu] ogonekcomb <: 165, 0>;
+	base [O Oslash Theta Omicron Omega] ogonekcomb <: 140, 6>;
+	base [P Rho] ogonekcomb <: 30, 0>;
+	base Q ogonekcomb <: 185, -35>;
+	base R ogonekcomb <: 160, 0>;
+	base S ogonekcomb <: 115, 5>;
+	base [T Tau] ogonekcomb <: 75, 0>;
+	base U ogonekcomb <: 135, 7>;
+	base V ogonekcomb <: 100, 0>;
+	base W ogonekcomb <: 180, 0>;
+	base [X Chi] ogonekcomb <: 145, 0>;
+	base [Y Upsilon] ogonekcomb <: 85, 0>;
+	base [Z Zeta] ogonekcomb <: 140, 0>;
+	base AE ogonekcomb <: 240, 0>;
+	base OE ogonekcomb <: 265, 0>;
+	base Eth ogonekcomb <: 120, 8>; // D + (10,0) by def
+	base Thorn ogonekcomb <: 30, 0>;
+
+	base Xi ogonekcomb <: 155, 0>;
+	base Pi ogonekcomb <: 155, 0>;
+	base Sigma ogonekcomb <: 140, 0>;
+	base Phi ogonekcomb <: 105, -5>;
+	base Psi ogonekcomb <: 100, 0>;
+	
+	base a ogonekcomb <: 125, 0>;
+	base b ogonekcomb <: 115, 7>;
+	base c ogonekcomb <: 130, 10>;
+	base d ogonekcomb <: 135, 0>;
+	base e ogonekcomb <: 115, 8>;
+	base f ogonekcomb <: 45, 0>;
+	base g ogonekcomb <: 140, -38>;
+	base h ogonekcomb <: 130, 0>;
+	base [i dotlessi] ogonekcomb <: 35, 0>;
+	base [j dotlessj] ogonekcomb <: 35, -41>;
+	base k ogonekcomb <: 135, 0>;
+	base l ogonekcomb <: 35, 0>;
+	base m ogonekcomb <: 225, 0>;
+	base n ogonekcomb <: 130, 0>;
+	base [o omicron] ogonekcomb <: 121, 10>;
+	base [p thorn] ogonekcomb <: 115, 8>;
+	base q ogonekcomb <: 135, -53>;
+	base r ogonekcomb <: 35, 0>;
+	base s ogonekcomb <: 95, 1>;
+	base t ogonekcomb <: 90, 0>;
+	base u ogonekcomb <: 130, 0>;
+	base [v nu] ogonekcomb <: 75, 0>;
+	base w ogonekcomb <: 155, 0>;
+	base x ogonekcomb <: 123, 0>;
+	base y ogonekcomb <: 45, -50>;
+	base z ogonekcomb <: 130, 0>;
+
+	base ae ogonekcomb <: 205, 8>;
+	base oslash ogonekcomb <: 121, 10>;
+	base oe ogonekcomb <: 230, 8>;
+	base germandbls ogonekcomb <: 115, 5>;
+	base eth ogonekcomb <: 121, 10>;
+	// for thorn see p
+	
+	base alpha ogonekcomb <: 160, 0>;
+	base beta ogonekcomb <: 115, 5>;
+	base gamma ogonekcomb <: 75, -53>;
+	base delta ogonekcomb <: 120, 8>;
+	base epsilon ogonekcomb <: 120, 10>;
+	base [zeta xi sigma1] ogonekcomb <: 105, -50>;
+	base eta ogonekcomb <: 35, 0>;
+	base theta ogonekcomb <: 110, 5>;
+	base iota ogonekcomb <: 35, 0>;
+	base kappa ogonekcomb <: 135, 0>;
+	base lambda ogonekcomb <: 130, 0>;
+	base mu ogonekcomb <: 130, 0>;
+	// for nu see v
+	// for omicron see o
+	base pi ogonekcomb <: 125, 0>;
+	base rho ogonekcomb <: 115, 8>;
+	base sigma ogonekcomb <: 110, 8>;
+	base tau ogonekcomb <: 65, 0>;
+	base upsilon ogonekcomb <: 120, 8>;
+	base phi ogonekcomb <: 95, -50>;
+	base chi ogonekcomb <: 115, -50>;
+	base psi ogonekcomb <: 110, -50>;
+	base omega ogonekcomb <: 178, 8>;
+}
+
+/*** Attach marks to marks ***/
+
+feature markToMark mkmk {
+	lookup markToMarkAbove;
+}
+
+group @pointedMarks [gravecomb variacomb acutecomb tonoscomb
+	dotabovecomb hookabovecomb caroncomb verticallineabovecomb
+	commaabovecomb reversedcommaabovecomb];
+
+lookup markToMarkAbove {
+	ignore mark except @marksAbove;
+	
+	mark @marksAbove  <: -25, 160>;
+	
+	base mark [@marksAbove -[gravecomb acutecomb tildeaccentcomb macroncomb
+			dotabovecomb dieresiscomb brevecomb hookabovecomb caroncomb
+			dialectycavariacomb dialectycatonoscomb]]
+		@marksAbove <: -25, 215>;
+	base mark gravecomb @marksAbove <: -35, 215>;
+	base mark acutecomb @marksAbove <: -15, 215>;
+	base mark tildeaccentcomb @marksAbove <: -25, 210>;
+	base mark [macroncomb dotabovecomb] @marksAbove <: -25, 195>;
+	base mark dieresiscomb @marksAbove <: -25, 190>;
+	base mark hookabovecomb @marksAbove <: -25, 220>;
+	base mark [dialectycavariacomb dialectycatonoscomb] @marksAbove <: -25, 225>;
+	
+	base mark [brevecomb caroncomb] [@marksAbove - @pointedMarks] <:-25, 215>;
+	base mark [brevecomb caroncomb] @pointedMarks <:-25, 205>;
+}
+
+/*
+feature vietnameseMarkToMark mkmk {
+	lookup vietnameseMarkToMark;
+}
+
+lookup vietnameseMarkToMark {
+	ignore mark except @marksAbove;
+	
+	mark @marksAbove <0, 160>;
+	
+	base mark @marksAbove @marksAbove <-25, 215>;
+}
+
+feature strange REQD {
+	lookup strange;
+}
+
+lookup strange {
+	sub a->b;
+}
+*/

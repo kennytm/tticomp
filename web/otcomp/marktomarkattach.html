@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Mark-to-mark Attachment</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/marktomarkattach.html";
+var lastEdited = "March 14, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+The mark-to-mark attachment lookup attaches marks to other marks.
+This may be used to stack marks upon one another.
+The table format is very similar to the mark-to-base
+table format.
+An example of a simple mark-to-mark attachment lookup:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup marks {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;mark @marksAbove  <: -25, 160>;<BR>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;base mark [@marksAbove gravecomb] @marksAbove <: -25, 215>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;base mark gravecomb @marksAbove <: -35, 215>;<BR>
+}
+</CODE>
+</P>
+
+<P>
+In this example the attachment points for all marks are the same.
+Here, each base mark glyph has the same attachment point for all mark glyphs,
+except for "gravecomb".
+It is required that all mark glyphs that are used are attached to all base mark
+glyphs that are used.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

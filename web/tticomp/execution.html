@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Instruction Compiler Tutorial - Execution</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "tticomp/execution.html";
+var lastEdited = "30 December 2002";
+document.switcherPrevious = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<H2>Running TTIComp</H2>
+
+<P>
+You may want to know how to actually run TTIComp.
+Make sure you are in the
+right directory. Then type <CODE>tticomp -o <I>&lt;tti file name&gt;</I></CODE>.
+The following options may be used.
+</P>
+
+<UL>
+<LI><CODE>-o</CODE> produces <U>o</U>ptimised code. Because optimisation in the case
+of TrueType instructions means mostly gathering stack pushes and reducing
+unnecessary zone pointer setting, the resulting code actually is a lot easier
+to follow in a program such as TrueTypeViewer. I recommend you use this switch
+unless you have good reasons not to.
+Oh, by the way, the switch will reduce the size of the instructions with a
+factor of 5 or so.
+</LI>
+
+<LI><CODE>-l</CODE> produces a program <U>l</U>isting. This may be useful to
+see where the compiler didn't understand you or where you didn't get the
+compiler.
+It will also print the list of predefined functions, which may be useful as
+well.</LI>
+</UL>
+
+<P>
+Of course, the switches may help you find bugs in the TTIComp program.
+If you do, please send <A href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</A> a
+note.
+Please include the .tti file that gave the problem, plus the font file, if
+necessary.
+But please don't send me files that are larger than 100kB. Thanks.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (TTIReservedWords);
+</SCRIPT>
+</body>
+</html>

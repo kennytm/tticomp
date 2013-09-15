@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<title>$title</title>
+<link href="otfont.css" rel="stylesheet" type="text/css">
+</head><body>
+<SCRIPT type="text/javascript">
+/*
+	Append a line after all "tagName" elements and put the header and the
+	line into a new DIV element (to circumvent buggy IE behaviour).
+*/
+
+function makeLine(tagName) {
+	headers = document.getElementsByTagName(tagName);
+	for (i=0; i<headers.length; i++) {
+		var container = document.createElement("DIV");
+		var line = document.createElement("DIV");
+		headers[i].parentNode.insertBefore(container, headers[i]);
+		container.className = tagName + "container";
+		line.className = tagName + "line";
+		container.appendChild(headers[i]);
+		container.appendChild(line);
+	}
+}
+
+
+</SCRIPT>
+

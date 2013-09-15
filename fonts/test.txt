@@ -1,0 +1,279 @@
+void H()
+void I()
+void J()
+void K()
+void L()
+void Lambda()
+void M()
+void N()
+void O()
+void OE()
+void O_()
+void Omega()
+void Oslash()
+void P()
+void Phi()
+void Pi()
+void Psi()
+void Q()
+void R()
+void S()
+void Sigma()
+void T()
+void Theta()
+void Thorn()
+void U()
+void V()
+void W()
+void X()
+void Xi()
+void Y()
+void Z()
+void a()
+void acutecomb()
+void ae()
+void align(uint, uint, uint, uint);
+void alignPoints(uint, uint, uint, uint);
+void alpha()
+void asciicircum()
+void at()
+void b()
+void backslash()
+void beta()
+void bracketleft()
+void bracketright()
+void brevecomb()
+void c()
+void centerStem(uint rp, uint p1, uint p2, uint cvtStem)
+void chi()
+void circumflexcomb()
+void colon()
+void comma()
+void commaabovecomb()
+void d()
+void dasiaoxiacomb()
+void dasiavariacomb()
+void delta()
+void deltaC1(uint, uint);
+void deltaC2(uint, uint);
+void deltaC3(uint, uint);
+void deltaP1(uint, uint);
+void deltaP2(uint, uint);
+void deltaP3(uint, uint);
+void dialectycatonoscomb()
+void dialectycavariacomb()
+void dieresiscomb()
+void dotabovecomb()
+void dotbelowcomb()
+void e()
+void eight(uint lsb, uint rsb, bool fixedWidth)
+void eight()
+void eightprop()
+void epsilon()
+void equal()
+void eta()
+void exclam()
+void f()
+void five(uint lsb, uint rsb, bool fixedWidth, bool lining)
+void five()
+void fivelining()
+void fiveprop()
+void flipPoint(uint);
+void flipRangeOn(uint, uint);
+void four(uint lsb, uint rsb, bool fixedWidth, uint height, uint stem17, uint stem, uint stem28)
+void four()
+void fourdenominator()
+void fourlining()
+void fourprop()
+void fraction()
+void g()
+void gamma()
+void glyph0()
+void gravecomb()
+void greater()
+void h()
+void horncomb()
+void hyphen()
+void i()
+void interpolate(uint, uint, uint, uint, uint, uint);
+void interpolateX();
+void interpolateY();
+void intersection(uint, uint, uint, uint, uint, uint, uint, uint);
+void iota()
+void j()
+void k()
+void k_(uint stem1Height, uint stem2Height, uint slantedStem1, uint slantedStem2)
+void kappa()
+void l()
+void lambda()
+void less()
+void m()
+void macroncomb()
+void moveDistance(uint, uint, uint, uint, fixed);
+void moveDistanceBlack(uint, uint, uint, uint);
+void moveDistanceBlack(uint, uint, uint, uint, uint);
+void moveDistanceGrey(uint, uint, uint, uint);
+void moveDistanceGrey(uint, uint, uint, uint, uint);
+void moveDistanceMinDistBlack(uint, uint, uint, uint);
+void moveDistanceMinDistBlack(uint, uint, uint, uint, uint);
+void moveDistanceMinDistGrey(uint, uint, uint, uint);
+void moveDistanceMinDistGrey(uint, uint, uint, uint, uint);
+void moveDistanceMinDistRoundBlack(uint, uint, uint, uint);
+void moveDistanceMinDistRoundBlack(uint, uint, uint, uint, uint);
+void moveDistanceMinDistRoundGrey(uint, uint, uint, uint);
+void moveDistanceMinDistRoundGrey(uint, uint, uint, uint, uint);
+void moveDistanceMinDistRoundWhite(uint, uint, uint, uint);
+void moveDistanceMinDistRoundWhite(uint, uint, uint, uint, uint);
+void moveDistanceMinDistWhite(uint, uint, uint, uint);
+void moveDistanceMinDistWhite(uint, uint, uint, uint, uint);
+void moveDistanceRoundBlack(uint, uint, uint, uint);
+void moveDistanceRoundBlack(uint, uint, uint, uint, uint);
+void moveDistanceRoundGrey(uint, uint, uint, uint);
+void moveDistanceRoundGrey(uint, uint, uint, uint, uint);
+void moveDistanceRoundWhite(uint, uint, uint, uint);
+void moveDistanceRoundWhite(uint, uint, uint, uint, uint);
+void moveDistanceRoundWhite(uint p1, uint p2, uint cvtEntry)
+void moveDistanceWhite(uint, uint, uint, uint);
+void moveDistanceWhite(uint, uint, uint, uint, uint);
+void movePoint(uint, uint, uint);
+void movePointRound(uint, uint, uint);
+void mu()
+void n()
+void nine(uint lsb, uint rsb)
+void nine()
+void ninelining()
+void nineprop()
+void o()
+void ogonekcomb()
+void omega()
+void one(uint lsb, uint rsb, bool fixedWidth, uint height, uint stemNormal, uint stemTop, uint stemSerif)
+void one()
+void onedenominator()
+void onehalf()
+void onelining()
+void oneprop()
+void oslash(uint height, uint horStem, uint slantedStem, uint stem1, uint stem2)
+void oslash()
+void overlinecomb()
+void p(uint height)
+void p()
+void parenleft()
+void parenright()
+void period()
+void phi()
+void pi()
+void plus()
+void prep()
+void psi()
+void psilioxiacomb()
+void psilivariacomb()
+void q()
+void question()
+void quotedbl()
+void quotesingle()
+void r()
+void rho()
+void roundPoint(uint, uint);
+void s()
+void s_(uint height, uint cvtCompensate)
+void semicolon()
+void setAutoFlipOff();
+void setAutoFlipOn();
+void setCVT(uint, int);
+void setCVT(uint, fixed);
+void setCVTCutIn(fixed);
+void setCoordinate(uint, uint, fixed);
+void setDeltaBase(uint);
+void setDeltaShift(uint);
+void setDualProjection(uint, uint, uint, uint);
+void setDualProjectionPerp(uint, uint, uint, uint);
+void setFreedom(uint, uint, uint, uint);
+void setFreedom(fixed, fixed);
+void setFreedomPerp(uint, uint, uint, uint);
+void setFreedomProjection();
+void setFreedomX();
+void setFreedomY();
+void setMinDist(fixed);
+void setProjection(uint, uint, uint, uint);
+void setProjection(fixed, fixed);
+void setProjectionPerp(uint, uint, uint, uint);
+void setProjectionX();
+void setProjectionY();
+void setRound(uint);
+void setRound45(uint);
+void setRoundDouble();
+void setRoundDown();
+void setRoundGrid();
+void setRoundHalf();
+void setRoundOff();
+void setRoundUp();
+void setScanConversion(uint);
+void setScanType(uint);
+void setSingleWidth(fixed);
+void setSingleWidthCutIn(fixed);
+void setVectorsX();
+void setVectorsY();
+void seven(uint lsb, uint rsb, bool fixedWidth)
+void seven()
+void sevenlining()
+void sevenprop()
+void shiftContour(uint, uint, uint);
+void shiftPoint(uint, uint, uint, uint);
+void shiftPoint(uint, uint, fixed);
+void shiftZone(uint, uint, uint);
+void sigma()
+void sigma1()
+void six(uint lsb, uint rsb, bool fixedWidth)
+void six()
+void sixprop()
+void slash()
+void t()
+void tau()
+void theta()
+void thorn()
+void three(uint lsb, uint rsb, bool fixedWidth, bool lining, uint height, uint stem17, uint stem, uint stem22)
+void three()
+void threedenominator()
+void threelining()
+void threeprop()
+void tildeaccentcomb()
+void touch(uint, uint);
+void two(uint lsb, uint rsb, bool fixedWidth, uint height, uint stem17, uint stem, uint stem21, uint stem30)
+void two()
+void twodenominator()
+void twolining()
+void twoprop()
+void u()
+void underscore()
+void untouch(uint, uint);
+void upsilon()
+void v()
+void v_(uint height, uint lsb, uint rsb, uint slantedStem)
+void variacomb()
+void w()
+void w_(uint height)
+void x()
+void x_(uint height, uint lsb, uint rsb, uint slantedStem)
+void xi()
+void y()
+void z()
+void z_(uint height, uint slantedStem)
+void zero(uint lsb, uint rsb, bool fixedWidth, uint base, uint height, uint stemHor, uint stemVert)
+void zero(uint lsb, uint rsb, bool fixedWidth, uint height)
+void zero()
+void zerodenominator()
+void zerolining()
+void zeroprop()
+void zeta()
+void A()
+void AE()
+void B()
+void C()
+void D()
+void Delta()
+void E()
+void Eth()
+void F()
+void FlipRangeOff(uint, uint);
+void G()
+void Gamma()

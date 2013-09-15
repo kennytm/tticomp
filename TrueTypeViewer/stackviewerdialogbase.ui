@@ -1,0 +1,78 @@
+<!DOCTYPE UI><UI>
+<class>StackViewerDialogBase</class>
+<widget>
+    <class>QDialog</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>StackViewerDialogBase</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>215</width>
+            <height>300</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>sizePolicy</name>
+        <sizepolicy>
+            <hsizetype>5</hsizetype>
+            <vsizetype>5</vsizetype>
+        </sizepolicy>
+    </property>
+    <property stdset="1">
+        <name>minimumSize</name>
+        <size>
+            <width>0</width>
+            <height>0</height>
+        </size>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>Stack Viewer</string>
+    </property>
+    <hbox>
+        <property stdset="1">
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget>
+            <class>QListBox</class>
+            <item>
+                <property>
+                    <name>text</name>
+                    <string>New Item</string>
+                </property>
+            </item>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>listItems</cstring>
+            </property>
+            <property stdset="1">
+                <name>variableWidth</name>
+                <bool>true</bool>
+            </property>
+        </widget>
+    </hbox>
+</widget>
+<connections>
+    <slot access="public">backInstruction()</slot>
+    <slot access="public">firstInstruction()</slot>
+    <slot access="public">forwardInstruction()</slot>
+    <slot access="public">lastInstruction()</slot>
+    <slot access="public">openGraphicsStateViewer()</slot>
+    <slot access="public">nextInstruction()</slot>
+    <slot access="public">openCVTViewer()</slot>
+    <slot access="public">openStackViewer()</slot>
+    <slot access="public">openStorageViewer()</slot>
+    <slot access="public">previousInstruction()</slot>
+    <slot access="public">selectGlyph(int)</slot>
+    <slot access="public">showDebug(bool)</slot>
+</connections>
+</UI>

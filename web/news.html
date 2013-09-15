@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+  <title>TrueType/OpenType Tools - News</title>
+
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot; - News">
+
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</HEAD>
+<BODY>
+<SCRIPT type="text/javascript">
+var documentPath = "news.html";
+var lastEdited = "22 November 2003";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+
+<UL>
+<LI><B>22 November 2003</B><BR>
+TrueTypeViewer now accepts unicodes after a backslash;
+numerous bugfixes, the most important of which are the fixes to the TrueType
+virtual machine, which hopefully exhibits the same behaviour
+(which is often weird compared to the specs)
+as the Microsoft virtual machine;
+the internal representation of fixed point numbers has changed drastically.
+</LI>
+
+<LI><B>23 August 2003</B><BR>
+Small bugfixes: gcc 3.3 warning about integer constants missing suffixes
+has been addressed;
+outline representation has changed slightly;
+slight performance enhancements in reading/writing files.
+</LI>
+
+<LI><B>14 March 2003</B><BR>
+Numerous fixes and enhancements; the most important being the addition
+of support for contextual lookups in OTComp.
+Furthermore, I've written an OTComp tutorial which basically should cover
+everything and make you make your own OpenType Layout-enabled fonts
+in no time.
+Any comments and suggestions are welcome!
+Finally, I've added a whole lot of new glyphs to Legendum and slightly
+changed all the rest.
+</LI>
+
+<LI><B>2 March 2003</B><BR>
+The new versions of the programs are finally up.
+The OpenType font manipulation library (OTFont) uses some more advanced
+features of C++ (STL, exceptions) that make it a better, cleaner and safer
+library.
+It may however be somewhat slower for relatively small files.
+On the other hand, the binaries I post are now release versions so that
+makes things quicker.
+The programs have changed quite a lot, but I have only rewritten 
+OTComp. The interfaces have not changed much.<BR>
+I'm expecially keen on bugs in error handling from now on; if you run across
+errors (in fonts or other input files) that are not handled as gracefully
+as they should be, please let me know!
+</LI>
+
+<LI><B>2 February 2003</B><BR>
+I have a totally new version of my OTFont library
+(rewritten from scratch) I am porting all applications to.
+The new framework is a lot cleaner, a lot less error-prone, has much better
+checks for invalid inputs, and is probably a bit slower.
+It will work on gcc 2.9 as well 
+(it hasn't got <CODE>#pragma pack</CODE> anymore).
+I will make all publicly available as soon as I have working versions of all
+programs and improved versions of the fonts.
+I hope this will be at the end of March.</LI>
+</UL>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (CReservedWords);
+</SCRIPT>
+</BODY>
+</HTML>

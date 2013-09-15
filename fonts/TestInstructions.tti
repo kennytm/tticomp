@@ -1,0 +1,457 @@
+// This is the instructions file for the "Legendum" font.
+// (c) Copyright 2002 Rogier van Dalen
+
+#input "TestInstructions1.ttf"
+#output "TestInstructions.ttf"
+#gasp AI
+
+#twilight 1
+#stack 85
+
+/*** CVT values ***/
+
+#cvt cvt0: 250
+
+/*** CVT program ***/
+
+void prep() {
+}
+
+/*** LCD control ***/
+
+void setDigit (uint position, int digit) {
+	bool off0 = false;
+	bool off1 = false;
+	bool off2 = false;
+	bool off3 = false;
+	bool off4 = false;
+	bool off5 = false;
+	bool off6 = false;
+
+	if (digit == -1) {
+		off0 = true;
+		off1 = true;
+		off2 = true;
+		off4 = true;
+		off5 = true;
+		off6 = true;
+	}
+	if (digit == 0) {
+		off3 = true;
+	}
+	if (digit == 1) {
+		off0 = true;
+		off1 = true;
+		off3 = true;
+		off4 = true;
+		off6 = true;
+	}
+	if (digit == 2) {
+		off2 = true;
+		off4 = true;
+	}
+	if (digit == 3) {
+		off1 = true;
+		off4 = true;
+	}
+	if (digit == 4) {
+		off0 = true;
+		off1 = true;
+		off6 = true;
+	}
+	if (digit == 5) {
+		off1 = true;
+		off5 = true;
+	}
+	if (digit == 6) {
+		off5 = true;
+	}
+	if (digit == 7) {
+		off0 = true;
+		off1 = true;
+		off3 = true;
+		off4 = true;
+	}
+	if (digit == 9) {
+		off1 = true;
+	}
+	if (digit < -1 || digit > 9) {
+		off0 = off1 = off2 = off3 = off4 = off5 = off6 = true;
+	}
+	
+	uint start = uint (64.0 * fixed (position) * fixed (30u));
+	
+	if (off0) {
+		setCoordinate (1u,start+0u, 0.0);
+		setCoordinate (1u,start+1u, 0.0);
+		setCoordinate (1u,start+2u, 0.0);
+		setCoordinate (1u,start+3u, 0.0);
+	}
+	if (off1) {
+		setCoordinate (1u,start+4u, 0.0);
+		setCoordinate (1u,start+5u, 0.0);
+		setCoordinate (1u,start+6u, 0.0);
+		setCoordinate (1u,start+7u, 0.0);
+	}
+	if (off2) {
+		setCoordinate (1u,start+8u, 0.0);
+		setCoordinate (1u,start+9u, 0.0);
+		setCoordinate (1u,start+10u, 0.0);
+		setCoordinate (1u,start+11u, 0.0);
+	}
+	if (off3) {
+		setCoordinate (1u,start+12u, 0.0);
+		setCoordinate (1u,start+13u, 0.0);
+		setCoordinate (1u,start+14u, 0.0);
+		setCoordinate (1u,start+15u, 0.0);
+		setCoordinate (1u,start+16u, 0.0);
+		setCoordinate (1u,start+17u, 0.0);
+	}
+	if (off4) {
+		setCoordinate (1u,start+18u, 0.0);
+		setCoordinate (1u,start+19u, 0.0);
+		setCoordinate (1u,start+20u, 0.0);
+		setCoordinate (1u,start+21u, 0.0);
+	}
+	if (off5) {
+		setCoordinate (1u,start+22u, 0.0);
+		setCoordinate (1u,start+23u, 0.0);
+		setCoordinate (1u,start+24u, 0.0);
+		setCoordinate (1u,start+25u, 0.0);
+	}
+	if (off6) {
+		setCoordinate (1u,start+26u, 0.0);
+		setCoordinate (1u,start+27u, 0.0);
+		setCoordinate (1u,start+28u, 0.0);
+		setCoordinate (1u,start+29u, 0.0);
+	}
+}
+
+void setNumber (int number) {
+	fixed passed;
+	fixed digit;
+
+	if (number >= 0) {
+		digit = fixed (number) / 100.0;
+		setDigit (0u, int (digit));
+		passed = digit;
+	} else {
+		setDigit (0u, -1);
+		number = -number;
+		passed = fixed (number) / 100.0;
+	}
+	
+	digit = (fixed (number) / 10.0) - passed * 10.0;
+	setDigit (1u, int (digit));
+	passed = passed * 10.0 + digit;
+	
+	digit = fixed (number) - passed * 10.0;
+	setDigit (2u, int (digit));
+}
+
+void testLCD() {
+//	setDigit (0u, 9);
+//	setDigit (1u, 1);
+//	setDigit (2u, 1);
+	setNumber (750);
+}
+
+void testLCD2() {
+//	setDigit (0u, 9);
+//	setDigit (1u, 1);
+//	setDigit (2u, 1);
+	setNumber (-50);
+}
+
+/*** Real tests ***/
+
+void testSHP() {
+	fixed original = getCoordinate (1u,91u);
+	setCoordinate (1u,90u, 0.0);
+	setCoordinate (1u,92u, 1.0);
+	shiftPoint (1u,90u, 1u,91u);
+	interpolateX();
+	setNumber (int (getCoordinate (1u,91u) == original));
+}
+
+void testSHC() {
+	fixed original = getCoordinate (1u,91u);
+	setCoordinate (1u,90u, 0.0);
+	setCoordinate (1u,92u, 1.0);
+	shiftContour (1u,90u, 21u);
+	interpolateX();
+	setNumber (int (getCoordinate (1u,91u) == original));
+}
+
+void testSHZ() {
+	fixed original = getCoordinate (1u,91u);
+	setCoordinate (1u,90u, 0.0);
+	setCoordinate (1u,92u, 1.0);
+	shiftZone (1u,90u, 1u);
+	interpolateX();
+	setNumber (int (getCoordinate (1u,91u) == original));
+}
+
+/*** MSIRP ***/
+
+void testMSIRP1() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistance (0u,0u, 1u,92u, 3.0);
+	setNumber (int (getCoordinateOrig (1u,92u)));
+}
+
+
+void testMSIRP2() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistance (0u,0u, 1u,92u, 3.0);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+
+void testMSIRP3() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistance (1u,92u, 0u,0u, 3.0);
+	setNumber (int (getCoordinateOrig (1u,92u)));
+}
+
+
+void testMSIRP4() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistance (1u,92u, 0u,0u, 3.0);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+void testMSIRP5() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	moveDistance (1u,92u, 0u,0u, 3.0);
+	setVectorsY();
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+
+void testMSIRP6() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	moveDistance (1u,92u, 0u,0u, 3.0);
+	setVectorsY();
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+
+/*** MDAP ***/
+
+void testMDAP1() {
+	setCoordinate (0u,0u, 5.5);
+	touch (0u,0u);
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+void testMDAP2() {
+	setCoordinate (0u,0u, 5.5);
+	roundPoint (0u,0u);
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+void testMDAP3() {
+	setCoordinate (0u,0u, 5.5);
+	touch (0u,0u);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+void testMDAP4() {
+	setCoordinate (0u,0u, 5.5);
+	roundPoint (0u,0u);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+void testMDAP5() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	touch (0u,0u);
+	setVectorsY();
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+void testMDAP6() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	roundPoint (0u,0u);
+	setVectorsY();
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+/*** MDRP ***/
+
+void testMDRP1() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (0u,0u, 1u,92u);
+	setNumber (int (getCoordinateOrig (1u,92u)));
+}
+
+
+void testMDRP2() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (0u,0u, 1u,92u);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+
+void testMDRP3() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u);
+	setNumber (int (getCoordinateOrig (1u,92u)));
+}
+
+
+void testMDRP4() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+void testMDRP5() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u);
+	setVectorsY();
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+
+void testMDRP6() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u);
+	setVectorsY();
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+/*** MIRP ***/
+
+void testMIRP1() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (0u,0u, 1u,92u, cvt0);
+	setNumber (int (getCoordinateOrig (1u,92u)));
+}
+
+
+void testMIRP2() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (0u,0u, 1u,92u, cvt0);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+
+void testMIRP3() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u, cvt0);
+	setNumber (int (getCoordinateOrig (1u,92u)));
+}
+
+
+void testMIRP4() {
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u, cvt0);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+void testMIRP5() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u, cvt0);
+	setVectorsY();
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+
+void testMIRP6() {
+	setVectorsY();
+	setCoordinate (0u,0u, 0.0);
+	setVectorsX();
+	
+	setCoordinate (0u,0u, 5.5);
+	moveDistanceBlack (1u,92u, 0u,0u, cvt0);
+	setVectorsY();
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+/*** MIAP ***/
+
+void testMIAP1() {
+	movePoint (0u,0u, cvt0);
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+void testMIAP2() {
+	movePoint (0u,0u, cvt0);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+void testMIAP3() {
+	movePointRound (0u,0u, cvt0);
+	setNumber (int (getCoordinate (0u,0u)));
+}
+
+void testMIAP4() {
+	movePointRound (0u,0u, cvt0);
+	setNumber (int (getCoordinateOrig (0u,0u)));
+}
+
+/*** rounding ***/
+
+void testRound (fixed start, fixed end) {
+	bool first = false;
+	while (true) {
+		setCoordinate (0u,0u, start);
+		roundPoint (0u,0u);
+		if (getCoordinate (0u,0u) >= end) {
+			setNumber (int (start));
+			return;
+		}
+		start = start + fixed (1);
+	}
+}
+
+void testRound1() {
+	setRound (0xB7u);
+	testRound (-1.0, 0.0);
+}
+
+void testRound2() {
+	setRound (0xB7u);
+	testRound (-6.0, -4.0);
+}
+
+void testRound3() {
+	setRound (0x4au);
+	testRound (7.0, 9.0);
+}
+
+void testRound4() {
+	setRoundUp ();
+	testRound (0.0, 1.0);
+}
+
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - File Format</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/format.html";
+var lastEdited = "March 13, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+Substitution lookups are always applied before positioning lookups.
+The order that is used in the .ot file is only relevant for specifying the
+order of positioning lookups relative to each other and the order of
+substitution lookups relative to each other.
+For example, imagine a lookup that turns lower-case letters into small
+capitals.
+This lookup should be applied <I>before</I> a ligature substitution that
+substitutes "f i" by "fi".
+If this order is turned around, the word "efficiently" will look like
+"<SPAN style="font-variant: small-caps;">ef</SPAN>fi<SPAN style="font-variant: small-caps;">ciently</SPAN>".
+Let's use this very example for a bit of code to introduce the .ot file syntax.
+</P>
+
+<P class="codeFragment">
+<CODE>
+#input "Garogier.ttf"<BR>
+#output "Garogier.otf"<BR>
+<BR>
+/*** Latin ***/<BR>
+<BR>
+script latn {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;feature smallCaps;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;feature ligatures;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;language VIT {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;feature smallCaps;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[...]<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;}<BR>
+}<BR>
+<BR>
+feature smallCaps smcp {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;lookup smallCaps;<BR>
+}<BR>
+<BR>
+lookup smallCaps {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub [a - z] -> [A.small - Z.small];<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub [alpha - sigma1] -> [Alpha.small - Sigma.small];<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub [sigma - omega] -> [Sigma.small - Omega.small];<BR>
+}<BR>
+<BR>
+feature ligatures liga {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;lookup ffi;<BR>
+}<BR>
+<BR>
+lookup ffi {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub f i -> fi;<BR>
+}
+
+</CODE>
+</P>
+
+<H2>Script</H2>
+<P>
+Scripts are specified by a tag and a number of languages.
+The features used for the DFLT language should be specified first,
+then the other languages (if any) may be put in.
+A required feature may be put in by saying <CODE>required feature
+<I>&lt;feature name&gt;</I></CODE>.
+</P>
+
+<P>
+All features contain lookups that tell what actions should happen for that
+feature.
+The feature tag is specified behind the feature name.
+It is perfectly legal to have a feature name that is the same as the feature tag,
+but you will need different names if you have features that should do
+different things for various scripts, e.g., a <CODE>liga</CODE> feature
+for Latin and one for Arabic.
+</P>
+
+<P>
+The positions of the script and feature definitions in the file does not
+make any difference.
+It is also legal to have multiple features reference one lookup,
+or to reference multiple lookups from within one feature.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

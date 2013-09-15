@@ -1,0 +1,126 @@
+<!DOCTYPE UI><UI>
+<class>FeatureDialogBase</class>
+<widget>
+    <class>QDialog</class>
+    <property stdset="1">
+        <name>name</name>
+        <cstring>FeatureDialogBase</cstring>
+    </property>
+    <property stdset="1">
+        <name>geometry</name>
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>338</width>
+            <height>268</height>
+        </rect>
+    </property>
+    <property stdset="1">
+        <name>caption</name>
+        <string>Form1</string>
+    </property>
+    <property stdset="1">
+        <name>iconText</name>
+        <string>Select Features</string>
+    </property>
+    <vbox>
+        <property stdset="1">
+            <name>margin</name>
+            <number>11</number>
+        </property>
+        <property stdset="1">
+            <name>spacing</name>
+            <number>6</number>
+        </property>
+        <widget>
+            <class>QLayoutWidget</class>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>Layout1</cstring>
+            </property>
+            <hbox>
+                <property stdset="1">
+                    <name>margin</name>
+                    <number>0</number>
+                </property>
+                <property stdset="1">
+                    <name>spacing</name>
+                    <number>6</number>
+                </property>
+                <widget>
+                    <class>QComboBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>comboScript</cstring>
+                    </property>
+                </widget>
+                <widget>
+                    <class>QComboBox</class>
+                    <property stdset="1">
+                        <name>name</name>
+                        <cstring>comboLanguage</cstring>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <widget>
+            <class>QListView</class>
+            <column>
+                <property>
+                    <name>text</name>
+                    <string>Tag</string>
+                </property>
+                <property>
+                    <name>clickable</name>
+                    <bool>true</bool>
+                </property>
+                <property>
+                    <name>resizeable</name>
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property>
+                    <name>text</name>
+                    <string>Description</string>
+                </property>
+                <property>
+                    <name>clickable</name>
+                    <bool>true</bool>
+                </property>
+                <property>
+                    <name>resizeable</name>
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property stdset="1">
+                <name>name</name>
+                <cstring>listFeatures</cstring>
+            </property>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>comboLanguage</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>FeatureDialogBase</receiver>
+        <slot>languageChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>comboScript</sender>
+        <signal>activated(const QString&amp;)</signal>
+        <receiver>FeatureDialogBase</receiver>
+        <slot>scriptChanged(const QString&amp;)</slot>
+    </connection>
+    <connection>
+        <sender>listFeatures</sender>
+        <signal>clicked(QListViewItem*)</signal>
+        <receiver>FeatureDialogBase</receiver>
+        <slot>featuresChanged()</slot>
+    </connection>
+    <slot access="public">languageChanged(const QString&amp;)</slot>
+    <slot access="public">featuresChanged()</slot>
+    <slot access="public">scriptChanged(const QString&amp;)</slot>
+</connections>
+</UI>

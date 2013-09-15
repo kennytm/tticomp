@@ -1,0 +1,13 @@
+otfontobjects = $(otfontdir)/OTLayoutTable.o \
+	$(otfontdir)/OThmtxTable.o $(otfontdir)/OTException.o \
+	$(otfontdir)/OTMemoryBlock.o $(otfontdir)/OTlocaTable.o \
+	$(otfontdir)/OTGDEFTable.o $(otfontdir)/OTOS2Table.o \
+	$(otfontdir)/OTmaxpTable.o $(otfontdir)/OTGPOSTable.o \
+	$(otfontdir)/OTTable.o $(otfontdir)/OTpostTable.o \
+	$(otfontdir)/OTGSUBTable.o $(otfontdir)/OTcmapTable.o \
+	$(otfontdir)/OpenTypeFile.o $(otfontdir)/OTGlyph.o \
+	$(otfontdir)/OTgaspTable.o $(otfontdir)/OpenTypeFont.o \
+	$(otfontdir)/OTheadTable.o $(otfontdir)/OpenTypeText.o \
+	$(otfontdir)/OThheaTable.o $(otfontdir)/OTGlyphToOutline.o
+
+

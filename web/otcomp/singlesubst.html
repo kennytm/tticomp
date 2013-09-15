@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Single Substitution</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/singlesubst.html";
+var lastEdited = "March 14, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+A single substitution replaces one glyph by one other glyph.
+An example that will turn lowercase letters into small caps:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup smallCaps {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub [a - z] -> [A.small - Z.small];<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub [alpha - sigma1] -> [Alpha.small - Sigma.small];<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub [sigma - omega] -> [Sigma.small - Omega.small];<BR>
+}
+</CODE>
+</P>
+
+<P>
+Any glyph list you supply at the left side of <CODE>-></CODE> must have
+exactly the same length as the glyph list on the right.
+</P>
+<P>
+<B>Note</B>: the order in which you specify the various parts and how you
+separate the parts does not matter.
+The file output would have been exactly the same if the lookup had been
+formulated:
+</P>
+
+<P class="codeFragment">
+<CODE>
+&nbsp;&nbsp;&nbsp;&nbsp;sub a -> A.small;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub b -> B.small;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub c -> C.small;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;sub d -> D.small;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;[...]
+</CODE>
+</P>
+
+<P>
+The table data that is written to the output file is optimised automatically.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

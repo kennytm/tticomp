@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+  <title>TrueType/OpenType Tools</title>
+
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</HEAD>
+<BODY>
+<SCRIPT type="text/javascript">
+var documentPath = "index.html";
+var lastEdited = "2 March 2003";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+       
+<P>Though you'll not find any tools here that actually change glyphs' outlines,
+you may find some helper tools here. Mind: none of these works on OpenType
+fonts with Postscript outlines; however, some may be changed easily to
+enable this, I think. Please do email
+<A href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</A> if you've got any
+plans in that direction: I may be able to help you on your way a bit.</P>
+       
+<P>All these I have made primarily for my own use, but they may be useful
+for you as well.
+They are all released under the GNU Public license.
+Any questions about the contents of the site
+or about the applications should be directed to
+<A href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</A>.</P>
+       
+<ul>
+      <li><a href="truetypeviewer.html">TrueTypeViewer</a> enables you to 
+view  TrueType fonts, and, specifically, to debug the <i>instructions</i> 
+embedded  in the font. It has a "Features" button that will allows 
+you to apply OpenType features to the string;</li>
+      <li><a href="tticomp.html">TTIComp</a> compiles a .TTI file (with <i>T</i>rue<i>T</i>ype
+      <i>I</i>nstructions in a format not unlike C code) and a TrueType font
+  into an instructed TrueType font;</li>
+      <li><a href="otcomp.html">OTComp</a> takes a feature file in a format 
+ not unlike Adobe's and produces an OpenType font with advanced layout tables.</li>
+<LI><A href="otlegacy.html">OTLegacy</A> takes an OpenType font and adds
+Unicode precomposed characters to it by applying the OpenType features.</LI>     
+</ul>
+       
+<P>The <A href="source.html">sources</A> for all these are also available.
+These work on Visual C++ 6.0 and gcc, but should compile on any C++ compiler with
+only  a few changes. If you have made some changes you think I ought to apply,
+please email them to me. The versions of the programs posted now are
+<A href="news.html">brand new</A> and have been totally revised</P>
+
+<p>You might also want to take a look at the <a
+ href="fonts.html">fonts</a> I made so far.  </p>
+       
+<h2>A word of warning</h2>
+      
+<p>Both the TrueTypeViewer and TTIComp use TrueType instructions, crucial 
+parts&nbsp;of which are patented by Apple. One page explaining something 
+about this is <a href="http://www.freetype.org/patents.html">the one about 
+the patents on  the FreeType site</a> (by the way, I'm not using the FreeType 
+instruction  engine in my code, but the same patent related problems apply 
+to my own <i>Virtual  Machine</i>). Though I am not a lawyer, what I understand 
+is that you are  not allowed to download or use those programs if you are 
+in a country where  those patents are valid (e.g., the USA) unless you have
+acquired a license from Apple.</p>
+       
+<SCRIPT type="text/javascript">
+beautify();
+</SCRIPT>
+</BODY>
+</HTML>

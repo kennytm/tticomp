@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Mark-to-ligature Attachment</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/marktoligaattach.html";
+var lastEdited = "March 14, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+The mark-to-base attachment lookup attaches marks to ligature glyphs.
+This means that every base glyph is supposed to have more than one attachment
+point for a certain mark glyph.
+An example of a simple mark-to-ligature attachment lookup:
+</P>
+
+<P class="codeFragment">
+<CODE>
+lookup marks {<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;ignore mark except @marksAbove;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;mark @marksAbove <: -25, 160>;<BR>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;base ff @marksAbove <: 90, 200> <: 160, 200>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;base ffl @marksAbove <: 90, 200> <: 160, 200> <:230, 200>;<BR>
+}
+</CODE>
+</P>
+
+<P>
+Here, every ligature glyphs has the same attachment points for all mark glyphs,
+but this is not required.
+(It is a lot easier to use one anchor for all marks though.)
+It is required that all mark glyphs that are used are attached to all ligature
+glyphs that are used.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

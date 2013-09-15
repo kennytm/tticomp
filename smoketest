@@ -1,0 +1,10 @@
+cd TTIComp
+make
+cd ../OTComp
+make
+cd ../OTLegacy
+make
+cd ../fonts
+make
+cd ../TrueTypeViewer
+make

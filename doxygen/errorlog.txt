@@ -1,0 +1,145 @@
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.h:26: Warning: the name `The' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTException.h:26: Warning: the name `Provides' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTgaspTable.h:26: Warning: the name `OTgaspTable' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGDEFTable.cpp:23: Warning: the name `Glyph' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:23: Warning: the name `Glyph' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGSUBTable.cpp:23: Warning: the name `Glyph' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTheadTable.h:26: Warning: the name `Represents' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:26: Warning: the name `Internal' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.cpp:23: Warning: the name `General' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.h:26: Warning: the name `Represents' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTMemoryBlock.h:26: Warning: the name `OTMemoryBlock' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOS2Table.h:26: Warning: the name `OTOS2Table' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTpostTable.h:26: Warning: the name `OTpostTable' supplied as the second argument in the \file statement is not an input file
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:413: Warning: Compound OpenType::MarkToBaseLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTMemoryBlock.h:86: Warning: Compound OpenType::MemoryPen is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:203: Warning: Compound OpenType::ClassDefTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTmaxpTable.h:36: Warning: Compound OpenType::maxpTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:314: Warning: Compound OpenType::ContextLookup3 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:260: Warning: Compound OpenType::ContextLookupSubTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:104: Warning: Compound OpenType::FeatureList is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:169: Warning: Compound OpenType::SinglePosLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:199: Warning: Compound OpenType::SinglePosLookup2 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTMemoryBlock.h:182: Warning: Compound OpenType::MemoryWritePen is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:236: Warning: Compound OpenType::PairPosLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:312: Warning: Compound OpenType::PairPosLookup2 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:248: Warning: Compound OpenType::SimpleGlyph is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.cpp:304: Warning: Compound OpenType::_Segment is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTpostTable.h:38: Warning: Compound OpenType::postTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTgaspTable.h:42: Warning: Compound OpenType::GridFittingBehaviour::Range is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:121: Warning: Compound OpenType::OpenTypeChar::Position is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:492: Warning: Compound OpenType::MarkToLigatureLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:102: Warning: Compound OpenType::OpenTypeChar is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.cpp:234: Warning: Compound OpenType::SegmentMappingToDeltaTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGSUBTable.cpp:121: Warning: Compound OpenType::MultipleSubstLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.cpp:113: Warning: Compound OpenType::KnownMappingTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.cpp:410: Warning: Compound OpenType::CoverageSingleTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.cpp:421: Warning: Compound OpenType::CoverageRangeTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGSUBTable.cpp:172: Warning: Compound OpenType::AlternateSubstLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:245: Warning: Compound OpenType::LookupReference is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:169: Warning: Compound OpenType::LookupSubTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:67: Warning: Compound OpenType::Contours is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:215: Warning: Compound OpenType::ClassDefTable1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:226: Warning: Compound OpenType::ClassDefTable2 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:87: Warning: Compound OpenType::LanguageSystem is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:180: Warning: Compound OpenType::Glyph::BoundingBox is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOS2Table.h:37: Warning: Compound OpenType::OS2Table is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTheadTable.h:38: Warning: Compound OpenType::headTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:54: Warning: Compound OpenType::ScriptList is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:71: Warning: Compound OpenType::Script is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:41: Warning: Compound OpenType::Point_conversion_trait is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:116: Warning: Compound OpenType::Feature is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeFile.cpp:259: Warning: Compound OpenType::TableBlock is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:134: Warning: Compound OpenType::LookupList is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:43: Warning: Compound OpenType::Point_conversion_trait< Short > is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:250: Warning: Compound OpenType::QuadraticCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.h:42: Warning: Compound OpenType::MappingTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:272: Warning: Compound OpenType::CompositeGlyph is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:137: Warning: Compound OpenType::PositionedCompositeComponent is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:617: Warning: Compound OpenType::Outlines is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:104: Warning: Compound OpenType::CompositeComponent::Scale is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.cpp:102: Warning: Compound OpenType::Mapping is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:132: Warning: Compound OpenType::PointAnchor is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:103: Warning: Compound OpenType::CompositeComponent::Translation is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OThmtxTable.h:37: Warning: Compound OpenType::HorMetric is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.h:87: Warning: Compound OpenType::GDEFTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:42: Warning: Compound OpenType::PositioningValue is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGSUBTable.cpp:45: Warning: Compound OpenType::SingleSubstLookup1 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGSUBTable.cpp:78: Warning: Compound OpenType::SingleSubstLookup2 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:124: Warning: Compound OpenType::SimpleAnchor is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.cpp:543: Warning: Compound OpenType::SegmentMappingTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.h:73: Warning: Compound OpenType::GSUBTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.h:72: Warning: Compound OpenType::cmapTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.h:47: Warning: Compound OpenType::LayoutTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTlocaTable.h:38: Warning: Compound OpenType::locaTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTgaspTable.h:50: Warning: Compound OpenType::gaspTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:326: Warning: Compound OpenType::ChainingContextLookup3 is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyph.h:154: Warning: Compound OpenType::AttachedCompositeComponent is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTcmapTable.cpp:45: Warning: Compound OpenType::UnknownMappingTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OThheaTable.h:35: Warning: Compound OpenType::hheaTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGlyphToOutline.h:33: Warning: Compound OpenType::ContourOutlineIterator is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:489: Warning: Compound OpenType::Outline is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:150: Warning: Compound OpenType::Lookup is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OThmtxTable.h:51: Warning: Compound OpenType::hmtxTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGSUBTable.cpp:217: Warning: Compound OpenType::LigatureSubstLookup is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutInternal.h:180: Warning: Compound OpenType::CoverageTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.h:103: Warning: Compound OpenType::Anchor is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:183: Warning: Compound OpenType::OpenTypeTextIterator is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeFile.cpp:48: Warning: Compound OpenType::DirectoryEntry is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTMemoryBlock.h:45: Warning: Compound OpenType::MemoryBlock is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTGPOSTable.cpp:388: Warning: Compound OpenType::MarkRecord is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.h:80: Warning: Compound OpenType::GPOSTable is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.cpp:90: Warning: no matching class member found for
+  OpenTypeText::iterator OpenType::OpenTypeText::replace(OpenTypeTextIterator begin, OpenTypeTextIterator end, GlyphId glyphId)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.cpp:113: Warning: no matching class member found for
+  OpenTypeText::iterator OpenType::OpenTypeText::replace(OpenTypeTextIterator it, GlyphIds glyphIds)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTheadTable.cpp:122: Warning: no matching class member found for
+  void OpenType::headTable::reset(const Glyphs &glyphs, const locaTable &loca)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OThheaTable.cpp:110: Warning: no matching class member found for
+  void OpenType::hheaTable::reset(const Glyphs &glyphs)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.cpp:257: Warning: no matching class member found for
+  OpenType::Lookup::Lookup(MemoryPen pen, OpenTypeFont &aFont, const LookupList &lookupList, SubTablePtrnewSubTable(UShort, UShort, MemoryPen, const LookupList &, OpenTypeFont &font))
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTLayoutTable.cpp:671: Warning: no matching class member found for
+  OpenType::LayoutTable::LayoutTable(OpenTypeFont &aFont, MemoryBlockPtr aMemory, smart_ptr< LookupSubTable >newSubTable(UShort, UShort, MemoryPen, const LookupList &, OpenTypeFont &font))
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTmaxpTable.cpp:138: Warning: no matching class member found for
+  void OpenType::maxpTable::reset(const Glyphs &glyphs)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTpostTable.cpp:420: Warning: no matching class member found for
+  void OpenType::postTable::set(const Glyphs &glyphs)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:154: Warning: Member T of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:155: Warning: Member QuadraticCurvePtr of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:156: Warning: Member CurvePtr of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:157: Warning: Member TwoCurves of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:167: Warning: Member getStartPoint of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:168: Warning: Member getEndPoint of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:169: Warning: Member hasMiddleXExtremum of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:170: Warning: Member hasMiddleYExtremum of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:172: Warning: Member getBoundingBox of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:186: Warning: Member getCBox of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:200: Warning: Member asQuadratic of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:207: Warning: Member splitAtHalf of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:214: Warning: Member splitAtXExtremum of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:215: Warning: Member splitAtYExtremum of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:228: Warning: Member transpose of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:235: Warning: Member transform of class OpenType::LineCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:94: Warning: argument `glyphIds' of command @param is not found in the argument list of OpenType::OpenTypeText::replace(iterator i1, GlyphIds glyphId)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:94: Warning: The following parameters of OpenType::OpenTypeText::replace(iterator i1, GlyphIds glyphId) are not documented:
+  parameter glyphId
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:80: Warning: argument `i1' of command @param is not found in the argument list of OpenType::OpenTypeText::replace(iterator it, GlyphId glyphId)
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OpenTypeText.h:80: Warning: The following parameters of OpenType::OpenTypeText::replace(iterator it, GlyphId glyphId) are not documented:
+  parameter it
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:87: Warning: Member T of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:88: Warning: Member QuadraticCurvePtr of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:89: Warning: Member CurvePtr of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:90: Warning: Member TwoCurves of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:99: Warning: Member getStartPoint of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:100: Warning: Member getEndPoint of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:101: Warning: Member hasMiddleXExtremum of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:102: Warning: Member hasMiddleYExtremum of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:104: Warning: Member getBoundingBox of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:109: Warning: Member getCBox of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:114: Warning: Member asQuadratic of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:119: Warning: Member splitAtHalf of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:122: Warning: Member splitAtXExtremum of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:123: Warning: Member splitAtYExtremum of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:136: Warning: Member transpose of class OpenType::PointCurve is not documented.
+/cygdrive/c/Documents and Settings/Rogier van Dalen/My Documents/Fonts/OTFont/OTOutline.h:141: Warning: Member transform of class OpenType::PointCurve is not documented.

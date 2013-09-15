@@ -1,0 +1,15 @@
+0000-0341 latn dflt ccmp mark kern liga mkmk
+0342-0345 grek dflt ccmp mark kern liga mkmk
+0346-036F latn dflt ccmp mark kern liga mkmk
+0379-03CE grek dflt ccmp mark kern liga mkmk
+03D3-03D4 grek dflt ccmp mark kern liga mkmk
+0400-050F cyrl dflt ccmp mark kern liga mkmk
+
+1E00-1E9F latn dflt ccmp mark kern liga mkmk
+1EA0-1EFF latn VIT ccmp mark kern liga mkmk
+1F00-1FFF grek dflt ccmp mark kern liga mkmk
+#2000-24FF latn dflt ccmp mark kern liga mkmk
+2000-24FF /
+
+FB00-FB06 latn dflt ccmp mark kern liga mkmk
+

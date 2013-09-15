@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Viewer Tool</title>
+                                                                        
+                                                                        
+  <meta name="author" content="Rogier van Dalen">
+                                                                        
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot;">
+                                                                        
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</head>
+<BODY>
+<SCRIPT type="text/javascript">
+var documentPath = "truetypeviewer.html";
+var lastEdited = "22 November 2002";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+
+<p>The TrueTypeViewer shows any TrueType font. It is extremely useful for debugging
+TrueType instructions and for viewing OpenType Layout features.
+Its user interface should be self-explanatory. 
+Any questions remaining, however, should be directed to <a
+href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</a>.
+</p>
+
+<p>
+The virtual machine should now do exactly the same as the one provided by
+Microsoft in Windows 2000.
+This includes all undocumented behaviour for twilight points.
+If you find anything still looking wrong, please
+<a href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">
+send me a note</a>.
+</p>
+
+<P>
+It now supports all OpenType positioning and substitution lookups.
+To see these working, you may try <I>Palatino Linotype</I> that comes with
+Windows, or one of my own <A href="fonts.html">fonts</A>.
+</P>
+   
+<h2>A screenshot</h2>
+
+  <P><img src="image/screenshot.png" alt="Screenshot" width="492"
+ height="379">
+   <BR><SPAN id="warning1">(This image may have an ugly greyish background on browsers that don't have PNG alpha support,
+ such as IE 5)</SPAN>
+ </P>
+   
+<h2>Download</h2>
+   
+<p>You may download a <a
+href="truetypeviewer.zip">MS Windows binary</A> (i.e., a working program file) here.
+It works on Windows 2000 and Windows
+95; other 32 bit Windowses (98, ME, XP etc.) should work as well. You do
+need the <i>Qt library</i> though. If you do not yet have the file <b>qt-mt230nc.dll</b>
+on your system, you can download a <a href="truetypeviewerqt.zip">version of
+the TrueTypeViewer that includes
+the file</a>.</p>
+   
+<p>The <a href="source.html">source</a> is available as well. If you find
+ any bug, please email <a
+ href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</a>  (please make sure
+I'll be able to reproduce it using the information you give me). Thank you.</p>
+   
+<SCRIPT type="text/javascript">
+if(navigator.userAgent.substring(0,11)=="Mozilla/5.0") {
+	document.getElementById("warning1").style.display = "none";
+}
+beautify();
+</SCRIPT>
+</BODY>
+</html>

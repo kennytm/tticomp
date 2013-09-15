@@ -1,0 +1,273 @@
+/*	Tested in MS IE 5 and Mozilla 1.1. Things that don't work in IE have been identified as such.
+	This should work in any browser supporting CSS. */
+
+BODY {
+	font-family: legendum, verdana, tahoma, sans-serif;
+	font-size: 9pt;
+	background-color: #FFFBF0;
+/*	text-align: justify;*/
+	max-width: 60em;		/* Doesn't work in IE 5 */
+	margin-left: 1.5%;
+	margin-right: 1.5%;
+}
+
+A {
+	color: #CC5500;
+	text-decoration: underline;
+}
+A.tooltipLink {
+	border-bottom: 1px dashed #CC5500;
+	cursor: help;
+	text-decoration: none;
+}
+
+A:visited {
+	color: #AA7700;
+}
+
+A:hover {
+	color: #FF5500;
+/*	background-color: #FFFFF8;*/
+	text-decoration: none;
+}
+A.tooltipLink:hover {
+	border-bottom-color: #FF5500;
+	text-decoration: none;
+}
+
+H1 {
+	font-family: garogier, palatino linotype, serif;
+	font-weight: normal;
+	font-size: 220%;
+	margin-bottom: .1em;
+	text-align: left;
+}
+DIV:first-child H1 {
+	/* first H1 should have no top margin */
+	margin-top: 0em;
+}
+
+.H1line {
+	margin: 0px;
+	padding: 0px;
+	width: 50%;
+	height: 10px;
+	border-top: solid 2px #CC5500;
+}
+
+.H2container {
+	margin-bottom: 1.5em;
+}
+
+H2 {
+	font-family: garogier, palatino linotype, serif;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 16pt;
+	border-bottom: solid 1px #807D78;
+	margin-bottom: 0px;
+	text-align: left;
+}
+.H2line {
+	margin-top: 0cm;
+	height: 1.7em;
+	width: 1.7em;
+	background-color: black;
+	position: absolute;
+	font-size: 4pt;		/* Hack needed for IE 5 */
+}
+
+H3 {
+	font-family: garogier, palatino linotype, serif;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 140%;
+	width: 45%;
+	border-bottom: dotted 1px #A07D78; /*#807D78;*/
+	margin-bottom: 0px;
+	text-align: left;
+}
+
+P {
+	margin: .5em 2.5em .5em 2.5em;
+	text-align: justify;
+	line-height: 145%;
+}
+LI {
+	margin: .5em 2.5em .5em 2.5em;
+	text-align: justify;
+	line-height: 130%;
+}
+
+P.codeFragment {
+	margin-left: 3.5em;
+	text-align: left;
+	line-height: inherit;
+	border-top: solid 1px #F0EBE0;
+	border-bottom: solid 1px #F0EBE0;
+	background-color: #FBF8EB;
+	padding-left: .5em;
+}
+
+CODE {
+	left: 8em;
+	color: #013;
+	border-top: solid 1px #F0EBE0;
+	border-bottom: solid 1px #F0EBE0;
+	background-color: #FBF8EB;
+	padding-left: .3em;
+	padding-right: .3em;
+	font-size: 110%;
+}
+P.codeFragment CODE {
+	border-top: 0px;
+	border-bottom: 0px;
+	background-color: transparent;
+	padding: 0px;
+	font-size: 100%;
+}
+TABLE CODE {
+	border-top: 0px;
+	border-bottom: 0px;
+	background-color: transparent;
+	padding: 0px;
+}
+CODE *.reservedWord {
+	color: #813;
+}
+CODE *.syntaxElement {
+	color: #513;
+}
+
+TABLE {
+	margin: .5em;
+	/** Hack needed for IE 5. **/
+	font-size: 100%;
+}
+
+TD {
+	background-color: #F4F0E4;
+	padding: 0em .5em;
+}
+TH {
+	background-color: #F4F0E4;
+	padding: 0em .5em;
+	font-weight: normal;
+}
+TD.leftHeader + TD {
+	border-left: solid 1px #D0ACA8;
+}
+
+TR.tableHeader TD {
+	padding-bottom: .2em;
+	border-left: solid 1px #D0ACA8;
+	border-bottom: solid 1px #D0ACA8;
+	background-color: #FBF8EB;
+}
+TR.tableHeader TD:first-child {
+	border-left: 0px;
+}
+
+/*** Automatically added elements ***/
+
+.pageSwitcher {
+	color: #bbb;
+	font-size: 90%;
+}
+
+.footerline {
+	margin: 0.5em 0em 0.5em 0em;
+	padding: 0px;
+	width: 50%;
+	height: 1em;
+	border-bottom: solid 2px #CC5500;
+}
+
+.footer {
+	font-size: 75%;
+}
+
+.navigation {
+	position: fixed;
+	background-color: #FFFCF6;
+	border: 1px solid #D0C0B0;
+	-moz-opacity: .85;			/* Mozilla */
+	filter: alpha(opacity=85);	/* IE */
+	z-index: 1;
+}
+
+.contentsHeader {
+	font-family: garogier, georgia, serif;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 100%;
+	text-align: center;
+	letter-spacing: .15em;
+	padding: 0em .2em;
+	cursor: move;
+}
+
+#contentsHide {
+	text-align: right;
+	font-family: legendum, verdana, tahoma, arial, helvetica, sans-serif;
+	font-size: 75%;
+	font-weight: normal;
+	font-style: normal;
+}
+
+.contents {
+	border-top: 1px solid #E0DBD0;
+	padding-left: 1.5em;
+}
+
+.contentsItem {
+	font-size: 75%;
+	display: list-item;	/* Doesn't work in IE 5 */
+	padding: .15em 0em;
+}
+
+.thisPageItem {
+	font-size: 75%;
+}
+
+.thisPageItem A {
+	color: #554000;	/* Doesn't work in IE 5 */
+}
+
+#currentItem A {
+	color: black;
+}
+
+.tooltip {
+	position: absolute;
+	text-align: left;
+	display: none;
+	font-size: 90%;
+	background-color: #FFFFE0;
+	border: solid 1px #AA7700;
+	padding: .2em .5em;
+	width: 20em;
+}
+
+.closeButton {
+	position: relative;
+	top: -.1em;
+	left: .3em;
+	float: right;
+	background-color: #FFFFF0;
+	border-bottom: 1px solid #AA7700;
+	border-left: 1px solid #FFBB44;
+	padding: 0em 0em .2em .3em;
+	margin: 0em 0em 0em .3em;
+}
+
+.closeButton A {
+	text-decoration: none;
+}
+
+.printOnly {
+	display: none;
+}
+.printLink {
+	display: none;
+}

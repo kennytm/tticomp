@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+  <title>OpenType Compiler</title>
+
+  <meta name="author" content="Rogier van Dalen">
+                                                                 
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot;">
+                                                                 
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</HEAD>
+<BODY>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp.html";
+var lastEdited = "22 November 2003";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+
+<p>The OTComp tool takes a font file and a file containing feature information
+to produce an OpenType file.
+You can download the <A href="otcomp.zip">binary</A> (i.e. a working program
+file) for Windows.
+You may also take a look at the <a href="source.html">source</a>.
+It now implements almost all lookups.
+A <A href="otcomp/introduction.html">tutorial</A> is available.
+</P>
+
+<P>
+There are also other tools available that also produce OpenType layout tables.
+</P>
+<UL>
+<LI>
+<A href="http://www.microsoft.com/typography/developers/volt/default.htm">
+Microsoft's <B>VOLT</B></A> is a tool that allows you to edit the tables
+graphically, which makes things very easy to grasp.
+However, I found that it is difficult to edit the font afterwards.
+Also, VOLT does not support using contour points as mark anchors, which
+makes hinting anchors impossible.
+</LI>
+
+<LI>
+<A href="http://partners.adobe.com/asn/tech/type/otfdk/index.jsp">
+Adobe's <B>Font Developer Kit</B></A> contains an OpenType layout compiler as well.
+This one works with an input file containing a textual description, just
+like OTComp.
+It is, however, much geared towards Type 1 fonts, and does not support mark
+anchors contour points either.
+</LI>
+</UL>
+
+<P>
+Personally, I feel using text input for an OpenType layout compiler
+is very important since it allows you to start with the same file for the
+various different faces (regular, bold, italic) and to change only the parts
+that are different for this face.
+OTComp mirrors the OpenType file format pretty closely,
+providing a powerful tool.
+It fulfills my needs, of course, but if <I>you</I> need anything that is not yet
+in there (device tables, cursive attachment, reverse chaining contextual
+lookups), <A href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">contact me</A>
+and I will add it.
+</P>
+
+<P>
+For examples please take a look at the <A href="fontsources.zip">sources</A> of my
+<A href="fonts.html">fonts</A>.
+</p>
+
+<SCRIPT type="text/javascript">
+beautify();
+</SCRIPT>
+</BODY>
+</HTML>

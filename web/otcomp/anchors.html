@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Anchors</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/anchors.html";
+var lastEdited = "March 13, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+Anchors are points that go with a certain glyph and to which other glyphs'
+anchors may attach.
+Consider the e with macron and breve in this example:
+</P>
+<P><IMG src="../image/breakinggood.png"></P>
+
+<P>
+The e has an anchor above the glyph, to which the anchor below the macron
+is attached.
+The macron glyph has not only an anchor under, but also an anchor above,
+which attaches to the anchor under the breve glyph.
+In this way, many glyphs may automatically positioned relative to each
+other without having to specify positions for each combination separately.
+</P>
+
+<P>
+OTComp expects to find anchors in the format <CODE>&lt;x,y&gt;</CODE>.
+Thus, <CODE>&lt;50, 170&gt;</CODE> is an anchor with x coordinate 50 and y
+coordinate 170.
+By adding a colon before the first coordinate, the anchor is mapped to a
+contour point, which may be explicitly positioned using glyph instructions
+(for example by using TTIComp).
+Thus, <CODE>&lt;: 50, 170&gt;</CODE> will produce a contour point anchor at
+(50,170).
+If there is no contour point with that coordinate yet, it is added.
+OTComp is fairly smart about adding points in composite glyphs, so you do not
+have to worry about that.
+</P>
+<P>
+<B>Note</B>: OTComp does not support <I>device records</I> yet.
+If you need these, drop a note proposing a good syntax and I'll add it.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

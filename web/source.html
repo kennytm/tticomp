@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>Source for TrueType/OpenType Tools</title>
+                                                                        
+                                                                      
+  <meta name="author" content="Rogier van Dalen">
+                                                                       
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot;">
+                                                                       
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "source.html";
+var lastEdited = "23 August 2003";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+
+<p>The TrueTypeViewer, TTIComp, OTComp and OTLegacy all use my
+easy-to-handle, fast and safe OpenType font manipulation library.
+You may download the <A href="fonttools-20030823.zip">
+sources to all of those</A> at once.
+The current version is 20030318.
+Building the tools requires the following:
+</p>
+<ul>
+<li>Visual C++ 6.0, which will build the applications straight away, and
+for which project and workspace files are provided,
+or gcc (version 3 works on cygwin and GNU/Linux;
+version 2.95 with STLport should work but doesn't,
+a volunteer to look into this?).
+It should be possible to compile the sources on any other C++ compiler with
+decent template and STL support.<BR>
+I would appreciate being notified
+of any changes that make the code more portable.
+</li>
+
+<li>The Qt library for the TrueTypeViewer.
+I use version 2.3 for Windows.
+Qt is an easy-to-use, cross-platform, object-oriented library downloadable
+from <a href="http://www.trolltech.com/">www.trolltech.com</a>.
+Note again that the Qt library is only required for the TrueTypeViewer,
+as this is an application with a GUI.
+The other ones are console applications.
+Never mind the "Qt" project Visual C++ can't find when you open the
+TrueTypeViewer workspace;
+this does not matter at all.
+</li>
+
+<li>The relative paths should be as in the ZIP file.
+All applications refer
+to the OTFont library with <code>#include "../OTFont/OpenTypeFile.h"</code>
+so that has to work.
+</li>
+</ul>
+
+<P>
+All of the programs are distributed under the GNU General Public License,
+which allows you do to pretty much with it (like selling them, if you can
+find anyone who is crazy enough to pay for them, or changing the source and
+redistributing them).
+However, I would like to incorporate any improvements in the versions
+you find here.
+So if you find any bugs, or have suggestions for improvements, don't hesitate
+to email <a href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</a>.
+If you've
+got a bug you cannot find a solution for, please email me instructions on
+how to reproduce the bug and I'll try to do what I can. Thank you.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (CReservedWords);
+</SCRIPT>
+</body>
+</html>

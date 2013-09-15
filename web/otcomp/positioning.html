@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - Positioning Parameters</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/positioning.html";
+var lastEdited = "March 13, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+Positioning glyphs in OpenType is done by manipulating four parameters:
+</P>
+
+<UL>
+<LI>the <B>x</B> position;</LI>
+<LI>the <B>y</B> position;</LI>
+<LI>the <B>x advance</B>, which is the amount of space the pen moves
+horizontally after drawing the glyph;</LI>
+<LI>the <B>y advance</B>, which is the amount of space the pen moves
+horizontally after drawing the glyph.</LI>
+</UL>
+
+<P>
+Lookups may adjust each of these values.
+To make the values take less space in the output file, all values in one
+positioning lookup have to have the same <I>format</I>.
+For example, kerning is done by adjusting the x advance value,
+but no other values.
+<CODE>,,-30</CODE> specifies subtraction of 30 font units from the x advance
+value.
+It has the same meaning as <CODE>0,0,-30,0</CODE> but the format is different.
+Moving a glyph down while at the same time increasing its y advance value
+may be done with <CODE>,30,,30</CODE>.
+</P>
+
+<P>
+<B>Note</B>: OTComp does not support <I>device records</I> yet.
+If you need these, drop a note proposing a good syntax and I'll add it.
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (OTReservedWords);
+</SCRIPT>
+</body>
+</html>

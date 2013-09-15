@@ -1,0 +1,190 @@
+/***
+	This file is used for the Doxygen documentation.
+***/
+
+BODY {
+	font-family: legendum, verdana, tahoma, sans-serif;
+	font-size: 9pt;
+	background-color: #FFFBF0;
+	text-align: justify;
+	max-width: 60em;		/* Doesn't work in IE 5 */
+	margin-left: 1.5%;
+	margin-right: 1.5%;
+}
+
+A {
+	color: #CC5500;
+	text-decoration: underline;
+}
+A.tooltipLink {
+	border-bottom: 1px dashed #CC5500;
+	cursor: help;
+	text-decoration: none;
+}
+
+A:visited {
+	color: #AA7700;
+}
+
+A:hover {
+	color: #FF5500;
+/*	background-color: #FFFFF8;*/
+	text-decoration: none;
+}
+A.tooltipLink:hover {
+	border-bottom-color: #FF5500;
+	text-decoration: none;
+}
+
+H1 {
+	font-family: garogier, palatino linotype, serif;
+	font-weight: normal;
+	font-size: 220%;
+	margin-bottom: .1em;
+	text-align: left;
+}
+DIV:first-child H1 {
+	/* first H1 should have no top margin */
+	margin-top: 0em;
+}
+
+.H1line {
+	margin: 0px;
+	padding: 0px;
+	width: 50%;
+	height: 10px;
+	border-top: solid 2px #CC5500;
+}
+
+.H2container {
+	margin-bottom: 1.5em;
+}
+
+H2 {
+	font-family: garogier, palatino linotype, serif;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 16pt;
+	border-bottom: solid 1px #807D78;
+	margin-bottom: 0px;
+	text-align: left;
+}
+.H2line {
+	margin-top: 0cm;
+	height: 1.7em;
+	width: 1.7em;
+	background-color: black;
+	position: absolute;
+	font-size: 4pt;		/* Hack needed for IE 5 */
+}
+
+H3 {
+	font-family: garogier, palatino linotype, serif;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 140%;
+	width: 45%;
+	border-bottom: dotted 1px #A07D78; /*#807D78;*/
+	margin-bottom: 0px;
+	text-align: left;
+}
+
+P {
+	/*margin: .5em 2.5em .5em 2.5em;*/
+	text-align: justify;
+	line-height: 145%;
+}
+LI {
+	margin: .5em 2.5em .5em 2.5em;
+	text-align: justify;
+	line-height: 130%;
+}
+
+CODE {
+	left: 8em;
+	color: #013;
+	border-top: solid 1px #F0EBE0;
+	border-bottom: solid 1px #F0EBE0;
+	background-color: #FBF8EB;
+	padding-left: .3em;
+	padding-right: .3em;
+	font-size: 110%;
+}
+
+TABLE CODE {
+	border-top: 0px;
+	border-bottom: 0px;
+	background-color: transparent;
+	padding: 0px;
+}
+
+TABLE {
+/*	margin: .5em;*/
+	/** Hack needed for IE 5. **/
+	font-size: 100%;
+}
+TD {
+	font-family: legendum, verdana, tahoma, sans-serif;
+	font-size: 9pt;
+	line-height: 130%;
+	margin-bottom: 5em;
+}
+
+
+CAPTION { font-weight: bold }
+A.qindex {}
+A.qindexRef {}
+A.el { text-decoration: none; font-weight: bold }
+A.elRef { font-weight: bold }
+A.code { text-decoration: none; font-weight: normal; color: #4444ee }
+A.codeRef { font-weight: normal; color: #4444ee }
+A:hover { text-decoration: none; background-color: #f2f2ff }
+DL.el { margin-left: -1cm }
+DIV.fragment {
+	left: 8em;
+	color: #013;
+	border-top: solid 1px #F0EBE0;
+	border-bottom: solid 1px #F0EBE0;
+	background-color: #FBF8EB;
+	padding-left: .3em;
+	padding-right: .3em;
+	font-size: 110%;
+}
+DIV.ah { background-color: black; font-weight: bold; color: #ffffff; margin-bottom: 3px; margin-top: 3px }
+TD.md { background-color: #F4F0E4; font-weight: bold; border-top: 1px solid #E0E0D0; }
+TD.mdname1 { background-color: #F4F0E4; font-weight: bold; color: #602020; }
+TD.mdname { background-color: #F4F0E4; font-weight: bold; color: #602020; width: 600px; }
+DIV.groupHeader { margin-left: 16px; margin-top: 12px; margin-bottom: 6px; font-weight: bold }
+DIV.groupText { margin-left: 16px; font-style: italic; font-size: smaller }
+TD.indexkey { 
+	background-color: #F4F0E4;
+   font-weight: bold; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px  
+}
+TD.indexvalue { 
+	background-color: #FFF7F0;
+   font-style: italic; 
+   padding-right  : 10px; 
+   padding-top    : 2px; 
+   padding-left   : 10px; 
+   padding-bottom : 2px; 
+   margin-left    : 0px; 
+   margin-right   : 0px; 
+   margin-top     : 2px; 
+   margin-bottom  : 2px  
+}
+
+span.keyword       { color: #813; }
+span.keywordtype   { color: #513; }
+span.keywordflow   { color: #e08000 }
+span.comment       { color: #080; }
+span.preprocessor  { color: #806020 }
+span.stringliteral { color: #002080 }
+span.charliteral   { color: #008080 }

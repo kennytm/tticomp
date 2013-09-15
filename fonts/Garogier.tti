@@ -1,0 +1,1624 @@
+// This is the instruction file for Garogier.ttf
+
+#input "Garogier_unhinted.otf"
+#output "Garogier.otf"
+
+#gasp AI
+#twilight 1
+#stack 100
+
+#cvt base50: -50 base40: -40 base30: -30 base20: -20 \
+	capHeight: 1300 capHeight16: 16 capHeight30: 1330 capHeight50: 1350 \
+	xHeight: 800 xHeight20: 820 xHeight30: 830 xHeight100: 900 \
+	ascenderHeight: 1400 \
+	serifHeight40: 40 serifHeight: 30 capSerifHeight: 1270 xSerifHeight: 770 \
+	dipInHeight: 10 capDipInHeight: 1290 xDipInHeight: 790 \
+	compensateXHeight30: 0 compensateXRound20: 20 compensateXRound30: 30 \
+\
+	difference10: 10 difference15: 15 difference16: 16 difference20: 20 difference30: 30 difference50: 50 difference100: 100 difference450: 450 \
+\
+	lsbBegin:\
+	lsb20: 20 lsb50: 50 lsb70: 70 lsb80: 80 lsb100: 100 lsb120: 120 lsb130: 130 lsb150: 150 lsb170: 170 lsb180: 180 lsb185: 185 lsb190: 190 lsb200: 200 lsb250: 250 lsb300: 300 \
+	lsbEnd:\
+	rsbStart:\
+	rsb0: 0 rsb20: 20 rsb30: 30 rsb40: 40 rsb50: 50 rsb55: 55 rsb70: 70 rsb80: 80 rsb100: 100 rsb115: 115 rsb120: 120 rsb130: 130 rsb150: 150 rsb170: 170 rsb185: 185 rsb250: 250 rsb300: 300 \
+	rsbEnd:\
+\
+	minimumStemWidth: 0 \
+	stemBegin: \
+	stem25: 25 stem30: 30 stem35: 35 stem40: 40 stem45: 45 stem50: 50 stem54: 54 stem60: 60 stem65: 65 stem70: 70 stem72: 72 stem80: 80 stem100: 100 stem110: 110 stem120: 120 stem130: 130 stem140: 140 stem135: 135 stem145: 145 stem150: 150 stem160: 160 stem176: 176 stem200: 200 stem220: 220 \
+	stemEnd: \
+	serif95: 95 serif100: 100 serif130: 130 serif150: serifLow: 150 serif170: 170 serif180: 180 serif200: serifCap: 200 serif205: 205 serif230: 230
+	
+void prep() {
+	setVectorsY();
+	
+	fixed oldCapHeight = getCVT(capHeight);
+	fixed newCapHeight = roundBlack(getCVT(capHeight));
+	setCVT(capHeight, newCapHeight);
+	
+	setCVT(ascenderHeight, fixed(max(uint(newCapHeight + 1.0),
+		uint(roundBlack(getCVT(ascenderHeight))))));
+	
+	fixed oldXHeight = getCVT(xHeight);
+	fixed newXHeight;
+	
+	// This looks reasonable down to 8 ppem
+	const fixed minXHeight = 2.67;
+	const fixed attXHeight = 8.0;
+	if (oldXHeight < attXHeight)
+		newXHeight = roundBlack(oldXHeight * ((attXHeight-minXHeight)/attXHeight) + minXHeight);
+	else
+		newXHeight = roundBlack(oldXHeight);
+	setCVT(xHeight, newXHeight);
+	
+	fixed diff10 = getCVT(difference10);
+	fixed diff16 = getCVT(difference16);
+	fixed diff20 = getCVT(difference20);
+	fixed diff30 = getCVT(difference30);
+	fixed diff50 = getCVT(difference50);
+	fixed diff100 = getCVT(difference100);
+
+	if (getPPEM() < 40u) {
+		setCVT(base50, 0.0);
+		setCVT(base40, 0.0);
+		setCVT(base30, 0.0);
+		setCVT(base20, 0.0);
+		
+		setCVT(capHeight16, newCapHeight);
+		setCVT(capHeight30, newCapHeight);
+		setCVT(capHeight50, newCapHeight);
+		setCVT(xHeight20, newXHeight);
+		setCVT(xHeight30, newXHeight);		
+		setCVT(xHeight100, newXHeight);		
+	} else {
+		setCVT(capHeight16, newCapHeight + diff16);
+		setCVT(capHeight30, newCapHeight + diff30);
+		setCVT(capHeight50, newCapHeight + diff50);
+		setCVT(xHeight20, newXHeight + diff20);
+		setCVT(xHeight30, newXHeight + diff30);
+		setCVT(xHeight100, roundBlack(newXHeight + diff100));
+	}
+	
+	if (getPPEM() < 200u) {
+		setCVT(dipInHeight, 0.0);
+		setCVT(capDipInHeight, newCapHeight);
+		setCVT(xDipInHeight, newXHeight);
+	} else {
+		setCVT(capDipInHeight, newCapHeight - diff10);
+		setCVT(xDipInHeight, newXHeight - diff10);
+	}
+	
+	setCVT(compensateXHeight30, newXHeight - oldXHeight - diff30 - getCVT(base30));
+	setCVT(compensateXRound30, newXHeight - oldXHeight - 2.0 * (diff30 + getCVT(base30)));
+	setCVT(compensateXRound20, newXHeight - oldXHeight - 2.0 * (diff20 + getCVT(base20)));
+	
+	uint ppemY = getPPEM();
+	setVectorsX();
+	if (getPPEM() > ppemY)
+		setVectorsY();
+
+	// Optical size stems	
+	uint cur = stemBegin;
+	if (getPointSize() < 48u) {
+		fixed stem150Size = getCVT(stem150);
+		// Width stem of width 0 will be scaled to
+		fixed stem0Ratio = 0.7;
+		setCVT(minimumStemWidth, int(fixed(48) * stem0Ratio) - int(fixed(getPointSize()) * stem0Ratio));
+		fixed minStemWidth = getCVT(minimumStemWidth);
+		while (cur < stem150) {
+			setCVT(cur, ((stem150Size - minStemWidth)/stem150Size) * getCVT(cur) + minStemWidth);
+			cur = cur + 1u;
+		}
+		
+		cur = stemBegin;
+	}
+	
+	// pixel size stems
+	while (cur < stemEnd) {
+		fixed size = getCVT(cur);
+		const fixed attenuation = .5;
+		if (size<2.0)
+			size = size*((2.0-attenuation)/2.0) + attenuation;
+		setCVT(cur, size);
+		cur = cur + 1u;
+	}
+	
+	// optical size serifs
+	if (getPointSize() < 48u) {
+		const int attenuation = 50;
+		setCVT(serifHeight, attenuation - int((fixed(attenuation-30)/fixed(48)) * fixed(getPointSize())));
+	}
+	
+	// pixel size serifs
+	if (getCVT(serifHeight) < 1.0)
+		setCVT(serifHeight, getCVT(serifHeight)*.5 + .5);
+	
+	setCVT(capSerifHeight, getCVT(capHeight)-getCVT(serifHeight));
+	setCVT(xSerifHeight, getCVT(xHeight)-getCVT(serifHeight));
+	setCVT(serifHeight40, getCVT(serifHeight)+getCVT(difference10));
+	
+	// lsb and rsb
+	if (getPPEM() < 40u) {
+		cur = lsbBegin;
+		while (cur < lsbEnd) {
+			setCVT(cur, getCVT(cur) - 0.4);
+			cur = cur + 1u;
+		}
+		while (cur < rsbEnd) {
+			setCVT(cur, getCVT(cur) + 0.7);
+			cur = cur + 1u;
+		}
+	}
+	
+	setCVTCutIn(50.0);
+}
+
+void centerStem(uint rp, uint p1, uint p2, uint cvt) {
+	fixed newStemWidth = getCVT(cvt);
+	setCoordinate(0u,0u, (getCoordinateOrig(1u,p1) + getCoordinateOrig(1u,p2))/2.0);
+	shiftPoint(1u,rp, 0u,0u);
+	if (odd(newStemWidth) || newStemWidth<1.0)
+		setRoundHalf();
+	else
+		setRoundGrid();
+	roundPoint(0u,0u);
+	setRoundGrid();
+	moveDistance(0u,0u, 1u,p1, -(newStemWidth/2.0));
+	moveDistance(0u,0u, 1u,p2, newStemWidth/2.0);
+}
+
+/*** General helper functions ***/
+
+
+void capSerifLastX(uint first) {
+	moveDistanceGrey(1u,first+10u, 1u, first+7u, serifCap);
+	moveDistanceBlack(1u,first+10u, 1u, first, stem150);
+	moveDistanceGrey(1u,first, 1u,first+3u, serifCap);
+}
+
+void capSerifLastX(uint first, uint stem) {
+	moveDistanceGrey(1u,first+9u, 1u, first+7u, serifCap);
+	moveDistanceBlack(1u,first+9u, 1u, first+1u, stem);
+	moveDistanceGrey(1u,first+1u, 1u,first+3u, serifCap);
+}
+
+void capSerifFirstX(uint first) {
+	moveDistanceGrey(1u,first, 1u, first+3u, serifCap);
+	moveDistanceBlack(1u,first, 1u, first+10u, stem150);
+	moveDistanceGrey(1u,first+10u, 1u,first+7u, serifCap);
+}
+
+void capSerifFirstX(uint first, uint stem) {
+	moveDistanceGrey(1u,first+1u, 1u, first+3u, serifCap);
+	moveDistanceBlack(1u,first+1u, 1u, first+9u, stem150);
+	moveDistanceGrey(1u,first+9u, 1u,first+7u, serifCap);
+}
+
+void smallCapSerifLastX(uint first) {
+	moveDistanceGrey(1u,first+10u, 1u, first+7u, serifLow);
+	moveDistanceBlack(1u,first+10u, 1u, first, stem130);
+	moveDistanceGrey(1u,first, 1u,first+3u, serifLow);
+}
+
+void smallCapSerifFirstX(uint first) {
+	moveDistanceGrey(1u,first, 1u, first+3u, serifLow);
+	moveDistanceBlack(1u,first, 1u, first+10u, stem130);
+	moveDistanceGrey(1u,first+10u, 1u,first+7u, serifLow);
+}
+
+void lowSerifLastX(uint first) {
+	moveDistanceGrey(1u,first+10u, 1u, first+7u, serifLow);
+	moveDistanceBlack(1u,first+10u, 1u, first, stem120);
+	moveDistanceGrey(1u,first, 1u,first+3u, serifLow);
+}
+
+void lowSerifLastX(uint first, uint stem) {
+	moveDistanceGrey(1u,first+9u, 1u, first+7u, serifLow);
+	moveDistanceBlack(1u,first+9u, 1u, first+1u, stem);
+	moveDistanceGrey(1u,first+1u, 1u,first+3u, serifLow);
+}
+
+void lowSerifFirstX(uint first) {
+	moveDistanceGrey(1u,first, 1u, first+3u, serifLow);
+	moveDistanceBlack(1u,first, 1u, first+10u, stem120);
+	moveDistanceGrey(1u,first+10u, 1u,first+7u, serifLow);
+}
+
+void lowSerifFirstX(uint first, uint stem) {
+	moveDistanceGrey(1u,first+1u, 1u, first+3u, serifLow);
+	moveDistanceBlack(1u,first+1u, 1u, first+9u, stem);
+	moveDistanceGrey(1u,first+9u, 1u,first+7u, serifLow);
+}
+
+void baseSerifY(uint first) {	
+	touch(1u,first+7u);
+	touch(1u,first+3u);
+	movePoint(1u,first+8u, serifHeight);
+	align(1u,first+8u, 1u, first+2u);
+	movePoint(1u,first+5u, dipInHeight);
+}
+
+void capHeightSerifY(uint first) {
+	movePoint(1u,first+7u, capHeight);
+	align(1u,first+7u, 1u,first+3u);
+	movePoint(1u,first+8u, capSerifHeight);
+	align(1u,first+8u, 1u, first+2u);
+	movePoint(1u,first+5u, capDipInHeight);
+}
+
+void xHeightSerifY(uint first) {
+	movePoint(1u,first+7u, xHeight);
+	align(1u,first+7u, 1u,first+3u);
+	movePoint(1u,first+8u, xSerifHeight);
+	align(1u,first+8u, 1u, first+2u);
+	movePoint(1u,first+5u, xDipInHeight);
+}
+
+void roundHeightSerifY(uint first) {
+	roundPoint(1u,first+7u);
+	align(1u,first+7u, 1u,first+3u);
+	moveDistanceBlack(1u,first+7u, 1u,first+5u, dipInHeight);
+	moveDistanceBlack(1u,first+7u, 1u,first+8u, serifHeight);
+	align(1u,first+8u, 1u, first+2u);
+}
+
+void lowTopSerifX(uint first) {
+	moveDistanceBlack(1u,first+8u, 1u,first+7u, serifHeight);
+	moveDistanceBlack(1u,first+0u, 1u, first+3u, serifLow);
+}
+
+void lowTopSerifY(uint first) {
+	movePoint(1u, first+8u, ascenderHeight);
+	//moveDistanceRoundGrey(1u, first+8u, 1u, first+3u);
+//	moveDistanceBlack(1u,first+3u, 1u,first+4u, serifHeight);
+	movePoint(1u,first+4u, capHeight);
+	moveDistanceBlack(1u,first+4u, 1u,first+3u, serifHeight);
+}
+
+void I_ (uint lsb, uint rsb, bool capHeight, bool capWidth) {
+	// lsb
+	movePointRound(1u,0u, lsb);
+	align(1u,0u, 1u,21u);
+	if (capWidth) {
+		capSerifFirstX(0u);
+		capSerifLastX(11u);
+	} else {
+		smallCapSerifFirstX(0u);
+		smallCapSerifLastX(11u);
+	}
+	
+	// rsb
+	moveDistanceWhite(1u,11u, 1u,23u, rsb);
+	roundPoint(1u,23u);
+	
+	setVectorsY();
+	baseSerifY(11u);
+	if (capHeight) {
+		capHeightSerifY(0u);
+	} else {
+		xHeightSerifY(0u);
+	}
+	
+	interpolateX();
+	interpolateY();
+}
+
+/*** punctuation ***/
+
+void comma() {
+	const uint lsbPoint = 8u;
+	const uint rsbPoint = lsbPoint+1u;
+	
+	// lsb
+	movePointRound(1u,0u, lsb120);
+	align(1u,0u, 1u,10u);
+	moveDistanceRoundBlack(1u,0u, 1u,6u, stem220);
+	moveDistanceBlack(1u,6u, 1u,13u, stem60);
+	moveDistanceWhite(1u,6u, 1u,16u, rsb100);
+	roundPoint(1u,16u);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,14u, base30);
+	moveDistanceBlack(1u,14u, 1u,2u, stem200);
+	roundPoint(1u,10u);
+	moveDistanceBlack(1u,10u, 1u,9u, stem30);
+	interpolateY();
+}
+
+void period() {
+	const uint lsbPoint = 8u;
+	const uint rsbPoint = lsbPoint+1u;
+	
+	// X direction
+	// lsb
+	movePointRound(1u,0u, lsb120);
+	moveDistanceBlack(1u,0u, 1u,5u, stem200);
+	// rsb
+	moveDistanceWhite(1u,5u, 1u,rsbPoint, rsb120);
+	roundPoint(1u,rsbPoint);
+	interpolateX();
+	if (getPPEM()<24u) {	
+		align(1u,0u, 1u,2u);
+		align(1u,0u, 1u,7u);
+		
+		align(1u,5u, 1u,3u);
+		align(1u,5u, 1u,6u);
+	}
+	
+	setVectorsY();
+	movePoint(1u,7u, base30);
+	moveDistanceBlack(1u,7u, 1u,2u, stem200);
+	interpolateY();
+}
+
+/*** figures ***/
+
+void zero() {
+	//lsb
+	movePointRound(1u,1u, lsb50);
+	moveDistanceBlack(1u,1u, 1u,23u, stem150);
+	moveDistanceGrey(1u,1u, 1u,7u);
+	shiftPoint(1u,7u, getCVT(compensateXRound30));
+	roundPoint(1u,7u);
+	moveDistanceBlack(1u,7u, 1u,17u, stem150);
+	// rsb
+	moveDistanceRoundWhite(1u,7u, 1u,25u, rsb50);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,10u, base30);
+	moveDistanceBlack(1u,10u, 1u,14u, stem40);
+	movePoint(1u,4u, xHeight30);
+	moveDistanceBlack(1u,4u, 1u,20u, stem40);
+	interpolateY();
+}
+
+void one() {
+	I_(lsb300, rsb300, false, true);
+}
+
+void two() {
+	// lsb
+	movePointRound(1u,0u, lsb120);
+	moveDistanceRoundWhite(1u,0u, 1u,11u);
+	moveDistanceBlack(1u,11u, 1u,10u, stem30);
+	moveDistanceRoundBlack(1u,0u, 1u,25u);
+	// rsb
+	moveDistanceRoundWhite(1u,25u, 1u,30u);
+	moveDistanceBlack(1u,25u, 1u,24u, serifHeight);
+	
+	moveDistanceRoundWhite(1u,25u, 1u,17u);
+	moveDistanceBlack(1u,17u, 1u,4u);
+	interpolateX();
+	
+	setVectorsY();
+	touch(1u,0u);
+	movePoint(1u,1u, stem40);
+	movePoint(1u,20u, stem110);
+	moveDistanceBlack(1u,20u, 1u,25u, serif170);
+	
+	movePoint(1u,14u, xHeight30);
+	moveDistanceBlack(1u,14u, 1u,7u, stem80);
+	interpolateY();
+	
+	setProjectionPerp(1u,1u, 1u,2u);
+	setFreedomX();
+	moveDistanceBlack(1u,1u, 1u,20u, stem35);
+	interpolateX();
+}
+
+void three() {
+	// lsb
+	movePointRound(1u,0u, lsb100);
+	moveDistanceRoundGrey(1u,0u, 1u,21u);
+	// rsb
+	moveDistanceRoundWhite(1u,21u, 1u,25u, rsb130);
+	moveDistanceBlack(1u,21u, 1u,4u, stem160);
+	moveDistanceRoundWhite(1u,21u, 1u,16u);
+	moveDistanceBlack(1u,16u, 1u,10u, stem120);
+	
+	moveDistanceRoundWhite(1u,0u, 1u,14u);
+	moveDistanceBlack(1u,14u, 1u,13u, stem30);
+	interpolateX();
+	
+	setVectorsY();
+	roundPoint(1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, stem50);
+	movePoint(1u,16u, xHeight30);
+	moveDistanceBlack(1u,16u, 1u,11u, stem80);
+	
+	setProjectionPerp(1u,8u, 1u,9u);
+	touch(1u,8u);
+	moveDistanceBlack(1u,8u, 1u,7u, stem54);
+	interpolate(1u,8u, 1u,7u, 1u,18u);
+	interpolateY();
+}
+
+/*** capitals ***/
+
+void A() {
+	setVectorsY();
+	// set up virtual point on capHeight/left stem
+	movePoint(0u,0u, capHeight);
+	setProjectionPerp(1u,29u, 1u,1u);
+	setFreedomX();
+	align(1u,1u, 0u,0u);
+	setRoundHalf();
+	roundPoint(0u,0u);
+	setRoundGrid();
+	
+	setProjectionX();
+	movePointRound(1u,29u, lsb120);
+	capSerifLastX(20u, stem70);
+	shiftPoint(1u,29u, 0u,0u);
+	
+	setVectorsY();
+	baseSerifY(6u);
+	baseSerifY(20u);
+	movePoint(1u,3u, capHeight);
+	//interpolate(1u,23u,1u,3u, 1u,18u);
+	moveDistanceGrey(1u,3u, 1u,18u);
+	roundPoint(1u,18u);
+	moveDistanceBlack(1u,18u, 1u,33u, stem40);
+	interpolateY();
+	
+	setProjectionPerp(0u,0u, 1u,29u);
+	setFreedomX();
+	align(0u,0u, 1u,1u);
+	moveDistanceBlack(1u,1u, 1u,3u);
+	moveDistanceBlack(1u,1u, 1u,32u, stem35);
+	moveDistanceGrey(1u,32u, 1u,33u);
+	moveDistanceGrey(1u,32u, 1u,18u);
+	
+	setVectorsX();
+	setRoundHalf();
+	moveDistanceBlack(1u,3u, 1u,5u);
+	roundPoint(1u,5u);
+	setRoundGrid();
+	// symmetric triangle
+	moveDistance(1u,32u, 1u,31u, getDistance(1u,33u, 1u,32u));
+	
+	setProjectionPerp(1u,32u, 1u,31u);
+	setFreedom(1u,33u, 1u,32u);
+	moveDistanceBlack(1u,5u, 1u,32u, stem140);
+	setFreedomX();
+	align(1u,32u, 1u,31u);
+	align(1u,32u, 1u,17u);
+	
+	// right serif
+	align(1u,5u, 1u,7u);
+	setProjectionX();
+	// rsb
+	moveDistanceWhite(1u,7u, 1u,35u, rsb170);
+	roundPoint(1u,35u);
+	capSerifFirstX(6u, stem150);
+	
+	interpolateX();
+}
+
+void B(uint lsb, uint rsb, uint height, uint stemWidth, uint serif,
+       uint base, uint extremeStem, uint middleStem) {
+	// lsb
+	movePointRound(1u,0u, lsb);
+	moveDistanceBlack(1u,0u, 1u,3u, serif);
+	align(1u,3u, 1u,14u);
+	moveDistanceBlack(1u,0u, 1u,26u, stemWidth);
+	align(1u,26u, 1u,21u);
+	moveDistanceRoundGrey(1u,0u, 1u,10u);
+	// rsb
+	moveDistanceRoundWhite(1u,10u, 1u,28u);
+	moveDistanceBlack(1u,10u, 1u,19u, stemWidth);
+	moveDistanceRoundWhite(1u,10u, 1u,6u);
+	moveDistanceBlack(1u,6u, 1u,25u, stemWidth);
+	interpolateX();
+	
+	setVectorsY();
+	// lower part
+	touch(1u,13u);
+	movePoint(1u,14u, serifHeight);
+	movePoint(1u,11u, base);
+	interpolate(1u,11u, 1u,13u, 1u,12u);
+	moveDistanceBlack(1u,12u, 1u,17u, extremeStem);
+	
+	// upper part
+	movePoint(1u,3u, height);
+	moveDistanceBlack(1u,3u, 1u,2u, serifHeight);
+	moveDistanceGrey(1u,3u, 1u,5u, base50);
+	interpolate(1u,3u, 1u,5u, 1u,4u);
+	moveDistanceBlack(1u,4u, 1u,26u, extremeStem);
+	
+	// middle part
+	interpolate(1u,17u, 1u,26u, 1u,22u);
+	roundPoint(1u,22u);
+	moveDistanceBlack(1u,22u, 1u,21u, middleStem);
+	interpolate(1u,22u, 1u,21u, 1u,8u);
+	interpolateY();
+}
+
+void B() {
+	B(lsb250, rsb80, capHeight, stem150, serifCap, base50, stem45, stem50);
+}
+
+void Bsmall() {
+	B(lsb185, rsb55, xHeight, stem130, serifLow, base30, stem35, stem40);
+}
+
+void H_(uint lsb, uint rsb, bool cap) {
+	// lsb
+	movePointRound(1u,0u, lsb);
+	align(1u,0u, 1u,47u);
+	if (cap) {
+		capSerifLastX(37u);
+		capSerifFirstX(0u);
+	} else {
+		smallCapSerifLastX(37u);
+		smallCapSerifFirstX(0u);
+	}
+	moveDistanceGrey(1u,0u, 1u,23u);
+	roundPoint(1u,23u);
+	align(1u,23u, 1u,24u);
+	// rsb
+	moveDistanceRoundWhite(1u,23u, 1u,49u, rsb);
+	if (cap) {
+		capSerifLastX(13u);
+		capSerifFirstX(24u);
+	} else {
+		smallCapSerifLastX(13u);
+		smallCapSerifFirstX(24u);
+	}
+	
+	setVectorsY();
+	baseSerifY(37u);
+	if (cap) {
+		capHeightSerifY(0u);
+		capHeightSerifY(13u);
+	} else {
+		xHeightSerifY(0u);
+		xHeightSerifY(13u);
+	}
+	baseSerifY(24u);
+	
+	// middle stem width
+	interpolate(1u,40u, 1u,7u, 1u,36u);
+	centerStem(36u, 36u, 11u, stem50);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void H() {
+	H_(lsb250, rsb250, true);
+}
+
+void Hsmall() {
+	H_(lsb185, rsb185, false);
+}
+
+void I() {
+	I_(lsb250, rsb250, true, true);
+}
+
+void Ismall() {
+	I_(lsb185, rsb185, false, false);
+}
+
+void P() {
+	movePointRound(1u,0u, lsb250);
+	align(1u,0u, 1u,18u);
+	moveDistanceBlack(1u,0u, 1u,3u, serifCap);
+	moveDistanceRoundGrey(1u,0u, 1u,5u);
+	moveDistanceBlack(1u,5u, 1u,21u, stem150);
+	// rsb
+	moveDistanceRoundWhite(1u,5u, 1u,24u, rsb80);
+	capSerifLastX(8u);
+	align(1u,8u, 1u,19u);
+	interpolateX();
+	
+	setVectorsY();
+	baseSerifY(8u);
+	movePoint(1u,3u, capHeight);
+	moveDistanceBlack(1u,3u, 1u,2u, serifHeight);
+	movePoint(1u,5u, capHeight50);
+	interpolate(1u,3u, 1u,5u, 1u,4u);
+	moveDistanceBlack(1u,4u, 1u,22u, stem40);
+	
+//	moveDistanceGrey(1u,4u, 1u,7u);
+	moveDistanceGrey(1u,4u, 1u,19u);
+	moveDistanceBlack(1u,19u, 1u,7u, stem40);
+	roundPoint(1u,7u);
+	moveDistanceBlack(1u,7u, 1u,19u, stem40);
+	moveDistanceGrey(1u,7u, 1u,6u, base40);
+	interpolateY();
+}
+
+void Psmall() {
+	movePointRound(1u,0u, lsb185);
+	align(1u,0u, 1u,18u);
+	moveDistanceBlack(1u,0u, 1u,3u, serifLow);
+	moveDistanceRoundGrey(1u,0u, 1u,5u);
+	moveDistanceBlack(1u,5u, 1u,21u, stem130);
+	// rsb
+	moveDistanceRoundWhite(1u,5u, 1u,24u, rsb55);
+	capSerifLastX(8u);
+	align(1u,8u, 1u,19u);
+	interpolateX();
+	
+	setVectorsY();
+	baseSerifY(8u);
+	movePoint(1u,3u, xHeight);
+	moveDistanceBlack(1u,3u, 1u,2u, serifHeight);
+	movePoint(1u,5u, xHeight30);
+	interpolate(1u,3u, 1u,5u, 1u,4u);
+	moveDistanceBlack(1u,4u, 1u,22u, stem40);
+	
+//	moveDistanceGrey(1u,4u, 1u,7u);
+	moveDistanceGrey(1u,4u, 1u,19u);
+	moveDistanceBlack(1u,19u, 1u,7u, stem40);
+	roundPoint(1u,7u);
+	moveDistanceBlack(1u,7u, 1u,19u, stem40);
+	moveDistanceGrey(1u,7u, 1u,6u, base40);
+	interpolateY();
+}
+
+/*** lowercase ***/
+
+void a() {
+	const uint lsbPoint = 29u;
+	// lsb
+	movePointRound(1u,0u, lsb80);
+	moveDistanceRoundGrey(1u,0u, 1u,7u);
+	moveDistanceBlack(1u,0u, 1u,23u, stem130);
+	moveDistanceGrey(1u,0u, 1u,13u);
+	shiftPoint(1u,13u, getCVT(compensateXRound30));
+	roundPoint(1u,13u);
+	//rsb
+	moveDistanceRoundWhite(1u,13u, 1u,lsbPoint+1u, rsb170);
+	moveDistanceBlack(1u,13u, 1u,25u, stem130);
+	align(1u,25u, 1u,2u);
+	align(1u,25u, 1u,20u);
+	interpolateX();
+	// Anchor
+	interpolate(1u,9u, 1u,10u, 1u,28u);
+	roundPoint(1u,28u);
+	
+	setVectorsY();
+	movePoint(1u,0u, base20);
+	align(1u,0u, 1u,18u);
+	moveDistanceBlack(1u,0u, 1u,23u, stem60);
+	moveDistanceBlack(1u,0u, 1u,14u, serifHeight);
+	moveDistanceGrey(1u,0u, 1u,20u);
+	moveDistanceBlack(1u,20u, 1u,25u, stem40);
+	
+	movePoint(1u,10u, xHeight30);
+	moveDistanceBlack(1u,10u, 1u,4u, stem60);
+	if (getPPEM()<40u)
+		shiftPoint(1u,8u, 1.0);
+	
+//	centerStem(22u, 26u,2u, stem40);
+	interpolate(1u,0u, 1u,10u, 1u,26u);
+	moveDistanceBlack(1u,26u, 1u,2u, stem40);
+
+	interpolateY();
+	// Anchor
+	moveDistanceMinDistWhite(1u,9u, 1u,28u);
+	roundPoint(1u,28u);
+}
+
+void b() {
+	// lsb
+	movePointRound(1u,0u, lsb130);
+	moveDistanceBlack(1u,0u, 1u,8u, stem120);
+	align(1u,8u, 1u,21u);
+	moveDistanceBlack(1u,0u, 1u,19u, serifHeight);
+	interpolate(1u,0u, 1u,21u, 1u,17u);
+	
+	// right
+	moveDistanceGrey(1u,0u, 1u,13u);
+	shiftPoint(1u,13u, getCVT(compensateXRound30));
+	roundPoint(1u,13u);
+	moveDistanceBlack(1u,13u, 1u,26u, stem140);
+	//rsb
+	moveDistanceRoundWhite(1u,13u, 1u,32u, rsb70);
+	
+	lowTopSerifX(0u);
+	
+	setVectorsY();
+	movePoint(1u,20u, base30);
+	moveDistanceBlack(1u,20u, 1u,23u, stem40);
+	movePoint(1u,10u, xHeight30);
+	moveDistanceBlack(1u,10u, 1u,28u, stem60);
+	moveDistanceGrey(1u,28u, 1u,30u);
+	moveDistanceBlack(1u,30u, 1u,9u, stem40);
+	lowTopSerifY(0u);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void c() {
+	// lsb
+	movePointRound(1u,0u, lsb70);
+	moveDistanceBlack(1u,0u, 1u,13u, stem130);
+	moveDistanceGrey(1u,0u, 1u,18u);
+	shiftPoint(1u,18u, getCVT(compensateXRound30));
+	roundPoint(1u,18u);
+	// rsb
+	moveDistanceRoundWhite(1u,18u, 1u,23u, rsb50);
+	moveDistanceRoundGrey(1u,18u, 1u,6u);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,20u, base30);
+	moveDistanceBlack(1u,20u, 1u,15u, stem110);
+	movePoint(1u,4u, xHeight30);
+	moveDistanceBlack(1u,4u, 1u,9u, stem40);
+	interpolateY();
+}
+
+void d() {
+	// lsb
+	movePointRound(1u,0u, lsb70);
+	moveDistanceBlack(1u,0u, 1u,26u, stem140);
+	moveDistanceGrey(1u,0u, 1u,14u);
+	shiftPoint(1u,14u, getCVT(compensateXRound30));
+	roundPoint(1u,14u);
+	// rsb
+	moveDistanceRoundWhite(1u,14u, 1u,37u, rsb170);
+	
+	moveDistanceBlack(1u,14u, 1u,29u, stem120);
+	align(1u,29u, 1u,6u);
+	align(1u,29u, 1u,22u);
+	lowTopSerifX(6u);
+	moveDistanceBlack(1u,14u, 1u,17u, serifLow);
+	moveDistanceBlack(1u,22u, 1u,21u, serifHeight);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,25u, base30);
+	align(1u,25u, 1u,22u);
+	moveDistanceBlack(1u,25u, 1u,27u, stem60);
+	
+	movePoint(1u,3u, xHeight30);
+	moveDistanceBlack(1u,3u, 1u,33u, stem40);
+	lowTopSerifY(6u);
+	moveDistanceGrey(1u,22u, 1u,18u);
+	moveDistanceBlack(1u,18u, 1u,17u, serifHeight);
+	interpolateY();
+}
+
+void e() {
+	// lsb
+	movePointRound(1u,1u, lsb80);
+	moveDistanceBlack(1u,1u, 1u,8u, stem120);
+	align(1u,8u, 1u,24u);
+	moveDistanceGrey(1u,1u, 1u,7u);
+	shiftPoint(1u,7u, getCVT(compensateXRound30));
+	roundPoint(1u,7u);
+	align(1u,7u, 1u,14u);
+	// rsb
+	moveDistanceRoundWhite(1u,7u, 1u,26u, rsb80);
+	moveDistanceBlack(1u,7u, 1u,18u, stem130);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,16u, base30);
+	moveDistanceBlack(1u,16u, 1u,11u, stem120);
+	movePoint(1u,4u, xHeight30);
+	moveDistanceBlack(1u,4u, 1u,21u, stem40);
+	
+	interpolate(1u,16u, 1u,4u, 1u,8u);
+	centerStem(8u, 8u, 24u, stem40);
+	
+	interpolateY();
+}
+
+
+
+void f() {
+	// lsb
+	movePointRound(1u,30u, lsb170);
+	//align(1u,30u, 1u,4u);
+	moveDistanceRoundGrey(1u,30u, 1u,4u);
+	moveDistanceRoundBlack(1u,4u, 1u,1u);
+	lowSerifLastX(20u);
+	align(1u,20u, 1u,16u);
+	moveDistanceBlack(1u,16u, 1u,9u);
+	roundPoint(1u,9u);
+	moveDistanceBlack(1u,16u, 1u,18u);
+	roundPoint(1u,18u);
+	// rsb
+	moveDistanceRoundWhite(1u,18u, 1u,32u, rsb30);
+	interpolateX();
+	
+	setVectorsY();
+	baseSerifY(20u);
+	movePoint(1u,3u, xHeight);
+	align(1u,3u, 1u,16u);
+	moveDistanceBlack(1u,3u, 1u,0u, stem70);
+	align(1u,0u, 1u,19u);
+	movePoint(1u,6u, ascenderHeight);
+	moveDistanceBlack(1u,6u, 1u,13u, stem100);	
+	interpolateY();
+}
+
+void g() {
+	// lsb
+	movePointRound(1u,0u, lsb20);
+	moveDistanceBlack(1u,0u, 1u,42u, stem120);
+	moveDistanceRoundGrey(1u,0u, 1u,3u);
+	moveDistanceRoundGrey(1u,0u, 1u,8u);
+	moveDistanceRoundGrey(1u,0u, 1u,28u);
+	moveDistanceBlack(1u,28u, 1u,45u, stem80);
+	// rsb
+	moveDistanceRoundWhite(1u,28u, 1u,51u, rsb0);
+	
+	moveDistanceBlack(1u,3u, 1u,25u, stem110);
+	
+	moveDistanceBlack(1u,8u, 1u,41u, stem120);
+	moveDistanceRoundGrey(1u, 8u, 1u,20u);
+	moveDistanceMinDistRoundGrey(1u,20u, 1u,16u);
+	moveDistanceBlack(1u,20u, 1u,35u, stem120);
+	interpolateX();
+	
+	setVectorsY();
+	// lower stem
+	roundPoint(1u,30u);
+	moveDistanceBlack(1u,30u, 1u,43u, stem40);
+	
+	// upper stem
+	movePoint(1u,11u, xHeight30);
+	moveDistanceBlack(1u,11u, 1u,38u, stem40);
+	
+	interpolate(1u,30u, 1u,11u, 1u,23u);
+	roundPoint(1u,23u);
+	moveDistanceBlack(1u,23u, 1u,32u, stem40);
+	interpolate(1u,23u, 1u,32u, 1u,5u);
+	moveDistanceMinDistRoundWhite(1u,23u, 1u,25u);
+	moveDistanceBlack(1u,25u, 1u,48u, stem120);
+	interpolate(1u,25u, 1u,48u, 1u,2u);
+	interpolateY();
+}
+
+void h() {
+	//lsb
+	movePointRound(1u,42u, lsb170);
+	align(1u,42u, 1u,0u);
+	moveDistanceGrey(1u,42u, 1u,15u);
+	shiftPoint(1u,15u, getCVT(compensateXHeight30));
+	roundPoint(1u,15u);
+	// rsb
+	moveDistanceRoundWhite(1u,15u, 1u,44u, rsb170);
+	
+	lowSerifLastX(32u);
+	align(1u,32u, 1u,8u);
+	lowSerifFirstX(15u);
+	lowTopSerifX(0u);
+	
+	setVectorsY();
+	baseSerifY(15u);
+	baseSerifY(32u);
+	lowTopSerifY(0u);
+	
+	movePoint(1u,11u, xHeight30);
+	moveDistanceBlack(1u,11u, 1u,29u, stem100);
+	moveDistanceGrey(1u,11u, 1u,31u);
+	moveDistanceBlack(1u,31u, 1u,9u, stem50);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void dotlessi() {
+	// lsb
+	movePointRound(1u,0u, lsb190);
+	align(1u,0u, 1u,19u);
+	lowSerifLastX(9u);
+	align(1u,9u, 1u,8u);
+	lowTopSerifX(0u);
+	// rsb
+	moveDistanceWhite(1u,9u, 1u,21u, rsb170);
+	roundPoint(1u,21u);
+	
+	interpolateX();
+	
+	setVectorsY();
+	setRoundDown();
+	movePoint(1u,7u, xHeight100);
+	setRoundGrid();
+	moveDistanceMinDistRoundGrey(1u,7u, 1u,4u);
+	moveDistanceBlack(1u,4u, 1u,3u, stem50);
+	
+	baseSerifY(9u);
+	interpolateY();
+}
+
+void i() {
+	// position dot
+	moveDistanceWhite(1u,8u, 1u,24u, difference10);
+	roundPoint(1u,24u);
+	moveDistanceBlack(1u,24u, 1u,20u, stem176);
+	interpolateX();
+
+	setVectorsY();
+//	setCoordinate(1u,22u, (getCVT(ascenderHeight) + getCVT(capHeight))/2.0);
+	moveDistanceRoundGrey(1u,8u, 1u,22u, difference450);
+	roundPoint(1u,22u);
+	moveDistanceBlack(1u,22u, 1u,26u, stem176);
+	interpolateY();
+}
+
+
+void dotlessj() {
+	// lsb
+	movePointRound(1u,0u, lsb200);
+	moveDistanceBlack(1u,0u, 1u,8u, stem120);
+	moveDistanceMinDistRoundGrey(1u,0u, 1u,12u);
+	moveDistanceBlack(1u,12u, 1u,11u, stem25);
+	lowTopSerifX(0u);
+	// rsb
+	moveDistanceWhite(1u,8u, 1u,16u, rsb115);
+	roundPoint(1u,16u);
+	
+	interpolateX();
+	
+	setVectorsY();
+	setRoundDown();
+	movePoint(1u,7u, xHeight100);
+	setRoundGrid();
+	moveDistanceMinDistRoundGrey(1u,7u, 1u,4u);
+	moveDistanceBlack(1u,4u, 1u,3u, stem50);
+	roundPoint(1u,11u);
+	
+	interpolateY();
+}
+
+void j() {
+	// position dot
+	moveDistanceWhite(1u,8u, 1u,19u, difference15);
+	roundPoint(1u,19u);
+	moveDistanceBlack(1u,19u, 1u,15u, stem176);
+	interpolateX();
+
+	setVectorsY();
+//	setCoordinate(1u,22u, (getCVT(ascenderHeight) + getCVT(capHeight))/2.0);
+	moveDistanceRoundGrey(1u,8u, 1u,17u, difference450);
+	roundPoint(1u,17u);
+	moveDistanceBlack(1u,17u, 1u,21u, stem176);
+	interpolateY();
+}
+
+void k() {
+	//lsb
+	movePointRound(1u,0u, lsb170);
+	align(1u,0u, 1u,45u);
+	moveDistanceRoundGrey(1u,0u, 1u,23u);
+	moveDistanceRoundGrey(1u,23u, 1u,19u);
+	moveDistanceRoundWhite(1u,23u, 1u,47u, rsb150);
+	lowSerifLastX(10u, stem60);
+	lowSerifFirstX(22u, stem140);
+	
+	lowSerifLastX(35u);
+	align(1u,35u, 1u,8u);
+	lowTopSerifX(0u);
+	
+	interpolateX();
+	
+	setVectorsY();
+	baseSerifY(35u);
+	baseSerifY(22u);
+	lowTopSerifY(0u);
+	xHeightSerifY(10u);
+	interpolateY();
+	
+	setProjectionPerp(1u,9u, 1u,11u);
+	align(1u,19u, 1u,34u);
+	setFreedomProjection();
+	align(1u,19u, 1u,33u);
+	align(1u,19u, 1u,21u);
+	
+	setProjectionPerp(1u,31u, 1u,33u);
+	setFreedom(1u,9u, 1u,11u);
+	align(1u,22u, 1u,21u);
+	interpolateX();
+	interpolateY();
+}
+
+void l() {
+	//lsb
+	movePointRound(1u,19u, lsb170);
+	align(1u,19u, 1u,0u);
+	
+	lowSerifLastX(9u);
+	align(1u,9u, 1u,8u);
+	lowTopSerifX(0u);
+	// rsb
+	moveDistanceWhite(1u,9u, 1u,21u, rsb170);
+	roundPoint(1u,21u);
+	
+	setVectorsY();
+	baseSerifY(9u);
+	lowTopSerifY(0u);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void nSerifY(uint first) {
+	movePoint(1u,first+7u, xHeight30);
+	moveDistanceMinDistRoundGrey(1u,first+7u, 1u,first+4u);
+	moveDistanceBlack(1u,first+4u, 1u,first+3u, stem50);
+}
+
+void m() {
+	//lsb
+	movePointRound(1u,0u, lsb200);
+	align(1u,0u, 1u,67u);
+	lowSerifLastX(57u);
+	align(1u,57u, 1u,8u);
+	lowTopSerifX(0u);
+	
+	moveDistanceGrey(1u,67u, 1u,40u);
+	shiftPoint(1u,40u, getCVT(compensateXHeight30));
+	roundPoint(1u,40u);
+	moveDistanceGrey(1u,40u, 1u,15u);
+	moveDistance(1u,40u, 1u,21u, getDistance(1u,57u, 1u,40u));
+//	shiftPoint(1u,21u, getCVT(compensateXHeight30));
+	roundPoint(1u,21u);
+	// rsb
+	moveDistanceRoundWhite(1u,21u, 1u,69u, rsb170);
+	lowSerifFirstX(40u);
+	lowSerifFirstX(21u);
+	
+	setVectorsY();
+	baseSerifY(21u);
+	baseSerifY(40u);
+	baseSerifY(57u);
+	nSerifY(0u);
+	
+	movePoint(1u,17u, xHeight30);
+	moveDistanceBlack(1u,17u, 1u,35u, stem100);
+	moveDistanceGrey(1u,17u, 1u,37u);
+	moveDistanceBlack(1u,37u, 1u,15u, stem50);
+	
+	movePoint(1u,11u, xHeight30);
+	moveDistanceBlack(1u,11u, 1u,54u, stem100);
+	moveDistanceGrey(1u,11u, 1u,56u);
+	moveDistanceBlack(1u,56u, 1u,9u, stem50);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void n() {
+	//lsb
+	movePointRound(1u,0u, lsb200);
+	align(1u,0u, 1u,42u);
+	lowSerifLastX(32u);
+	align(1u,32u, 1u,8u);
+	lowTopSerifX(0u);
+	
+	moveDistanceGrey(1u,42u, 1u,15u);
+	shiftPoint(1u,15u, getCVT(compensateXHeight30));
+	roundPoint(1u,15u);
+	// rsb
+	moveDistanceRoundWhite(1u,15u, 1u,44u, rsb170);
+	lowSerifFirstX(15u);
+	
+	setVectorsY();
+	baseSerifY(15u);
+	baseSerifY(32u);
+	nSerifY(0u);
+	
+	movePoint(1u,11u, xHeight30);
+	moveDistanceBlack(1u,11u, 1u,29u, stem100);
+	moveDistanceGrey(1u,11u, 1u,31u);
+	moveDistanceBlack(1u,31u, 1u,9u, stem50);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void o() {
+	//lsb
+	movePointRound(1u,1u, lsb70);
+	moveDistanceBlack(1u,1u, 1u,23u, stem135);
+	moveDistanceGrey(1u,1u, 1u,7u);
+	shiftPoint(1u,7u, getCVT(compensateXRound30));
+	roundPoint(1u,7u);
+	moveDistanceBlack(1u,7u, 1u,17u, stem135);
+	// rsb
+	moveDistanceRoundWhite(1u,7u, 1u,25u, rsb70);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,10u, base30);
+	moveDistanceBlack(1u,10u, 1u,14u, stem40);
+	movePoint(1u,4u, xHeight30);
+	moveDistanceBlack(1u,4u, 1u,20u, stem50);
+	interpolateY();
+}
+
+void p() {
+	// lsb
+	movePointRound(1u,0u, lsb180);
+	moveDistanceGrey(1u,0u, 1u,13u);
+	align(1u,0u, 1u,28u);
+	lowSerifLastX(18u);
+	align(1u,18u, 1u,29u);
+	align(1u,18u, 1u,8u);
+	lowTopSerifX(0u);
+	
+	shiftPoint(1u,13u, getCVT(compensateXRound30));
+	roundPoint(1u,13u);
+	// rsb
+	moveDistanceRoundWhite(1u,13u, 1u,40u, rsb70);
+	moveDistanceBlack(1u,13u, 1u,34u, stem140);
+	interpolateX();
+	
+	setVectorsY();
+	setRoundDown();
+	movePoint(1u,7u, xHeight100);
+	setRoundGrid();
+	moveDistanceMinDistRoundGrey(1u,7u, 1u,4u);
+	moveDistanceBlack(1u,4u, 1u,3u, stem50);
+	
+	movePoint(1u,16u, base30);
+	moveDistanceBlack(1u,16u, 1u,31u, stem40);
+	movePoint(1u,10u, xHeight30);
+	moveDistanceBlack(1u,10u, 1u,36u, stem60);
+
+	roundHeightSerifY(18u);
+	interpolateY();
+}
+
+void q() {
+	// lsb
+	movePointRound(1u,0u, lsb70);
+	moveDistanceBlack(1u,0u, 1u,23u, stem140);
+	moveDistanceGrey(1u,0u, 1u,8u);
+	shiftPoint(1u,8u, getCVT(compensateXRound30));
+	roundPoint(1u,8u);
+	moveDistanceBlack(1u,8u, 1u,6u, serifHeight);
+	lowSerifFirstX(8u);
+	align(1u,18u, 1u,26u);
+	// rsb
+	moveDistanceWhite(1u,8u, 1u,34u, rsb100);
+	roundPoint(1u,34u);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,22u, base30);
+	moveDistanceBlack(1u,22u, 1u,24u, stem60);
+	movePoint(1u,2u, xHeight30);
+	moveDistanceBlack(1u,2u, 1u,30u, stem40);
+	
+	roundHeightSerifY(8u);
+	interpolateY();
+}
+
+void r() {
+	//lsb
+	movePointRound(1u,0u, lsb190);
+	align(1u,0u, 1u,27u);
+	moveDistanceRoundGrey(1u,0u, 1u,12u);
+	// rsb
+	moveDistanceRoundWhite(1u,12u, 1u,29u, rsb40);
+	lowSerifLastX(17u);
+	align(1u,17u, 1u,8u);
+	lowTopSerifX(0u);
+	
+	setVectorsY();
+	baseSerifY(17u);
+	nSerifY(0u);
+	
+	movePoint(1u,11u, xHeight30);
+	moveDistanceBlack(1u,11u, 1u,12u, stem160);
+	moveDistanceGrey(1u,11u, 1u,16u);
+	moveDistanceBlack(1u,16u, 1u,9u, stem50);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void s() {
+	// lsb
+	movePointRound(1u,0u, lsb100);
+	moveDistanceBlack(1u,0u, 1u,2u, serifHeight40);
+	align(1u,0u, 1u,11u);
+	moveDistanceBlack(1u,11u, 1u,25u, stem100);
+	
+	moveDistanceGrey(1u,0u, 1u,27u);
+	shiftPoint(1u,27u, getCVT(compensateXRound20));
+	roundPoint(1u,27u);
+	moveDistanceBlack(1u,27u, 1u,9u, stem100);
+	// rsb
+	moveDistanceRoundWhite(1u,27u, 1u,32u, rsb100);
+	moveDistanceRoundGrey(1u,27u, 1u,17u);
+	moveDistanceBlack(1u,17u, 1u,18u, serifHeight40);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,29u, base20);
+	moveDistanceBlack(1u,29u, 1u,6u, stem40);
+	moveDistanceGrey(1u,29u, 1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, serif230);
+	movePoint(1u,14u, xHeight20);
+	moveDistanceBlack(1u,14u, 1u,21u, stem40);
+	moveDistanceGrey(1u,14u, 1u,16u);
+	moveDistanceBlack(1u,16u, 1u,17u, serif180);
+	interpolateY();
+	
+	setProjectionPerp(1u,25u, 1u,26u);
+	moveDistanceBlack(1u,25u, 1u,11u, stem145);
+	moveDistanceBlack(1u,10u, 1u,26u, stem145);
+}
+
+void t() {
+	// lsb
+	movePointRound(1u,0u, lsb20);
+	moveDistanceRoundGrey(1u,0u, 1u,20u);
+	moveDistanceBlack(1u,20u, 1u,9u, stem130);
+	align(1u,9u, 1u,5u);
+	moveDistanceBlack(1u,5u, 1u,4u, stem40);
+	moveDistanceBlack(1u,9u, 1u,8u);
+	roundPoint(1u,8u);
+	moveDistanceRoundGrey(1u,8u, 1u,15u);
+	// rsb
+	moveDistanceRoundWhite(1u,15u, 1u,22u, rsb20);
+	roundPoint(1u,22u);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,17u, base20);
+	moveDistanceBlack(1u,17u, 1u,12u, stem80);
+	movePoint(1u,6u, xHeight);
+	moveDistanceRoundBlack(1u,6u, 1u,5u);
+	moveDistanceBlack(1u,6u, 1u,9u, stem70);
+	align(1u,9u, 1u,20u);
+	moveDistanceBlack(1u,20u, 1u,1u, stem50);
+	interpolateY();
+}
+
+void u() {
+	// lsb
+	movePointRound(1u,0u, lsb150);
+	moveDistanceBlack(1u,0u, 1u,8u, stem120);
+	lowTopSerifX(0u);
+	moveDistanceGrey(1u,0u, 1u,23u);
+	shiftPoint(1u,23u, getCVT(compensateXHeight30));
+	roundPoint(1u,23u);
+	// rsb
+	moveDistanceWhite(1u,23u, 1u,39u, rsb170);
+	roundPoint(1u,39u);
+	moveDistanceBlack(1u,23u, 1u,15u, stem120);
+	align(1u,15u, 1u,31u);
+	lowTopSerifX(15u);
+	lowTopSerifX(23u);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,34u, base30);
+	moveDistanceBlack(1u,34u, 1u,12u, stem100);
+	
+	align(1u,34u, 1u,30u);
+	moveDistanceGrey(1u,34u, 1u,14u);
+	moveDistanceBlack(1u,14u, 1u,32u, stem50);
+	
+	moveDistanceMinDistRoundGrey(1u,30u, 1u,27u);
+	moveDistanceBlack(1u,27u, 1u,26u, stem50);
+	
+	movePoint(1u,7u, xHeight20);
+	align(1u,7u, 1u,22u);
+	moveDistanceMinDistRoundGrey(1u,7u, 1u,4u);
+	align(1u,4u, 1u,19u);
+	moveDistanceBlack(1u,4u, 1u,3u, stem30);
+	align(1u,3u, 1u,18u);
+	
+/*	movePoint(1u,22u, xHeight);
+	moveDistanceMinDistRoundGrey(1u,22u, 1u,19u);
+	moveDistanceBlack(1u,19u, 1u,18u, stem50);*/
+	interpolateY();
+}
+
+void v() {
+	const uint lsbPoint = 25u;
+	const uint rsbPoint = lsbPoint+1u;
+	movePointRound(1u,1u, lsb120);
+	lowSerifFirstX(0u, stem140);
+	moveDistanceGrey(1u,1u, 1u, 21u);
+	shiftPoint(1u,21u, getCVT(compensateXHeight30)*(720.0/800.0));
+	roundPoint(1u,21u);
+	//interpolate(1u,21u, 1u,1u, 1u,23u);
+	lowSerifLastX(12u, stem50);
+	// rsb
+	moveDistanceRoundWhite(1u,21u, 1u,rsbPoint, rsb120);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,24u, base30);
+	xHeightSerifY(0u);
+	xHeightSerifY(12u);
+	interpolateY();
+	setProjectionPerp(1u,21u, 1u,23u);
+	align(1u,13u, 1u,11u);
+	setFreedom(1u,21u, 1u,23u);
+	setProjectionPerp(1u,1u, 1u,24u);
+	align(1u,9u, 1u, 11u);
+
+	interpolateY();
+	interpolateX();
+}
+
+void w() {
+	movePointRound(1u,1u, lsb120);
+	moveDistanceBlack(1u,1u, 1u,3u, serif150);
+	moveDistanceBlack(1u,1u, 1u,9u, stem140);
+	moveDistanceBlack(1u,9u, 1u,7u, serif95);
+	//lowSerifFirstX(0u, stem140);
+	moveDistanceGrey(1u,9u, 1u,14u);
+	roundPoint(1u,14u);
+	
+	moveDistanceBlack(1u,14u, 1u,16u, serif95);
+	moveDistanceBlack(1u,14u, 1u,22u, stem140);
+	moveDistanceBlack(1u,22u, 1u,20u, serif205);
+	//lowSerifFirstX(13u, stem140);
+	
+	moveDistanceGrey(1u,22u, 1u,34u);
+	roundPoint(1u,34u);
+	//lowSerifLastX(25u, stem50);
+	moveDistanceBlack(1u,34u, 1u,36u, serif150);
+	moveDistanceBlack(1u,34u, 1u,26u, stem50);
+	moveDistanceBlack(1u,26u, 1u,28u, serif205);
+	
+	interpolate(1u,14u, 1u,34u, 1u,36u);
+	// rsb
+	moveDistanceRoundWhite(1u,34u, 1u,42u, rsb120);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,40u, base30);
+	align(1u,40u, 1u,37u);
+	
+	xHeightSerifY(0u);
+	xHeightSerifY(13u);
+	xHeightSerifY(25u);
+	interpolateY();
+	
+	setProjectionPerp(1u,36u, 1u,34u);
+	align(1u,26u, 1u,24u);
+	align(1u,39u, 1u,38u);
+	setFreedom(1u,36u, 1u,34u);
+	setProjectionPerp(1u,14u, 1u,37u);
+	align(1u,22u, 1u,24u);
+	setProjectionPerp(1u,14u, 1u,37u);
+	setFreedomProjection();
+	align(1u,14u, 1u,38u);
+	align(1u,14u, 1u,12u);
+	setProjection(1u,14u, 1u,37u);
+	setFreedomProjection();
+	moveDistanceBlack(1u,38u, 1u,12u, stem65);
+	setProjectionPerp(1u,36u, 1u,34u);
+	align(1u,12u, 1u,11u);
+	setProjectionPerp(1u,40u, 1u,1u);
+	setFreedom(1u,36u, 1u,34u);
+	align(1u,9u, 1u,11u);
+	
+	interpolateX();
+	interpolateY();
+}
+
+void x() {
+	// lsb
+	movePointRound(1u,45u, lsb170);
+	align(1u,45u, 1u,1u);
+	lowSerifLastX(36u, stem50);
+	lowSerifFirstX(0u, stem140);
+	
+	moveDistanceGrey(1u,37u, 1u,25u);
+	moveDistanceGrey(1u,25u, 1u,21u);
+	//roundPoint(1u,25u);
+	lowSerifFirstX(24u, stem140);
+	lowSerifLastX(12u, stem50);
+	
+	// rsb
+	moveDistanceWhite(1u,25u, 1u,49u, rsb150);
+	roundPoint(1u,49u);
+	
+	interpolateX();
+	
+	setVectorsY();
+	baseSerifY(36u);
+	xHeightSerifY(0u);
+	baseSerifY(24u);
+	xHeightSerifY(12u);
+	interpolateY();
+	
+	intersection(1u,45u,13u, 1u,33u,1u, 1u,47u);
+	intersection(1u,37u,21u, 1u,33u,1u, 1u,35u);
+	intersection(1u,45u,13u, 1u,9u,25u, 1u,11u);
+	intersection(1u,37u,21u, 1u,9u,25u, 1u,23u);
+}
+
+
+void y() {
+	const uint lsbPoint = 33u;
+	const uint rsbPoint = lsbPoint+1u;
+	movePointRound(1u,1u, lsb120);
+	lowSerifFirstX(0u, stem140);
+	moveDistanceGrey(1u,1u, 1u, 21u);
+	shiftPoint(1u,21u, getCVT(compensateXHeight30)*(720.0/800.0));
+	roundPoint(1u,21u);
+	lowSerifLastX(12u, stem50);
+	// rsb
+	moveDistanceRoundWhite(1u,21u, 1u,rsbPoint, rsb120);
+	interpolateX();
+	
+	setVectorsY();
+	movePoint(1u,lsbPoint-1u, base30);
+	xHeightSerifY(0u);
+	xHeightSerifY(12u);
+	roundPoint(1u,26u);
+	interpolateY();
+	setProjectionPerp(1u,21u, 1u,23u);
+	align(1u,13u, 1u,11u);
+	setFreedom(1u,32u, 1u,0u);
+	align(1u,12u, 1u,32u);
+	align(1u,12u, 1u,31u);
+	setFreedom(1u,21u, 1u,23u);
+	setProjectionPerp(1u,1u, 1u,lsbPoint-1u);
+	align(1u,9u, 1u, 11u);
+	
+	interpolateY();
+	interpolateX();
+}
+
+void z() {
+	const uint lsbPoint = 27u;
+	const uint rsbPoint = lsbPoint+1u;
+	
+	// lsb
+	movePointRound(1u,1u, lsb50);
+	align(1u,1u, 1u,6u);
+	moveDistanceBlack(1u,6u, 1u,5u, serifHeight);
+	moveDistanceRoundGrey(1u,6u, 1u,9u);
+	moveDistanceGrey(1u,9u, 1u,10u, serifHeight);
+	interpolate(1u,5u, 1u,10u, 1u,3u);
+	
+	moveDistanceRoundGrey(1u,1u, 1u,14u);
+	// rsb
+	moveDistanceRoundWhite(1u,14u, 1u,rsbPoint, rsb30);
+	moveDistanceBlack(1u,14u, 1u,2u);
+	
+	align(1u,14u, 1u,20u);
+	moveDistanceBlack(1u,20u, 1u,19u, serifHeight);
+	moveDistanceRoundGrey(1u,20u, 1u,23u);
+	moveDistanceBlack(1u,23u, 1u,24u, serifHeight);
+	
+	interpolateX();
+	
+	setVectorsY();
+	roundPoint(1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, stem40);
+	align(1u,1u, 1u,15u);
+	
+	movePoint(1u,24u, base30);
+	moveDistanceBlack(1u,15u, 1u,19u, stem150);
+	
+	movePoint(1u,13u, xHeight);
+	moveDistanceBlack(1u,13u, 1u,14u, stem40);
+	align(1u,14u, 1u,2u);
+	moveDistanceBlack(1u,13u, 1u,10u, serif100);
+	moveDistanceBlack(1u,2u, 1u,5u, serif130);
+	
+	interpolateY();
+	
+	// Slanted stem
+	setProjectionPerp(1u,1u, 1u,2u);
+	setFreedomX();
+	moveDistanceBlack(1u,1u, 1u,15u, stem120);
+	moveDistanceBlack(1u,14u, 1u,2u, stem120);
+}
+
+
+void alpha() {
+	const uint lsbPoint = 32u;
+	const uint rsbPoint = lsbPoint+1u;
+	
+	// X direction
+	movePointRound(1u,1u, lsb70);
+	moveDistanceBlack(1u,1u, 1u,29u, stem135);
+	moveDistanceBlack(1u,1u, 1u,9u);
+	shiftPoint(1u,9u, getCVT(compensateXRound30) * (740.0/860.0));
+	roundPoint(1u,9u);
+	moveDistanceBlack(1u,9u, 1u,24u, stem120);
+	interpolate(1u,9u, 1u,24u, 1u,18u);
+	interpolate(1u,9u, 1u,24u, 1u,6u);
+	
+	setRoundHalf();
+	moveDistanceMinDistRoundGrey(1u,9u, 1u,8u);
+	moveDistanceBlack(1u,8u, 1u,7u, stem100);
+	setRoundGrid();
+	
+	moveDistanceRoundGrey(1u,9u, 1u,14u);
+	// rsb
+	moveDistanceRoundWhite(1u,14u, 1u,rsbPoint, rsb50);
+	interpolateX();
+	
+	// Y direction
+	setVectorsY();
+	movePoint(1u,20u, base30);
+	moveDistanceBlack(1u,20u, 1u,22u, stem40);
+	
+	movePoint(1u,4u, xHeight30);
+	moveDistanceBlack(1u,4u, 1u,26u, stem40);
+	
+	movePoint(1u,8u, xHeight);
+	
+	movePoint(1u,16u, base30);
+	moveDistanceBlack(1u,16u, 1u,11u, stem80);
+	interpolateY();
+}
+
+/*** Combining marks ***/
+
+void gravecomb() {
+	setRoundHalf();
+	roundPoint(1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, stem130);
+	moveDistanceMinDistGrey(1u,1u, 1u,2u);
+	roundPoint(1u,2u);
+	moveDistanceBlack(1u,2u, 1u,3u, stem50);
+	// Anchor
+	interpolate(1u,3u, 1u,0u, 1u,4u);
+	setRoundGrid();
+	roundPoint(1u,4u);
+	
+	setVectorsY();
+	
+	roundPoint(1u,3u);
+	// Anchor
+	align(1u,3u, 1u,4u);
+	moveDistanceRoundBlack(1u,3u, 1u,0u);
+	interpolateY();
+}
+
+void gravecombalt() {
+//	setRoundHalf();
+	roundPoint(1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, stem100);
+	moveDistanceMinDistGrey(1u,1u, 1u,2u);
+	roundPoint(1u,2u);
+	moveDistanceBlack(1u,2u, 1u,3u, stem30);
+	// Anchor
+	interpolate(1u,3u, 1u,0u, 1u,4u);
+//	setRoundGrid();
+	roundPoint(1u,4u);
+	
+	setVectorsY();
+	
+	roundPoint(1u,3u);
+	// Anchor
+	align(1u,3u, 1u,4u);
+	moveDistanceBlack(1u,3u, 1u,2u, stem30);
+	moveDistanceRoundBlack(1u,3u, 1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, stem80);
+	interpolateY();
+}
+
+void variacomb() {
+	setRoundHalf();
+	roundPoint(1u,0u);
+	moveDistanceBlack(1u,0u, 1u,1u, stem130);
+	moveDistanceMinDistGrey(1u,1u, 1u,2u);
+	roundPoint(1u,2u);
+	moveDistanceBlack(1u,2u, 1u,3u, stem40);
+	// Anchor is point 3
+	
+	setVectorsY();
+	setRoundGrid();
+	roundPoint(1u,3u);
+	moveDistanceRoundBlack(1u,3u, 1u,0u);
+	interpolateY();
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>OpenType Compiler Tutorial - OpenType Terms</title>
+  <meta name="author" content="Rogier van Dalen">
+  <meta name="description"
+ content="TrueType/OpenType Tool for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="../style.css" type="text/css">
+  <link rel="stylesheet" href="../print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "otcomp/terms.html";
+var lastEdited = "March 12, 2003";
+document.switcherPrevious = true;
+document.switcherNext = true;
+</SCRIPT>
+<SCRIPT type="text/javascript" src="../beautify.js"></SCRIPT>
+
+<P>
+OpenType was meant to provide type designers with more control over how
+their fonts behave.
+This is especially important in languages that use a great deal of
+diacritics and/or contextual replacement, such as Arabic or Indic languages.
+For this, the OpenType layout tables were invented.
+These are font file tables that include information about the substitution
+and positioning of glyphs in certain circumstances.
+</P>
+
+<H2>Substitution</H2>
+<P>
+Glyph substitution in Latin is optional.
+However, it is often used to provide esthetical alternatives.
+The "fi" sequence is often rendered as a used ligature:
+</P>
+<P><IMG src="../image/fi.png"></P>
+
+<P>
+Another area where glyph substitution may come in useful is to provide
+justification alternates: thus, the line may be aligned without having
+to resort to wider or narrower spacing,
+by substituting a wider glyph for "a".
+</P>
+<P><IMG src="../image/a.png"></P>
+
+<H2>Positioning</H2>
+<P>
+Glyphs may have be positioned for esthetic reasons, but often without
+glyph positioning is plain wrong.
+For example, this illustration of a sound change would not be clear at all:
+</P>
+<P><IMG src="../image/breakingfaulty.png"></P>
+<P>
+From this, however, it immediately becomes clear we are speaking about
+one of the changes
+in <I>Old English breaking</I> where short or long <I>e</I> becomes
+a short or long diphthong <I>eo</I>:
+</P>
+<P><IMG src="../image/breakinggood.png"></P>
+<P>
+These examples show two things:
+</P>
+<UL>
+<LI>
+glyph positioning may be important for understanding what things are supposed
+to say;
+</LI>
+<LI>
+in the Latin script the need for intelligent glyph positioning
+is not that urgent, which makes clear why the
+computer industry has taken such a long time to implement more difficult
+glyph positioning.
+</LI>
+</UL>
+<P>
+(If you have any examples in other languages that show the problems better,
+please tell me!)
+</P>
+
+<SCRIPT type="text/javascript">
+beautify();
+</SCRIPT>
+</body>
+</html>

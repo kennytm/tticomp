@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+  <title>TrueType Instruction Compiler</title>
+
+  <meta name="author" content="Rogier van Dalen">
+
+  <meta name="description"
+ content="TrueType/OpenType Tools for &quot;font developers&quot;">
+
+  <link rel="stylesheet" title="Normal style" href="style.css" type="text/css">
+  <link rel="stylesheet" href="print.css" type="text/css" media="print" >
+</head>
+<body>
+<SCRIPT type="text/javascript">
+var documentPath = "tticomp.html";
+var lastEdited = "13 March 2002";
+</SCRIPT>
+<SCRIPT type="text/javascript" src="beautify.js"></SCRIPT>
+ 
+<p>The TTIComp tool lets you add instructions to a TrueType font through
+a .TTI file containing something that looks like C code.
+You will need to know some C and to know something about TrueType instructions.
+You can take a look at the examples, and browse the
+<A href="tticomp/introduction.html">tutorial</A> for more information.</p>
+ 
+<h2>Examples</h2>
+
+<p>This is an example of what a TTI file may look like:</p>
+ 
+<P class="codeFragment"><code>// This is the instruction file for Garogier.ttf</code><br>
+   <code></code><br>
+   <code>#input "../Garogier.ttf"</code><br>
+   <code>#output "Garogier_hinted.ttf"</code><br>
+   <code></code><br>
+   <code>#gasp AI</code><br>
+   <code>#twilight 1</code><br>
+   <code>#stack 100</code><br>
+   <code></code><br>
+   <code>#cvt base30: -30 \</code><br>
+   <code>&nbsp;&nbsp;&nbsp; xHeight30: 830 \</code><br>
+   <code>\</code><br>
+   <code>&nbsp;&nbsp;&nbsp; difference30: 30 \</code><br>
+   <code>\</code><br>
+   <code>&nbsp;&nbsp;&nbsp; stemBegin: \</code><br>
+   <code>&nbsp;&nbsp;&nbsp; stem40: 40 stem150: 150 \</code><br>
+   <code>&nbsp;&nbsp;&nbsp; stemEnd:</code><br>
+   <code>&nbsp;&nbsp;&nbsp; </code><br>
+   <code>void prep() {</code><br>
+   <code>&nbsp;&nbsp;&nbsp; setVectorsY();</code><br>
+   <code>&nbsp;&nbsp;&nbsp; </code><br>
+   <code>&nbsp;&nbsp;&nbsp; fixed oldXHeight = getCVT(xHeight);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; fixed newXHeight = roundBlack(oldXHeight);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; setCVT(xHeight, newXHeight);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; </code><br>
+   <code>&nbsp;&nbsp;&nbsp; fixed diff30 = getCVT(difference30);</code><br>
+   <code></code><br>
+   <code>&nbsp;&nbsp;&nbsp; if (getPPEM() &lt; 40u) {</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setCVT(base30, 0.0);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setCVT(xHeight30, newXHeight);&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp; </code><br>
+   <code>&nbsp;&nbsp;&nbsp; } else {</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setCVT(xHeight30, newXHeight 
++ diff30);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; }</code><br>
+   <code>&nbsp;&nbsp;&nbsp; </code><br>
+   <code>&nbsp;&nbsp;&nbsp; uint ppemY = getPPEM();</code><br>
+   <code>&nbsp;&nbsp;&nbsp; setVectorsX();</code><br>
+   <code>&nbsp;&nbsp;&nbsp; if (getPPEM() &gt; ppemY)</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setVectorsY();</code><br>
+   <code></code><br>
+   <code>&nbsp;&nbsp;&nbsp; // pixel size stems</code><br>
+   <code>&nbsp;&nbsp;&nbsp; while (cur &lt; stemEnd) {</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; fixed size = getCVT(cur);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; const fixed attenuation =
+.5;</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (size&lt;2.0)</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; size =
+size*((2.0-attenuation)/2.0) + attenuation;</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; setCVT(cur, size);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; cur = cur + 1u;</code><br>
+   <code>&nbsp;&nbsp;&nbsp; }</code><br>
+   <code>&nbsp;&nbsp;&nbsp; setCVTCutIn(50.0);</code><br>
+   <code>}</code><br>
+   <code></code><br>
+   <code>/*** figures ***/</code><br>
+   <code></code><br>
+   <code>void zero() {</code><br>
+   <code>&nbsp;&nbsp;&nbsp; //lsb</code><br>
+   <code>&nbsp;&nbsp;&nbsp; roundPoint(1u,1u);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; moveDistanceBlack(1u,1u, 1u,23u, stem150);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; moveDistanceRoundGrey(1u,1u, 1u,7u);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; roundPoint(1u,7u);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; moveDistanceBlack(1u,7u, 1u,17u, stem150);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; // rsb</code><br>
+   <code>&nbsp;&nbsp;&nbsp; moveDistanceRoundWhite(1u,7u, 1u,25u);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; interpolateX();</code><br>
+   <code>&nbsp;&nbsp;&nbsp; </code><br>
+   <code>&nbsp;&nbsp;&nbsp; setVectorsY();</code><br>
+   <code>&nbsp;&nbsp;&nbsp; movePoint(1u,10u, base30);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; moveDistanceBlack(1u,10u, 1u,14u, stem40);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; movePoint(1u,4u, xHeight30);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; moveDistanceBlack(1u,4u, 1u,20u, stem40);</code><br>
+   <code>&nbsp;&nbsp;&nbsp; interpolateY();</code><br>
+   <code>}</code><br>
+ </P>
+ 
+<p>If this does not scare you, but rather interests you, you may want to take
+a look at <a href="fontsources.zip">these files</a>, which include source 
+.TTF and .TTI files for two fonts made by me (but not finished yet).</p>
+ 
+<h2>Download</h2>
+
+<p>You may download a MS Windows binary (i.e., a working program file) of 
+TTIComp <a href="tticomp.zip">here</a>. It has been confirmed to work on
+Windows 2000 and Windows 95; other 32 bit Windowses (98, ME, XP etc.) should
+work as well. 
+ The <a
+ href="source.html">source</a> 
+is also available. If you find any bug, please email <a
+ href="mailto:R.C.van.Dalen@umail.leidenuniv.nl">me</a> (please make sure 
+I'll be able to reproduce it using the information you give me). Thank you.
+I expect to have one or two bugs left in switching from twilight zone to normal
+zone.
+I would also appreciate any suggestions for the program or the tutorial.
+</p>
+
+<SCRIPT type="text/javascript">
+beautify();
+showReservedWords (TTIReservedWords);
+</SCRIPT>
+</body>
+</html>
