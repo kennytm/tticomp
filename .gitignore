@@ -7,3 +7,4 @@ otlegacy
 tticomp
 *.ttf
 *.otf
+.DS_Store

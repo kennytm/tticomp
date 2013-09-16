@@ -20,8 +20,8 @@ include $(utildir)/OBJECTS
 include $(otfontdir)/OBJECTS
 include $(instructionprocessordir)/OBJECTS
 
-../tticomp: $(tticompobjects) util otfont instructionprocessor
-		$(CXX) -g -o ../tticomp $(tticompobjects) $(otfontobjects) $(utilobjects) $(instructionprocessorobjects)
+../bin/tticomp: $(tticompobjects) util otfont instructionprocessor
+		$(CXX) -g -o ../bin/tticomp $(tticompobjects) $(otfontobjects) $(utilobjects) $(instructionprocessorobjects)
 
 otfont:
 		$(MAKE) -C $(otfontdir)

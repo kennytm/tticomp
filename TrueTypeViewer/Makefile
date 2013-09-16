@@ -38,8 +38,8 @@ include $(utildir)/OBJECTS
 include $(otfontdir)/OBJECTS
 include $(instructionprocessordir)/OBJECTS
 
-../truetypeviewer: $(truetypeviewerobjects) util otfont instructionprocessor
-		$(CXX) $(LDFLAGS) -o ../ttviewer $(truetypeviewerobjects) $(otfontobjects) $(utilobjects) $(instructionprocessorobjects)
+../bin/ttviewer: $(truetypeviewerobjects) util otfont instructionprocessor
+		$(CXX) $(LDFLAGS) -o ../bin/ttviewer $(truetypeviewerobjects) $(otfontobjects) $(utilobjects) $(instructionprocessorobjects)
 
 otfont:
 		$(MAKE) -C $(otfontdir)

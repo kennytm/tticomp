@@ -17,8 +17,8 @@ otfontdir = ../OTFont
 include $(utildir)/OBJECTS
 include $(otfontdir)/OBJECTS
 
-../otlegacy: $(otlegacyobjects) util otfont
-		$(CXX) -g -o ../otlegacy $(otlegacyobjects) $(otfontobjects) $(utilobjects)
+../bin/otlegacy: $(otlegacyobjects) util otfont
+		$(CXX) -g -o ../bin/otlegacy $(otlegacyobjects) $(otfontobjects) $(utilobjects)
 
 otfont:
 		$(MAKE) -C $(otfontdir)
